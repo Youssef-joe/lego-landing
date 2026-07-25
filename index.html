@@ -3,28 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LEGO — Compose software from reusable bricks</title>
-<meta name="description" content="LEGO captures reusable modules from your projects into a versioned Vault, then snaps them into future applications. Build it once. Reuse it forever.">
+<title>Bricolage — Compose software from reusable pieces</title>
+<meta name="description" content="Bricolage captures reusable modules from your projects into a versioned Vault, then snaps them into future applications. Build it once. Reuse it forever.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,900;1,9..144,500&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   LEGO — Landing page
-   Bright & playful, brick-built design system
+   Bricolage — Landing page
+   Atelier & mosaic design system
    ============================================================ */
 :root{
-  --red:#D6001C;      --red-d:#A50016;
-  --yellow:#FFC500;   --yellow-d:#E3A700;
-  --blue:#0064D0;     --blue-d:#00479B;
-  --green:#00AF4D;    --green-d:#00873C;
-  --orange:#FF7A00;   --orange-d:#D96300;
-  --ink:#17213A;
-  --ink-soft:#4A5470;
-  --paper:#FFFDF4;
-  --paper-2:#FFF4D6;
+  --red:#C1552B;      --red-d:#98401F;
+  --yellow:#D9A13B;   --yellow-d:#B5822A;
+  --blue:#41617D;     --blue-d:#2F4A61;
+  --green:#7C8A4D;    --green-d:#61703A;
+  --orange:#8A5A83;   --orange-d:#6E4568;
+  --ink:#2E2A24;
+  --ink-soft:#6E645A;
+  --paper:#FAF6ED;
+  --paper-2:#F2E9D8;
   --white:#FFFFFF;
-  --shadow:rgba(23,33,58,.14);
+  --shadow:rgba(46,42,36,.13);
   --radius:18px;
   --font:'Nunito',system-ui,-apple-system,sans-serif;
   --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;
@@ -40,6 +40,13 @@ body{
 }
 ::selection{background:var(--yellow);color:var(--ink)}
 h1,h2,h3,h4{line-height:1.15;font-weight:900;letter-spacing:-.02em}
+h1,h2{font-family:'Fraunces',Georgia,serif;letter-spacing:-.01em}
+.defn{
+  font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:500;
+  color:var(--ink-soft);font-size:1.02rem;margin-top:14px;
+}
+.defn b{font-style:normal;color:var(--ink)}
+.defn .ipa{font-family:var(--font);font-style:normal;font-size:.85em;opacity:.75}
 a{color:inherit;text-decoration:none}
 code,pre,kbd{font-family:var(--mono)}
 .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
@@ -47,11 +54,9 @@ section{position:relative}
 
 /* ---------- generic stud ---------- */
 .stud{
-  width:16px;height:16px;border-radius:50%;
-  background:
-    radial-gradient(circle at 35% 28%, rgba(255,255,255,.8), rgba(255,255,255,0) 48%),
-    var(--c,var(--red));
-  box-shadow:inset 0 -3px 4px rgba(0,0,0,.22), 0 1px 2px rgba(0,0,0,.18);
+  width:13px;height:13px;border-radius:3px;transform:rotate(45deg);
+  background:linear-gradient(135deg, rgba(255,255,255,.4), rgba(255,255,255,0) 55%), var(--c,var(--red));
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.28), 0 1px 2px rgba(0,0,0,.18);
   flex:none;
 }
 
@@ -61,12 +66,6 @@ section{position:relative}
   position:absolute;border-radius:10px;opacity:.16;
   animation:floaty var(--dur,10s) ease-in-out infinite alternate;
   will-change:transform;
-}
-.fbrick::before{
-  content:"";position:absolute;top:-9px;left:12%;right:12%;height:18px;
-  background:radial-gradient(circle 8px at 20% 50%, inherit 60%, transparent 61%),
-             radial-gradient(circle 8px at 50% 50%, inherit 60%, transparent 61%),
-             radial-gradient(circle 8px at 80% 50%, inherit 60%, transparent 61%);
 }
 @keyframes floaty{
   from{transform:translateY(-18px) rotate(var(--rot,-6deg))}
@@ -83,24 +82,19 @@ section{position:relative}
 /* ---------- nav ---------- */
 nav{
   position:sticky;top:0;z-index:50;
-  background:rgba(255,253,244,.85);backdrop-filter:blur(12px);
+  background:rgba(250,246,237,.85);backdrop-filter:blur(12px);
   border-bottom:3px solid transparent;transition:border-color .3s, box-shadow .3s;
 }
 nav.scrolled{border-bottom-color:var(--ink);box-shadow:0 6px 0 var(--shadow)}
 .nav-inner{display:flex;align-items:center;gap:28px;height:72px}
 .logo{display:flex;align-items:center;gap:12px;font-weight:900;font-size:1.35rem;letter-spacing:.02em}
 .logo-brick{
-  position:relative;width:46px;height:30px;border-radius:6px;
-  background:var(--red);
-  box-shadow:inset 0 -5px 0 rgba(0,0,0,.18), 0 3px 0 var(--red-d);
+  position:relative;width:32px;height:32px;border-radius:8px;
+  background:conic-gradient(var(--red) 0 25%, var(--yellow) 0 50%, var(--blue) 0 75%, var(--green) 0);
+  box-shadow:inset 0 0 0 3px var(--paper), 0 0 0 2.5px var(--ink);
   transition:transform .3s cubic-bezier(.34,1.56,.64,1);
 }
 .logo:hover .logo-brick{transform:rotate(-8deg) scale(1.08)}
-.logo-brick::before{
-  content:"";position:absolute;top:-7px;left:6px;width:12px;height:12px;border-radius:50%;
-  background:radial-gradient(circle at 35% 28%, rgba(255,255,255,.7), transparent 50%), var(--red);
-  box-shadow:22px 0 0 0 var(--red), inset 0 -2px 3px rgba(0,0,0,.25);
-}
 .nav-links{display:flex;gap:26px;margin-left:auto;font-weight:800;font-size:.95rem}
 .nav-links a{position:relative;padding:4px 0;color:var(--ink-soft);transition:color .2s}
 .nav-links a:hover{color:var(--ink)}
@@ -134,19 +128,14 @@ nav.scrolled{border-bottom-color:var(--ink);box-shadow:0 6px 0 var(--shadow)}
   padding:7px 16px;box-shadow:0 4px 0 var(--shadow);margin-bottom:26px;
 }
 .badge .dot{width:10px;height:10px;border-radius:50%;background:var(--green);animation:pulse 1.8s infinite}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,175,77,.45)}55%{box-shadow:0 0 0 8px rgba(0,175,77,0)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(124,138,77,.5)}55%{box-shadow:0 0 0 8px rgba(124,138,77,0)}}
 .hero h1{font-size:clamp(2.6rem,5.2vw,4.1rem);margin-bottom:8px}
 .hero h1 .brickword{display:inline-flex;gap:6px;transform:translateY(6px)}
 .tile{
   display:inline-grid;place-items:center;position:relative;
   width:.94em;height:.94em;border-radius:.14em;color:#fff;font-size:.92em;
-  box-shadow:inset 0 -.09em 0 rgba(0,0,0,.22), 0 .07em 0 rgba(23,33,58,.9);
+  box-shadow:inset 0 0 0 .06em rgba(255,255,255,.3), 0 .07em 0 rgba(46,42,36,.6);
   animation:tiledrop .7s cubic-bezier(.34,1.56,.64,1) backwards;
-}
-.tile::before{
-  content:"";position:absolute;top:-.1em;left:20%;width:.22em;height:.22em;border-radius:50%;
-  background:radial-gradient(circle at 35% 28%, rgba(255,255,255,.75), transparent 55%), var(--c);
-  box-shadow:.36em 0 0 0 var(--c), inset 0 -.04em .05em rgba(0,0,0,.25);
 }
 .tile:nth-child(1){--c:var(--red);background:var(--red);animation-delay:.05s}
 .tile:nth-child(2){--c:var(--yellow);background:var(--yellow);color:var(--ink);animation-delay:.18s}
@@ -165,12 +154,12 @@ nav.scrolled{border-bottom-color:var(--ink);box-shadow:0 6px 0 var(--shadow)}
 .install-pill{
   display:flex;align-items:center;gap:12px;margin-top:26px;
   font-family:var(--mono);font-size:.92rem;font-weight:600;
-  background:var(--ink);color:#E9EDF7;border-radius:14px;padding:13px 18px;
+  background:var(--ink);color:#F0E8D8;border-radius:14px;padding:13px 18px;
   width:fit-content;box-shadow:0 6px 0 var(--shadow);
 }
 .install-pill .dollar{color:var(--yellow)}
 .install-pill button{
-  background:none;border:none;cursor:pointer;color:#9FB0D8;font-size:1rem;
+  background:none;border:none;cursor:pointer;color:#B5A68C;font-size:1rem;
   transition:color .2s, transform .2s;
 }
 .install-pill button:hover{color:#fff;transform:scale(1.15)}
@@ -179,7 +168,7 @@ nav.scrolled{border-bottom-color:var(--ink);box-shadow:0 6px 0 var(--shadow)}
 .hero-visual{position:relative}
 .terminal{
   position:relative;z-index:2;
-  background:#1B2340;border:3px solid var(--ink);border-radius:var(--radius);
+  background:#2B241C;border:3px solid var(--ink);border-radius:var(--radius);
   box-shadow:14px 14px 0 var(--shadow);overflow:hidden;
   transform:rotate(1.2deg);
   transition:transform .4s cubic-bezier(.34,1.56,.64,1);
@@ -187,21 +176,21 @@ nav.scrolled{border-bottom-color:var(--ink);box-shadow:0 6px 0 var(--shadow)}
 .terminal:hover{transform:rotate(0) scale(1.01)}
 .term-bar{
   display:flex;align-items:center;gap:8px;padding:12px 16px;
-  background:#141A31;border-bottom:2px solid rgba(255,255,255,.07);
+  background:#211B15;border-bottom:2px solid rgba(255,255,255,.07);
 }
 .term-bar .light{width:13px;height:13px;border-radius:50%}
-.term-bar .title{margin-left:10px;font-family:var(--mono);font-size:.78rem;color:#7C89AE}
+.term-bar .title{margin-left:10px;font-family:var(--mono);font-size:.78rem;color:#A6987F}
 .term-body{
   padding:20px 22px 24px;font-family:var(--mono);font-size:.86rem;line-height:1.75;
-  color:#D7DEF2;min-height:320px;
+  color:#EFE6D5;min-height:320px;
 }
 .term-body .ln{white-space:pre-wrap;word-break:break-word}
-.t-cmd{color:#FFE066;font-weight:600}
-.t-dim{color:#7C89AE}
-.t-green{color:#5CE488}
-.t-blue{color:#6EB6FF}
-.t-red{color:#FF7B72}
-.t-yellow{color:#FFD34D}
+.t-cmd{color:#E8C468;font-weight:600}
+.t-dim{color:#A6987F}
+.t-green{color:#B3C878}
+.t-blue{color:#9CBBD4}
+.t-red{color:#DE8A63}
+.t-yellow{color:#E3B04B}
 .caret{
   display:inline-block;width:9px;height:1.1em;vertical-align:text-bottom;
   background:var(--yellow);animation:blink 1s steps(1) infinite;
@@ -212,12 +201,6 @@ nav.scrolled{border-bottom-color:var(--ink);box-shadow:0 6px 0 var(--shadow)}
 .hbrick{
   position:absolute;border-radius:10px;border:3px solid var(--ink);
   animation:hdrop .8s cubic-bezier(.34,1.56,.64,1) backwards;
-}
-.hbrick::before{
-  content:"";position:absolute;top:-11px;left:10px;right:10px;height:16px;
-  background-image:radial-gradient(circle 7px at 10px 8px, var(--c) 62%, transparent 63%);
-  background-size:24px 16px;background-repeat:repeat-x;
-  filter:drop-shadow(0 -1px 0 var(--ink));
 }
 @keyframes hdrop{from{transform:translateY(-140px);opacity:0}to{transform:none;opacity:1}}
 
@@ -320,41 +303,33 @@ nav.scrolled{border-bottom-color:var(--ink);box-shadow:0 6px 0 var(--shadow)}
 /* ---------- cockpit / TUI ---------- */
 .cockpit{padding:96px 0}
 .tui{
-  background:#141A31;border:3px solid var(--ink);border-radius:var(--radius);
+  background:#211B15;border:3px solid var(--ink);border-radius:var(--radius);
   box-shadow:16px 16px 0 var(--shadow);overflow:hidden;
-  font-family:var(--mono);font-size:.85rem;color:#D7DEF2;
+  font-family:var(--mono);font-size:.85rem;color:#EFE6D5;
 }
 .tui-banner{display:flex;gap:6px;padding:20px 22px 6px;align-items:flex-end;flex-wrap:wrap}
 .tui-tile{
   width:34px;height:34px;border-radius:6px;display:grid;place-items:center;
   font-weight:700;color:#fff;position:relative;
-  box-shadow:inset 0 -4px 0 rgba(0,0,0,.25);
+  box-shadow:inset 0 0 0 3px rgba(255,255,255,.16);
   animation:tiledrop .7s cubic-bezier(.34,1.56,.64,1) backwards;
 }
-.tui-tile::before{
-  content:"";position:absolute;top:-5px;left:5px;width:8px;height:8px;border-radius:50%;
-  background:inherit;box-shadow:16px 0 0 0 var(--cc);filter:brightness(1.15);
-}
-.tui-meta{margin-left:14px;color:#7C89AE;font-size:.78rem;padding-bottom:4px}
+.tui-meta{margin-left:14px;color:#A6987F;font-size:.78rem;padding-bottom:4px}
 .tui-cols{display:grid;grid-template-columns:1.1fr 1fr;gap:16px;padding:16px 22px 22px}
-.tui-panel{border:2px solid #2A3558;border-radius:10px;padding:14px 16px;min-height:260px}
-.tui-panel .ph{color:#7C89AE;font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
+.tui-panel{border:2px solid #4A4033;border-radius:10px;padding:14px 16px;min-height:260px}
+.tui-panel .ph{color:#A6987F;font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
 .tui-brickrow{
   display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:8px;margin-bottom:6px;
   transition:background .25s, transform .25s;
 }
-.tui-brickrow:hover{background:#202A4E;transform:translateX(4px)}
-.tui-brickrow.sel{background:#243059;outline:2px solid var(--yellow)}
+.tui-brickrow:hover{background:#363028;transform:translateX(4px)}
+.tui-brickrow.sel{background:#3D362C;outline:2px solid var(--yellow)}
 .mini-brick{
   width:30px;height:16px;border-radius:4px;position:relative;flex:none;
-  box-shadow:inset 0 -3px 0 rgba(0,0,0,.28);
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.22);
 }
-.mini-brick::before{
-  content:"";position:absolute;top:-4px;left:4px;width:6px;height:6px;border-radius:50%;
-  background:inherit;filter:brightness(1.2);box-shadow:11px 0 0 0 inherit;
-}
-.tui-footer{padding:10px 22px;border-top:2px solid #2A3558;color:#7C89AE;font-size:.75rem;display:flex;gap:18px;flex-wrap:wrap}
-.tui-footer b{color:#FFD34D}
+.tui-footer{padding:10px 22px;border-top:2px solid #4A4033;color:#A6987F;font-size:.75rem;display:flex;gap:18px;flex-wrap:wrap}
+.tui-footer b{color:#E3B04B}
 .cockpit-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:52px;align-items:center}
 .checklist{list-style:none;margin-top:22px}
 .checklist li{
@@ -368,29 +343,29 @@ nav.scrolled{border-bottom-color:var(--ink);box-shadow:0 6px 0 var(--shadow)}
 .checklist b{color:var(--ink)}
 
 /* ---------- architecture ---------- */
-.arch{padding:96px 0;background:var(--ink);color:#EDF1FB;border-top:3px solid var(--ink)}
+.arch{padding:96px 0;background:var(--ink);color:#F2EBDD;border-top:3px solid var(--ink)}
 .arch .sec-head h2{color:#fff}
-.arch .sec-head p{color:#A7B3D4}
+.arch .sec-head p{color:#C7B9A2}
 .arch-diagram{max-width:760px;margin:0 auto;text-align:center}
 .arch-box{
-  display:inline-block;background:#222D52;border:3px solid #46538A;
+  display:inline-block;background:#3D362C;border:3px solid #5C5142;
   border-radius:14px;padding:16px 34px;font-weight:800;position:relative;
   box-shadow:0 7px 0 rgba(0,0,0,.3);
 }
-.arch-box small{display:block;font-weight:600;color:#A7B3D4;font-size:.8rem}
+.arch-box small{display:block;font-weight:600;color:#C7B9A2;font-size:.8rem}
 .arch-box.engine{background:var(--red);border-color:#fff2}
 .arch-box.vault{background:var(--green);border-color:#fff2}
 .arch-adapters{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin:0}
 .arch-box.adp{background:var(--blue)}
-.arch-box.adp.ghosted{background:#222D52;color:#8B98C0;border-style:dashed}
+.arch-box.adp.ghosted{background:#3D362C;color:#A6987F;border-style:dashed}
 .arch-pipe{
   width:6px;height:44px;margin:6px auto;border-radius:4px;
-  background:repeating-linear-gradient(180deg,#FFD34D 0 8px,transparent 8px 15px);
+  background:repeating-linear-gradient(180deg,#E3B04B 0 8px,transparent 8px 15px);
   background-size:6px 15px;animation:dashy 1s linear infinite;
 }
 @keyframes dashy{to{background-position:0 15px}}
-.arch-note{margin-top:34px;color:#A7B3D4;font-weight:700;max-width:36rem;margin-left:auto;margin-right:auto}
-.arch-note code{background:#222D52;padding:2px 8px;border-radius:6px;color:#FFD34D;font-size:.9em}
+.arch-note{margin-top:34px;color:#C7B9A2;font-weight:700;max-width:36rem;margin-left:auto;margin-right:auto}
+.arch-note code{background:#3D362C;padding:2px 8px;border-radius:6px;color:#E3B04B;font-size:.9em}
 
 /* ---------- docs ---------- */
 .docs{padding:96px 0}
@@ -413,7 +388,7 @@ nav.scrolled{border-bottom-color:var(--ink);box-shadow:0 6px 0 var(--shadow)}
 .doc-card h3{font-size:1.35rem;margin-bottom:8px}
 .doc-card .lead{color:var(--ink-soft);font-weight:700;margin-bottom:22px}
 .codeblock{
-  position:relative;background:#1B2340;color:#D7DEF2;border-radius:14px;
+  position:relative;background:#2B241C;color:#EFE6D5;border-radius:14px;
   border:3px solid var(--ink);padding:20px 22px;margin:16px 0;
   font-family:var(--mono);font-size:.84rem;line-height:1.8;overflow-x:auto;
 }
@@ -423,16 +398,16 @@ nav.scrolled{border-bottom-color:var(--ink);box-shadow:0 6px 0 var(--shadow)}
   padding:4px 10px;cursor:pointer;box-shadow:0 3px 0 var(--ink);transition:transform .15s;
 }
 .codeblock .copy:hover{transform:translateY(-2px)}
-.codeblock .c{color:#7C89AE}
-.codeblock .y{color:#FFE066}
-.codeblock .g{color:#5CE488}
-.codeblock .b{color:#6EB6FF}
+.codeblock .c{color:#A6987F}
+.codeblock .y{color:#E8C468}
+.codeblock .g{color:#B3C878}
+.codeblock .b{color:#9CBBD4}
 .cmd-table{width:100%;border-collapse:separate;border-spacing:0;margin-top:10px;font-size:.93rem}
 .cmd-table th{
   text-align:left;font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;
   color:var(--ink-soft);padding:10px 14px;border-bottom:3px solid var(--ink);
 }
-.cmd-table td{padding:12px 14px;border-bottom:2px solid #EDE9DA;font-weight:600;color:var(--ink-soft)}
+.cmd-table td{padding:12px 14px;border-bottom:2px solid #E5DCC8;font-weight:600;color:var(--ink-soft)}
 .cmd-table tr:last-child td{border-bottom:none}
 .cmd-table tr{transition:background .2s}
 .cmd-table tbody tr:hover{background:var(--paper-2)}
@@ -481,7 +456,7 @@ nav.scrolled{border-bottom-color:var(--ink);box-shadow:0 6px 0 var(--shadow)}
 .cta p{color:var(--ink-soft);font-weight:700;font-size:1.15rem;margin-bottom:36px}
 
 /* ---------- footer ---------- */
-footer{background:var(--ink);color:#A7B3D4;padding:0 0 40px;position:relative}
+footer{background:var(--ink);color:#C7B9A2;padding:0 0 40px;position:relative}
 .foot-studs{
   display:flex;justify-content:center;gap:26px;transform:translateY(-14px);
 }
@@ -528,7 +503,7 @@ footer{background:var(--ink);color:#A7B3D4;padding:0 0 40px;position:relative}
 <nav id="nav">
   <div class="wrap nav-inner">
     <a class="logo" href="#top">
-      <span class="logo-brick"></span> LEGO
+      <span class="logo-brick"></span> Bricolage
     </a>
     <div class="nav-links">
       <a href="#features">Features</a>
@@ -550,17 +525,18 @@ footer{background:var(--ink);color:#A7B3D4;padding:0 0 40px;position:relative}
         Build it once.<br>
         Snap it in <span class="brickword"><span class="tile">f</span><span class="tile">o</span><span class="tile">r</span><span class="tile">e</span></span>ver.
       </h1>
+      <p class="defn"><b>bricolage</b> <span class="ipa">/bʁi.kɔ.laʒ/</span> — n. the art of building with whatever is at hand.</p>
       <p class="sub">
-        LEGO captures the best modules from your projects into a <strong>versioned Vault</strong>,
+        Bricolage captures the best modules from your projects into a <strong>versioned Vault</strong>,
         then composes them into your next application. Stop asking <em>"how do we build this?"</em>
-        Start asking <strong>"do we already have a brick for this?"</strong>
+        Start asking <strong>"do we already have a piece for this?"</strong>
       </p>
       <div class="cta-row">
         <a class="btn" href="#docs" id="ctaMain">Start building ▸</a>
         <a class="btn ghost" href="#features">Explore features</a>
       </div>
       <div class="install-pill">
-        <span><span class="dollar">$</span> <span id="installCmd">go build -o lego ./cmd/lego</span></span>
+        <span><span class="dollar">$</span> <span id="installCmd">go build -o brico ./cmd/brico</span></span>
         <button id="copyInstall" title="Copy">⧉</button>
       </div>
     </div>
@@ -576,7 +552,7 @@ footer{background:var(--ink);color:#A7B3D4;padding:0 0 40px;position:relative}
           <span class="light" style="background:#FF5F57"></span>
           <span class="light" style="background:#FEBC2E"></span>
           <span class="light" style="background:#28C840"></span>
-          <span class="title">lego — zsh</span>
+          <span class="title">brico — zsh</span>
         </div>
         <div class="term-body" id="termBody"></div>
       </div>
@@ -586,7 +562,7 @@ footer{background:var(--ink);color:#A7B3D4;padding:0 0 40px;position:relative}
   <!-- marquee -->
   <div class="marquee">
     <div class="marquee-track" id="marqueeTrack">
-      <span>🧱 extract&nbsp;&nbsp;·&nbsp;&nbsp;📦 capture&nbsp;&nbsp;·&nbsp;&nbsp;🔍 search&nbsp;&nbsp;·&nbsp;&nbsp;⚡ add&nbsp;&nbsp;·&nbsp;&nbsp;🩺 doctor&nbsp;&nbsp;·&nbsp;&nbsp;🎛 ui&nbsp;&nbsp;·&nbsp;&nbsp;🗑 remove&nbsp;&nbsp;·&nbsp;&nbsp;🏛 vault&nbsp;&nbsp;·&nbsp;&nbsp;</span>
+      <span>◆ extract&nbsp;&nbsp;·&nbsp;&nbsp;📦 capture&nbsp;&nbsp;·&nbsp;&nbsp;🔍 search&nbsp;&nbsp;·&nbsp;&nbsp;⚡ add&nbsp;&nbsp;·&nbsp;&nbsp;🩺 doctor&nbsp;&nbsp;·&nbsp;&nbsp;🎛 ui&nbsp;&nbsp;·&nbsp;&nbsp;🗑 remove&nbsp;&nbsp;·&nbsp;&nbsp;🏛 vault&nbsp;&nbsp;·&nbsp;&nbsp;</span>
     </div>
   </div>
 </header>
@@ -612,7 +588,7 @@ footer{background:var(--ink);color:#A7B3D4;padding:0 0 40px;position:relative}
     <div class="stat reveal d3">
       <div class="studs"><span class="stud" style="--c:var(--green)"></span><span class="stud" style="--c:var(--green)"></span></div>
       <div class="num">∞</div>
-      <div class="lbl">reuse of every captured brick</div>
+      <div class="lbl">reuse of every captured piece</div>
     </div>
   </div>
 </section>
@@ -621,82 +597,82 @@ footer{background:var(--ink);color:#A7B3D4;padding:0 0 40px;position:relative}
 <section class="features" id="features">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="kicker" style="background:var(--red)">🧱 The brick box</span>
-      <h2>Every command is a brick that just snaps.</h2>
+      <span class="kicker" style="background:var(--red)">🧰 The atelier</span>
+      <h2>Every command is a piece that just fits.</h2>
       <p>No boilerplate. No copy-paste archaeology. A complete lifecycle for reusable modules — from discovery to teardown.</p>
     </div>
 
     <div class="feat-grid">
       <div class="card reveal">
         <div class="card-studs"><span class="stud" style="--c:var(--red)"></span><span class="stud" style="--c:var(--red)"></span><span class="stud" style="--c:var(--red)"></span></div>
-        <div class="icon" style="background:#FFE3E6">🔎</div>
-        <span class="cmd">lego extract</span>
+        <div class="icon" style="background:#F3DCCE">🔎</div>
+        <span class="cmd">brico extract</span>
         <h3>X-ray your codebase</h3>
-        <p>Point LEGO at any NestJS or Next.js project and it surfaces the parts worth reusing — auth, mailers, payment flows — ranked by confidence. Your best work, found automatically.</p>
+        <p>Point Bricolage at any NestJS or Next.js project and it surfaces the parts worth reusing — auth, mailers, payment flows — ranked by confidence. Your best work, found automatically.</p>
       </div>
 
       <div class="card reveal d1">
         <div class="card-studs"><span class="stud" style="--c:var(--yellow)"></span><span class="stud" style="--c:var(--yellow)"></span><span class="stud" style="--c:var(--yellow)"></span></div>
-        <div class="icon" style="background:#FFF3C4">📦</div>
-        <span class="cmd">lego capture</span>
+        <div class="icon" style="background:#F3E8C9">📦</div>
+        <span class="cmd">brico capture</span>
         <h3>Bottle the craftsmanship</h3>
-        <p>One command snapshots a module — files, dependencies, env vars, wiring — into an immutable, semver'd brick with a manifest. Versions are never overwritten. History is forever.</p>
+        <p>One command snapshots a module — files, dependencies, env vars, wiring — into an immutable, semver'd piece with a manifest. Versions are never overwritten. History is forever.</p>
       </div>
 
       <div class="card reveal d2">
         <div class="card-studs"><span class="stud" style="--c:var(--blue)"></span><span class="stud" style="--c:var(--blue)"></span><span class="stud" style="--c:var(--blue)"></span></div>
-        <div class="icon" style="background:#DCEBFF">⚡</div>
-        <span class="cmd">lego add</span>
+        <div class="icon" style="background:#DBE3E9">⚡</div>
+        <span class="cmd">brico add</span>
         <h3>Snap. Wired. Done.</h3>
-        <p>Resolves the right version, copies the files, records it in <code>lego.json</code>, merges required env vars into <code>.env.example</code>, and hands you exact framework wiring steps.</p>
+        <p>Resolves the right version, copies the files, records it in <code>brico.json</code>, merges required env vars into <code>.env.example</code>, and hands you exact framework wiring steps.</p>
       </div>
 
       <div class="card reveal">
         <div class="card-studs"><span class="stud" style="--c:var(--green)"></span><span class="stud" style="--c:var(--green)"></span><span class="stud" style="--c:var(--green)"></span></div>
-        <div class="icon" style="background:#D9F5E4">🔍</div>
-        <span class="cmd">lego list · search</span>
-        <h3>Every brick, findable</h3>
+        <div class="icon" style="background:#E4E8D2">🔍</div>
+        <span class="cmd">brico list · search</span>
+        <h3>Every piece, findable</h3>
         <p>Search your entire Vault by name, tag, or description in milliseconds. A self-healing <code>index.json</code> means the catalog is always in sync — even after messy git merges.</p>
       </div>
 
       <div class="card reveal d1">
         <div class="card-studs"><span class="stud" style="--c:var(--orange)"></span><span class="stud" style="--c:var(--orange)"></span><span class="stud" style="--c:var(--orange)"></span></div>
-        <div class="icon" style="background:#FFE8D4">🩺</div>
-        <span class="cmd">lego doctor</span>
+        <div class="icon" style="background:#EADFE9">🩺</div>
+        <span class="cmd">brico doctor</span>
         <h3>Green means go</h3>
-        <p>One command validates the engine, adapters, Vault, and your project — shown as a stack of snapped-green and loose-red bricks. Trust your setup before every ship.</p>
+        <p>One command validates the engine, adapters, Vault, and your project — shown as a row of set-green and loose-red tiles. Trust your setup before every ship.</p>
       </div>
 
       <div class="card reveal d2">
         <div class="card-studs"><span class="stud" style="--c:var(--red)"></span><span class="stud" style="--c:var(--yellow)"></span><span class="stud" style="--c:var(--blue)"></span></div>
-        <div class="icon" style="background:#F0E4FF">🎛</div>
-        <span class="cmd">lego ui</span>
+        <div class="icon" style="background:#EADFE9">🎛</div>
+        <span class="cmd">brico ui</span>
         <h3>A cockpit in your terminal</h3>
-        <p>Browse the Vault as a wall of colored bricks. Live filtering, spec sheets, version history, doctor and extract — all full-screen, all keyboard-driven, all beautiful.</p>
+        <p>Browse the Vault as a living mosaic of your best work. Live filtering, spec sheets, version history, doctor and extract — all full-screen, all keyboard-driven, all beautiful.</p>
       </div>
 
       <div class="card reveal">
         <div class="card-studs"><span class="stud" style="--c:var(--blue)"></span><span class="stud" style="--c:var(--blue)"></span><span class="stud" style="--c:var(--blue)"></span></div>
-        <div class="icon" style="background:#DCEBFF">🗑</div>
-        <span class="cmd">lego remove</span>
+        <div class="icon" style="background:#DBE3E9">🗑</div>
+        <span class="cmd">brico remove</span>
         <h3>Un-snap cleanly</h3>
         <p>Modules leave the way they came: files removed, records updated, cleanup steps printed. No orphaned imports, no mystery leftovers, no residue.</p>
       </div>
 
       <div class="card reveal d1">
         <div class="card-studs"><span class="stud" style="--c:var(--green)"></span><span class="stud" style="--c:var(--green)"></span><span class="stud" style="--c:var(--green)"></span></div>
-        <div class="icon" style="background:#D9F5E4">🏛</div>
+        <div class="icon" style="background:#E4E8D2">🏛</div>
         <span class="cmd">the Vault</span>
-        <h3>Your team's brick box</h3>
+        <h3>Your team's atelier</h3>
         <p>Git-versioned, offline-first, immutable. Every publish is a deterministic commit — auditable and reproducible. Remote &amp; team Vaults arrive on the same layout.</p>
       </div>
 
       <div class="card reveal d2">
         <div class="card-studs"><span class="stud" style="--c:var(--yellow)"></span><span class="stud" style="--c:var(--yellow)"></span><span class="stud" style="--c:var(--yellow)"></span></div>
-        <div class="icon" style="background:#FFF3C4">📜</div>
+        <div class="icon" style="background:#F3E8C9">📜</div>
         <span class="cmd">the Manifest</span>
         <h3>Behavior as data</h3>
-        <p>Every brick carries a contract: identity, versions, deps, env vars, exports, compatibility, lifecycle hooks. The engine reads behavior from the manifest — never hardcodes it.</p>
+        <p>Every piece carries a contract: identity, versions, deps, env vars, exports, compatibility, lifecycle hooks. The engine reads behavior from the manifest — never hardcodes it.</p>
       </div>
     </div>
   </div>
@@ -707,7 +683,7 @@ footer{background:var(--ink);color:#A7B3D4;padding:0 0 40px;position:relative}
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="kicker" style="background:var(--blue)">⚙️ How it works</span>
-      <h2>From "that's clever" to "that's a brick" in five snaps.</h2>
+      <h2>From "that's clever" to "that's a piece" in five moves.</h2>
       <p>One flow, end-to-end, working today. Watch it run.</p>
     </div>
 
@@ -745,16 +721,16 @@ footer{background:var(--ink);color:#A7B3D4;padding:0 0 40px;position:relative}
   <div class="wrap cockpit-grid">
     <div class="reveal">
       <span class="kicker" style="background:var(--green)">🎛 The cockpit</span>
-      <h2 style="font-size:clamp(1.8rem,3.2vw,2.5rem);margin:18px 0 14px">Your Vault, as a wall of bricks.</h2>
+      <h2 style="font-size:clamp(1.8rem,3.2vw,2.5rem);margin:18px 0 14px">Your Vault, as a mosaic.</h2>
       <p style="color:var(--ink-soft);font-weight:700">
-        <code style="background:var(--paper-2);border:2px solid var(--ink);border-radius:8px;padding:2px 10px">lego ui</code>
+        <code style="background:var(--paper-2);border:2px solid var(--ink);border-radius:8px;padding:2px 10px">brico ui</code>
         opens a full-screen terminal interface. Presentation-only by design — every fact comes
         from the same engine the CLI uses, so the two never drift.
       </p>
       <ul class="checklist">
         <li><span class="tick">✓</span><span><b>Browse &amp; search live</b> — <kbd>/</kbd> filters by name, tag, or description as you type.</span></li>
-        <li><span class="tick">✓</span><span><b>Brick spec panel</b> — version history, tags, env vars, files &amp; deps straight from the manifest.</span></li>
-        <li><span class="tick">✓</span><span><b><kbd>d</kbd> doctor</b> — health checks rendered as snapped-green and loose-red bricks.</span></li>
+        <li><span class="tick">✓</span><span><b>Piece spec panel</b> — version history, tags, env vars, files &amp; deps straight from the manifest.</span></li>
+        <li><span class="tick">✓</span><span><b><kbd>d</kbd> doctor</b> — health checks rendered as set-green and loose-red tiles.</span></li>
         <li><span class="tick">✓</span><span><b><kbd>e</kbd> extract</b> — reusable candidates in the current project, ranked by confidence.</span></li>
       </ul>
     </div>
@@ -762,15 +738,16 @@ footer{background:var(--ink);color:#A7B3D4;padding:0 0 40px;position:relative}
     <div class="reveal d2">
       <div class="tui">
         <div class="tui-banner">
-          <span class="tui-tile" style="--cc:var(--red);background:var(--red);animation-delay:.1s">L</span>
-          <span class="tui-tile" style="--cc:var(--yellow);background:var(--yellow);color:var(--ink);animation-delay:.22s">E</span>
-          <span class="tui-tile" style="--cc:var(--blue);background:var(--blue);animation-delay:.34s">G</span>
-          <span class="tui-tile" style="--cc:var(--green);background:var(--green);animation-delay:.46s">O</span>
-          <span class="tui-meta">vault ~/.lego/vault · 7 bricks · v0.1.0</span>
+          <span class="tui-tile" style="--cc:var(--red);background:var(--red);animation-delay:.1s">B</span>
+          <span class="tui-tile" style="--cc:var(--yellow);background:var(--yellow);color:var(--ink);animation-delay:.22s">R</span>
+          <span class="tui-tile" style="--cc:var(--blue);background:var(--blue);animation-delay:.34s">I</span>
+          <span class="tui-tile" style="--cc:var(--green);background:var(--green);animation-delay:.46s">C</span>
+          <span class="tui-tile" style="--cc:var(--orange);background:var(--orange);animation-delay:.58s">O</span>
+          <span class="tui-meta">vault ~/.brico/vault · 7 pieces · v0.1.0</span>
         </div>
         <div class="tui-cols">
           <div class="tui-panel">
-            <div class="ph">Bricks</div>
+            <div class="ph">Pieces</div>
             <div class="tui-brickrow sel"><span class="mini-brick" style="background:var(--red)"></span> auth <span class="t-dim">0.2.0 · jwt, security</span></div>
             <div class="tui-brickrow"><span class="mini-brick" style="background:var(--yellow)"></span> mailer <span class="t-dim">0.1.0 · smtp</span></div>
             <div class="tui-brickrow"><span class="mini-brick" style="background:var(--blue)"></span> cache <span class="t-dim">0.3.1 · redis</span></div>
@@ -779,7 +756,7 @@ footer{background:var(--ink);color:#A7B3D4;padding:0 0 40px;position:relative}
             <div class="tui-brickrow"><span class="mini-brick" style="background:var(--red)"></span> queue <span class="t-dim">0.2.0 · bullmq</span></div>
           </div>
           <div class="tui-panel">
-            <div class="ph">Brick spec — auth</div>
+            <div class="ph">Piece spec — auth</div>
             <div class="ln"><span class="t-yellow">auth</span> <span class="t-dim">·</span> <span class="t-blue">nest</span> <span class="t-dim">· typescript</span></div>
             <div class="ln t-dim">JWT authentication with Passport &amp; bcrypt</div>
             <div class="ln" style="margin-top:10px"><span class="t-dim">versions</span>  0.1.0 → <span class="t-green">0.2.0 (latest)</span></div>
@@ -820,8 +797,8 @@ footer{background:var(--ink);color:#A7B3D4;padding:0 0 40px;position:relative}
       <div class="arch-box vault">The Vault<small>local fs + git · immutable versions · searchable index</small></div>
       <p class="arch-note">
         The manifest is the contract: the engine reads behavior from
-        <code>lego.manifest.json</code> instead of hardcoding it — which is exactly what
-        makes community and third-party bricks possible.
+        <code>brico.manifest.json</code> instead of hardcoding it — which is exactly what
+        makes community and third-party pieces possible.
       </p>
     </div>
   </div>
@@ -832,7 +809,7 @@ footer{background:var(--ink);color:#A7B3D4;padding:0 0 40px;position:relative}
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="kicker" style="background:var(--yellow);color:var(--ink)">📚 Documentation</span>
-      <h2>From zero to first brick in five minutes.</h2>
+      <h2>From zero to first piece in five minutes.</h2>
       <p>Everything you need to build, capture, and compose.</p>
     </div>
 
@@ -848,29 +825,29 @@ footer{background:var(--ink);color:#A7B3D4;padding:0 0 40px;position:relative}
         <h3>Quick start</h3>
         <p class="lead">Build the engine, capture your first module, and snap it into a fresh project.</p>
         <div class="codeblock"><button class="copy">Copy</button><span class="c"># 1. Build the engine (single static binary, no runtime required)</span>
-<span class="y">cd</span> engine && go build -o ../lego ./cmd/lego && <span class="y">cd</span> ..
+<span class="y">cd</span> engine && go build -o ../brico ./cmd/brico && <span class="y">cd</span> ..
 
 <span class="c"># Use a local demo Vault for this walkthrough</span>
-<span class="y">export</span> LEGO_VAULT=<span class="g">"$PWD/.demo-vault"</span>
+<span class="y">export</span> BRICO_VAULT=<span class="g">"$PWD/.demo-vault"</span>
 
 <span class="c"># 2. See what's reusable in the sample source project</span>
-./lego --cwd examples/nest-source <span class="b">extract</span>
+./brico --cwd examples/nest-source <span class="b">extract</span>
 
 <span class="c"># 3. Capture the auth module into the Vault</span>
-./lego --cwd examples/nest-source <span class="b">capture</span> auth -y \
+./brico --cwd examples/nest-source <span class="b">capture</span> auth -y \
     -d <span class="g">"JWT authentication with Passport &amp; bcrypt"</span> -t security,jwt,auth
 
 <span class="c"># 4. Browse the Vault</span>
-./lego <span class="b">list</span>
-./lego <span class="b">search</span> jwt
+./brico <span class="b">list</span>
+./brico <span class="b">search</span> jwt
 
 <span class="c"># 5. Drop it into a fresh project</span>
-./lego --cwd examples/nest-target <span class="b">add</span> auth -y
+./brico --cwd examples/nest-target <span class="b">add</span> auth -y
 
 <span class="c"># 6. Validate everything</span>
-./lego --cwd examples/nest-target <span class="b">doctor</span></div>
+./brico --cwd examples/nest-target <span class="b">doctor</span></div>
         <p style="color:var(--ink-soft);font-weight:600;font-size:.95rem">
-          <code>add</code> copies the module's files, records it in <code>lego.json</code>, appends required
+          <code>add</code> copies the module's files, records it in <code>brico.json</code>, appends required
           variables to <code>.env.example</code>, and prints framework-specific wiring steps —
           like <em>"add AuthModule to the AppModule imports array."</em>
         </p>
@@ -884,16 +861,17 @@ footer{background:var(--ink);color:#A7B3D4;padding:0 0 40px;position:relative}
         <table class="cmd-table">
           <thead><tr><th>Command</th><th>Status</th><th>What it does</th></tr></thead>
           <tbody>
-            <tr><td><code>lego extract</code></td><td><span class="pill ok">working</span></td><td>Heuristically suggests reusable modules in a project</td></tr>
-            <tr><td><code>lego capture</code></td><td><span class="pill ok">working</span></td><td>Scans a module, builds a manifest, publishes to the Vault</td></tr>
-            <tr><td><code>lego list</code></td><td><span class="pill ok">working</span></td><td>Lists Vault modules</td></tr>
-            <tr><td><code>lego search</code></td><td><span class="pill ok">working</span></td><td>Searches by name / description / tags</td></tr>
-            <tr><td><code>lego add</code></td><td><span class="pill ok">working</span></td><td>Resolves a version, copies files, wires env &amp; config</td></tr>
-            <tr><td><code>lego remove</code></td><td><span class="pill ok">working</span></td><td>Removes an installed module + cleanup steps</td></tr>
-            <tr><td><code>lego doctor</code></td><td><span class="pill ok">working</span></td><td>Validates engine, adapters, Vault, and project</td></tr>
-            <tr><td><code>lego ui</code></td><td><span class="pill ok">working</span></td><td>Interactive terminal cockpit — browse the Vault as bricks</td></tr>
-            <tr><td><code>lego create</code></td><td><span class="pill prev">preview</span></td><td>Project generator (lands in the Templates phase)</td></tr>
-            <tr><td><code>push · pull · diff · update</code></td><td><span class="pill soon">planned</span></td><td>Vault sync commands (Phase 1 completion)</td></tr>
+            <tr><td><code>brico extract</code></td><td><span class="pill ok">working</span></td><td>Heuristically suggests reusable modules in a project</td></tr>
+            <tr><td><code>brico capture</code></td><td><span class="pill ok">working</span></td><td>Scans a module, builds a manifest, publishes to the Vault</td></tr>
+            <tr><td><code>brico list</code></td><td><span class="pill ok">working</span></td><td>Lists Vault modules</td></tr>
+            <tr><td><code>brico search</code></td><td><span class="pill ok">working</span></td><td>Searches by name / description / tags</td></tr>
+            <tr><td><code>brico add</code></td><td><span class="pill ok">working</span></td><td>Resolves a version, copies files, wires env &amp; config</td></tr>
+            <tr><td><code>brico remove</code></td><td><span class="pill ok">working</span></td><td>Removes an installed module + cleanup steps</td></tr>
+            <tr><td><code>brico doctor</code></td><td><span class="pill ok">working</span></td><td>Validates engine, adapters, Vault, and project</td></tr>
+            <tr><td><code>brico ui</code></td><td><span class="pill ok">working</span></td><td>Interactive terminal cockpit — browse the Vault as a mosaic</td></tr>
+            <tr><td><code>brico publish</code></td><td><span class="pill ok">working</span></td><td>Pushes the Vault (or one module) to a GitHub repo — <code>-l</code>/<code>--repo</code> for other repos</td></tr>
+            <tr><td><code>brico create</code></td><td><span class="pill prev">preview</span></td><td>Project generator (lands in the Templates phase)</td></tr>
+            <tr><td><code>pull · diff · update</code></td><td><span class="pill soon">planned</span></td><td>Remaining Vault sync commands (Phase 1 completion)</td></tr>
           </tbody>
         </table>
       </div>
@@ -907,7 +885,7 @@ footer{background:var(--ink);color:#A7B3D4;padding:0 0 40px;position:relative}
   index.json                 <span class="c"># searchable summary of every module</span>
   auth/
     0.1.0/
-      lego.manifest.json     <span class="c"># the manifest for this snapshot</span>
+      brico.manifest.json     <span class="c"># the manifest for this snapshot</span>
       auth.service.ts        <span class="c"># the module's files, exactly as declared</span>
       ...
     0.2.0/
@@ -923,7 +901,7 @@ footer{background:var(--ink);color:#A7B3D4;padding:0 0 40px;position:relative}
 
     <div class="tab-pane" id="tab-develop">
       <div class="doc-card">
-        <h3>Developing LEGO</h3>
+        <h3>Developing Bricolage</h3>
         <p class="lead">A single Go module. Minimal dependencies — cobra for the CLI; semver lives in-tree.</p>
         <div class="codeblock"><button class="copy">Copy</button><span class="y">cd</span> engine
 go build ./...      <span class="c"># compile</span>
@@ -952,7 +930,7 @@ go vet ./...        <span class="c"># static checks</span></div>
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="kicker" style="background:var(--green)">🗺 Roadmap</span>
-      <h2>Built brick by brick — literally.</h2>
+      <h2>Built piece by piece — literally.</h2>
       <p>Phase 1 is standing. Three more towers to go.</p>
     </div>
 
@@ -1017,8 +995,8 @@ go vet ./...        <span class="c"># static checks</span></div>
 <!-- ================= CTA ================= -->
 <section class="cta">
   <div class="wrap reveal">
-    <span class="kicker" style="background:var(--blue)">🧱 Ready?</span>
-    <h2>Stop rebuilding. Start snapping.</h2>
+    <span class="kicker" style="background:var(--blue)">🧩 Ready?</span>
+    <h2>Stop rebuilding. Start composing.</h2>
     <p>Your next app is already half-built — it's sitting in your last one.</p>
     <div class="cta-row" style="justify-content:center">
       <a class="btn" href="#docs" id="ctaBottom">Get started ▸</a>
@@ -1038,7 +1016,7 @@ go vet ./...        <span class="c"># static checks</span></div>
   </div>
   <div class="wrap foot-inner">
     <div>
-      <div class="foot-brand"><span class="logo-brick" style="width:38px;height:24px"></span> LEGO</div>
+      <div class="foot-brand"><span class="logo-brick" style="width:26px;height:26px;box-shadow:inset 0 0 0 3px var(--ink)"></span> Bricolage</div>
       <p style="margin-top:10px;max-width:26rem;font-weight:600">
         Not a code generator. Not a boilerplate. A platform that turns engineering
         craftsmanship into reusable, evolving assets.
@@ -1055,8 +1033,8 @@ go vet ./...        <span class="c"># static checks</span></div>
       </div>
     </div>
   </div>
-  <div class="wrap" style="margin-top:34px;padding-top:20px;border-top:1px solid #2A3558;font-size:.85rem;font-weight:600">
-    Compose software from reusable, versioned building blocks. · © 2026 LEGO Engineering Platform
+  <div class="wrap" style="margin-top:34px;padding-top:20px;border-top:1px solid #4A4033;font-size:.85rem;font-weight:600">
+    <i style="font-family:'Fraunces',Georgia,serif">L'art de bâtir avec l'existant.</i> · Compose software from reusable, versioned pieces. · © 2026 Bricolage
   </div>
 </footer>
 
@@ -1073,17 +1051,17 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
 /* ============ hero terminal typing ============ */
 const SCRIPT=[
-  {t:'$ lego extract',cls:'t-cmd',pause:350},
+  {t:'$ brico extract',cls:'t-cmd',pause:350},
   {t:'  ◆ auth        confidence 92%   jwt · passport · bcrypt',cls:'t-blue',pause:120},
   {t:'  ◆ mailer      confidence 81%   smtp · templates',cls:'t-blue',pause:320},
-  {t:'$ lego capture auth -y',cls:'t-cmd',pause:300},
+  {t:'$ brico capture auth -y',cls:'t-cmd',pause:300},
   {t:'  ✔ scanned 6 files · 3 deps · 2 env vars',cls:'t-green',pause:120},
   {t:'  ✔ published auth@0.1.0 to the Vault',cls:'t-green',pause:380},
-  {t:'$ lego add auth -y',cls:'t-cmd',pause:300},
+  {t:'$ brico add auth -y',cls:'t-cmd',pause:300},
   {t:'  ✔ resolved auth@0.1.0 · copied files · wired .env.example',cls:'t-green',pause:120},
   {t:'  → add AuthModule to the AppModule imports array',cls:'t-yellow',pause:380},
-  {t:'$ lego doctor',cls:'t-cmd',pause:300},
-  {t:'  ✔ engine ✔ adapters ✔ vault ✔ project — all bricks snapped',cls:'t-green',pause:1600},
+  {t:'$ brico doctor',cls:'t-cmd',pause:300},
+  {t:'  ✔ engine ✔ adapters ✔ vault ✔ project — every piece in place',cls:'t-green',pause:1600},
 ];
 const term=document.getElementById('termBody');
 let li=0,ci=0,line=null,caret=document.createElement('span');caret.className='caret';
@@ -1176,7 +1154,7 @@ addEventListener('mousemove',e=>{
 },{passive:true});
 
 /* ============ brick confetti on CTA ============ */
-const COLORS=['#D6001C','#FFC500','#0064D0','#00AF4D','#FF7A00'];
+const COLORS=['#C1552B','#D9A13B','#41617D','#7C8A4D','#8A5A83'];
 function confetti(x,y){
   for(let i=0;i<26;i++){
     const c=document.createElement('div');
