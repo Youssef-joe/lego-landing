@@ -3,990 +3,1208 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bricolage — Compose software from reusable pieces</title>
-<meta name="description" content="Bricolage captures reusable modules from your projects into a versioned Vault, then snaps them into future applications. Build it once. Reuse it forever.">
+<title>Bricolage — The Engineering Knowledge Operating System</title>
+<meta name="description" content="Bricolage captures your organisation's best engineering work as versioned pieces, then serves it to your team through a CLI and to your AI assistants through MCP. Reuse beats regeneration.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,900;1,9..144,500&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-/* ============================================================
-   Bricolage — Landing page
-   Atelier & mosaic design system
-   ============================================================ */
+/* =========================================================
+   BRICOLAGE — light atelier bento
+   bone page · terracotta accent · mosaic tesserae
+   ========================================================= */
 :root{
-  --red:#C1552B;      --red-d:#98401F;
-  --yellow:#D9A13B;   --yellow-d:#B5822A;
-  --blue:#41617D;     --blue-d:#2F4A61;
-  --green:#7C8A4D;    --green-d:#61703A;
-  --orange:#8A5A83;   --orange-d:#6E4568;
-  --ink:#2E2A24;
-  --ink-soft:#6E645A;
-  --paper:#FAF6ED;
-  --paper-2:#F2E9D8;
-  --white:#FFFFFF;
-  --shadow:rgba(46,42,36,.13);
-  --radius:18px;
-  --font:'Nunito',system-ui,-apple-system,sans-serif;
-  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;
+  --bone:#F7F4EE;
+  --bone-2:#F1ECE3;
+  --card:#FFFFFF;
+  --ink:#1A1714;
+  --ink-2:#5C544B;
+  --ink-3:#726B61;
+  --line:#E4DDD1;
+  --line-2:#D3C9B9;
+
+  --terra:#C2542B;
+  --terra-d:#9C4020;
+  --terra-soft:#F6E7DF;
+  --ochre:#B8873A;
+  --ochre-soft:#F7EEDC;
+  --sage:#5E7A5A;
+  --sage-soft:#E6EDE3;
+  --slate:#4A6072;
+  --slate-soft:#E4EAEF;
+  --plum:#7D5670;
+  --plum-soft:#EEE5EC;
+  --dark:#16181D;
+
+  --sans:'Instrument Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Instrument Serif',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --r:28px;
+  --r-sm:18px;
+  --sh:0 1px 2px rgba(26,23,20,.04), 0 8px 24px -12px rgba(26,23,20,.10);
+  --sh-h:0 2px 4px rgba(26,23,20,.05), 0 22px 48px -20px rgba(26,23,20,.20);
+  --ease:cubic-bezier(.16,1,.3,1);
+  --spring:cubic-bezier(.34,1.32,.5,1);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-  font-family:var(--font);
-  background:var(--paper);
-  color:var(--ink);
-  overflow-x:hidden;
-  line-height:1.6;
+  background:var(--bone);color:var(--ink);font-family:var(--sans);
+  line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;
 }
-::selection{background:var(--yellow);color:var(--ink)}
-h1,h2,h3,h4{line-height:1.15;font-weight:900;letter-spacing:-.02em}
-h1,h2{font-family:'Fraunces',Georgia,serif;letter-spacing:-.01em}
-.defn{
-  font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:500;
-  color:var(--ink-soft);font-size:1.02rem;margin-top:14px;
-}
-.defn b{font-style:normal;color:var(--ink)}
-.defn .ipa{font-family:var(--font);font-style:normal;font-size:.85em;opacity:.75}
+::selection{background:var(--terra);color:#fff}
 a{color:inherit;text-decoration:none}
 code,pre,kbd{font-family:var(--mono)}
-.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-weight:700;line-height:1.06;letter-spacing:-.035em}
+h4{font-weight:600;letter-spacing:-.015em}
+.wrap{max-width:1240px;margin:0 auto;padding:0 32px}
 section{position:relative}
+.it{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.01em}
 
-/* ---------- generic stud ---------- */
-.stud{
-  width:13px;height:13px;border-radius:3px;transform:rotate(45deg);
-  background:linear-gradient(135deg, rgba(255,255,255,.4), rgba(255,255,255,0) 55%), var(--c,var(--red));
-  box-shadow:inset 0 0 0 2px rgba(255,255,255,.28), 0 1px 2px rgba(0,0,0,.18);
-  flex:none;
-}
+/* ---------- tesserae ---------- */
+.tess{width:10px;height:10px;border-radius:2px;transform:rotate(45deg);flex:none;
+  background:var(--c,var(--terra))}
+.tess-row{display:flex;gap:8px;align-items:center}
+.mosaic{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;width:44px}
+.mosaic i{aspect-ratio:1;border-radius:3px;background:var(--line-2)}
 
-/* ---------- floating background bricks ---------- */
-.bg-bricks{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.fbrick{
-  position:absolute;border-radius:10px;opacity:.16;
-  animation:floaty var(--dur,10s) ease-in-out infinite alternate;
-  will-change:transform;
-}
-@keyframes floaty{
-  from{transform:translateY(-18px) rotate(var(--rot,-6deg))}
-  to{transform:translateY(22px) rotate(calc(var(--rot,-6deg) * -1))}
-}
-
-/* ---------- reveal on scroll ---------- */
-.reveal{opacity:0;transform:translateY(36px);transition:opacity .7s ease,transform .7s cubic-bezier(.22,1.2,.36,1)}
-.reveal.on{opacity:1;transform:none}
-.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}
-.reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}
-.reveal.d5{transition-delay:.40s}.reveal.d6{transition-delay:.48s}
+/* ---------- reveal ---------- */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .85s var(--ease),transform .85s var(--ease)}
+.rv.on{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+.d4{transition-delay:.32s}.d5{transition-delay:.4s}
+.split .ch{display:inline-block;opacity:0;transform:translateY(22px);
+  transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.split.on .ch{opacity:1;transform:none}
 
 /* ---------- nav ---------- */
-nav{
-  position:sticky;top:0;z-index:50;
-  background:rgba(250,246,237,.85);backdrop-filter:blur(12px);
-  border-bottom:3px solid transparent;transition:border-color .3s, box-shadow .3s;
-}
-nav.scrolled{border-bottom-color:var(--ink);box-shadow:0 6px 0 var(--shadow)}
-.nav-inner{display:flex;align-items:center;gap:28px;height:72px}
-.logo{display:flex;align-items:center;gap:12px;font-weight:900;font-size:1.35rem;letter-spacing:.02em}
-.logo-brick{
-  position:relative;width:32px;height:32px;border-radius:8px;
-  background:conic-gradient(var(--red) 0 25%, var(--yellow) 0 50%, var(--blue) 0 75%, var(--green) 0);
-  box-shadow:inset 0 0 0 3px var(--paper), 0 0 0 2.5px var(--ink);
-  transition:transform .3s cubic-bezier(.34,1.56,.64,1);
-}
-.logo:hover .logo-brick{transform:rotate(-8deg) scale(1.08)}
-.nav-links{display:flex;gap:26px;margin-left:auto;font-weight:800;font-size:.95rem}
-.nav-links a{position:relative;padding:4px 0;color:var(--ink-soft);transition:color .2s}
+nav{position:sticky;top:0;z-index:60;background:rgba(247,244,238,.82);
+  backdrop-filter:blur(18px) saturate(1.3);transition:box-shadow .4s,background .4s}
+nav.on{box-shadow:0 1px 0 var(--line);background:rgba(247,244,238,.95)}
+.nav-in{display:flex;align-items:center;gap:34px;height:80px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:1.16rem;letter-spacing:-.03em}
+.mark{width:30px;height:30px;border-radius:9px;flex:none;display:grid;
+  grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:2.5px;
+  transition:transform .6s var(--spring)}
+.mark i{border-radius:2.5px}
+.mark i:nth-child(1){background:var(--terra)}
+.mark i:nth-child(2){background:var(--ochre)}
+.mark i:nth-child(3){background:var(--sage)}
+.mark i:nth-child(4){background:var(--slate)}
+.brand:hover .mark{transform:rotate(90deg)}
+.nav-links{display:flex;gap:28px;margin-left:auto;font-size:.9rem;font-weight:500}
+.nav-links a{color:var(--ink-2);transition:color .25s}
 .nav-links a:hover{color:var(--ink)}
-.nav-links a::after{
-  content:"";position:absolute;left:0;bottom:-2px;height:4px;width:0;border-radius:4px;
-  background:var(--yellow);transition:width .25s cubic-bezier(.34,1.56,.64,1);
-}
-.nav-links a:hover::after{width:100%}
-.btn{
-  display:inline-flex;align-items:center;gap:10px;
-  font-family:var(--font);font-weight:900;font-size:1rem;color:var(--white);
-  background:var(--red);border:3px solid var(--ink);border-radius:14px;
-  padding:12px 26px;cursor:pointer;position:relative;
-  box-shadow:0 6px 0 var(--ink);
-  transition:transform .15s, box-shadow .15s;
-}
-.btn:hover{transform:translateY(-3px);box-shadow:0 9px 0 var(--ink)}
-.btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--ink)}
-.btn.yellow{background:var(--yellow);color:var(--ink)}
-.btn.blue{background:var(--blue)}
-.btn.ghost{background:var(--white);color:var(--ink)}
-.btn.small{padding:8px 18px;font-size:.9rem;border-radius:11px;box-shadow:0 4px 0 var(--ink)}
-.btn.small:hover{box-shadow:0 6px 0 var(--ink)}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--sans);
+  font-weight:600;font-size:.96rem;padding:14px 28px;border-radius:999px;border:none;
+  background:var(--ink);color:var(--bone);cursor:pointer;letter-spacing:-.01em;
+  transition:transform .35s var(--spring),background .3s,box-shadow .35s;
+  box-shadow:0 6px 18px -10px rgba(26,23,20,.5)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 28px -12px rgba(26,23,20,.55)}
+.btn.terra{background:var(--terra);box-shadow:0 6px 18px -10px rgba(194,84,43,.6)}
+.btn.terra:hover{background:var(--terra-d)}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:none;border:1.5px solid var(--line-2)}
+.btn.ghost:hover{border-color:var(--ink);background:transparent}
+.btn.sm{padding:10px 20px;font-size:.87rem}
+
+/* ---------- chips ---------- */
+.chip{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);
+  font-size:.72rem;letter-spacing:.02em;background:var(--card);border:1px solid var(--line);
+  border-radius:999px;padding:7px 14px;box-shadow:var(--sh);color:var(--ink-2)}
+.chip b{color:var(--ink);font-weight:500}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);
+  font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
+  background:var(--card);border:1px solid var(--line);border-radius:999px;
+  padding:8px 16px;margin-bottom:30px;box-shadow:var(--sh)}
+.eyebrow .live{width:6px;height:6px;border-radius:50%;background:var(--sage);
+  animation:live 2.2s infinite}
+@keyframes live{0%,100%{box-shadow:0 0 0 0 rgba(94,122,90,.5)}55%{box-shadow:0 0 0 7px rgba(94,122,90,0)}}
 
 /* ---------- hero ---------- */
-.hero{padding:84px 0 40px;position:relative;z-index:1}
-.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
-.badge{
-  display:inline-flex;align-items:center;gap:10px;font-weight:800;font-size:.85rem;
-  background:var(--paper-2);border:2.5px solid var(--ink);border-radius:999px;
-  padding:7px 16px;box-shadow:0 4px 0 var(--shadow);margin-bottom:26px;
-}
-.badge .dot{width:10px;height:10px;border-radius:50%;background:var(--green);animation:pulse 1.8s infinite}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(124,138,77,.5)}55%{box-shadow:0 0 0 8px rgba(124,138,77,0)}}
-.hero h1{font-size:clamp(2.6rem,5.2vw,4.1rem);margin-bottom:8px}
-.hero h1 .brickword{display:inline-flex;gap:6px;transform:translateY(6px)}
-.tile{
-  display:inline-grid;place-items:center;position:relative;
-  width:.94em;height:.94em;border-radius:.14em;color:#fff;font-size:.92em;
-  box-shadow:inset 0 0 0 .06em rgba(255,255,255,.3), 0 .07em 0 rgba(46,42,36,.6);
-  animation:tiledrop .7s cubic-bezier(.34,1.56,.64,1) backwards;
-}
-.tile:nth-child(1){--c:var(--red);background:var(--red);animation-delay:.05s}
-.tile:nth-child(2){--c:var(--yellow);background:var(--yellow);color:var(--ink);animation-delay:.18s}
-.tile:nth-child(3){--c:var(--blue);background:var(--blue);animation-delay:.31s}
-.tile:nth-child(4){--c:var(--green);background:var(--green);animation-delay:.44s}
-@keyframes tiledrop{
-  from{transform:translateY(-90px) rotate(-14deg);opacity:0}
-  60%{opacity:1}
-  to{transform:none;opacity:1}
-}
-.hero .sub{
-  font-size:1.22rem;color:var(--ink-soft);font-weight:700;max-width:34rem;margin:18px 0 30px;
-}
-.hero .sub strong{color:var(--ink)}
-.cta-row{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
-.install-pill{
-  display:flex;align-items:center;gap:12px;margin-top:26px;
-  font-family:var(--mono);font-size:.92rem;font-weight:600;
-  background:var(--ink);color:#F0E8D8;border-radius:14px;padding:13px 18px;
-  width:fit-content;box-shadow:0 6px 0 var(--shadow);
-}
-.install-pill .dollar{color:var(--yellow)}
-.install-pill button{
-  background:none;border:none;cursor:pointer;color:#B5A68C;font-size:1rem;
-  transition:color .2s, transform .2s;
-}
-.install-pill button:hover{color:#fff;transform:scale(1.15)}
+.hero{padding:56px 0 26px}
+h1.hh{font-size:clamp(3rem,6.6vw,5.5rem);max-width:17ch}
+h1.hh .it{color:var(--terra)}
+.hero-sub{font-size:1.16rem;color:var(--ink-2);max-width:36rem;margin:26px 0 16px}
+.hero-sub b{color:var(--ink);font-weight:600}
+.defn{font-family:var(--mono);font-size:.8rem;color:var(--ink-3);margin-bottom:32px;letter-spacing:-.01em}
+.defn b{color:var(--ink-2);font-weight:500}
+.cta-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.hero-chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:34px}
 
-/* hero terminal */
-.hero-visual{position:relative}
-.terminal{
-  position:relative;z-index:2;
-  background:#2B241C;border:3px solid var(--ink);border-radius:var(--radius);
-  box-shadow:14px 14px 0 var(--shadow);overflow:hidden;
-  transform:rotate(1.2deg);
-  transition:transform .4s cubic-bezier(.34,1.56,.64,1);
-}
-.terminal:hover{transform:rotate(0) scale(1.01)}
-.term-bar{
-  display:flex;align-items:center;gap:8px;padding:12px 16px;
-  background:#211B15;border-bottom:2px solid rgba(255,255,255,.07);
-}
-.term-bar .light{width:13px;height:13px;border-radius:50%}
-.term-bar .title{margin-left:10px;font-family:var(--mono);font-size:.78rem;color:#A6987F}
-.term-body{
-  padding:20px 22px 24px;font-family:var(--mono);font-size:.86rem;line-height:1.75;
-  color:#EFE6D5;min-height:320px;
-}
-.term-body .ln{white-space:pre-wrap;word-break:break-word}
-.t-cmd{color:#E8C468;font-weight:600}
-.t-dim{color:#A6987F}
-.t-green{color:#B3C878}
-.t-blue{color:#9CBBD4}
-.t-red{color:#DE8A63}
-.t-yellow{color:#E3B04B}
-.caret{
-  display:inline-block;width:9px;height:1.1em;vertical-align:text-bottom;
-  background:var(--yellow);animation:blink 1s steps(1) infinite;
-}
+/* ---------- bento ---------- */
+.bento{display:grid;gap:20px;margin-top:52px}
+.bento.hero-bento{grid-template-columns:1.35fr 1fr 1fr;grid-auto-rows:minmax(0,auto)}
+.tile{background:var(--card);border-radius:var(--r);padding:30px;box-shadow:var(--sh);
+  position:relative;overflow:hidden;
+  transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.tile:hover{transform:translateY(-4px);box-shadow:var(--sh-h)}
+.tile.dark{background:var(--dark);color:#F2EFEA}
+.tile.dark h3,.tile.dark h4{color:#fff}
+.tile.dark p{color:#A9A49C}
+.tile.terra{background:var(--terra-soft)}
+.tile.ochre{background:var(--ochre-soft)}
+.tile.sage{background:var(--sage-soft)}
+.tile.slate{background:var(--slate-soft)}
+.tile.plum{background:var(--plum-soft)}
+.tile .tl{font-family:var(--mono);font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:14px;display:block}
+.tile.dark .tl{color:#7E7871}
+.tile h3{font-size:1.32rem;margin-bottom:10px}
+.tile h4{font-size:1.02rem;margin-bottom:8px}
+.tile p{color:var(--ink-2);font-size:.94rem}
+.tile .big{font-size:3.3rem;font-weight:700;letter-spacing:-.05em;line-height:1}
+.tile .big small{font-size:.3em;font-weight:600;letter-spacing:-.01em}
+.span2{grid-column:span 2}
+.tile .icn{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;
+  background:var(--bone);margin-bottom:20px;font-size:1.1rem;
+  transition:transform .5s var(--spring)}
+.tile:hover .icn{transform:rotate(-8deg) scale(1.08)}
+.tile.dark .icn{background:#22252B}
+
+/* terminal tile */
+.term{font-family:var(--mono);font-size:.78rem;line-height:1.85;color:#C9C4BC;min-height:190px}
+.term .ln{white-space:pre-wrap;word-break:break-word}
+.t-cmd{color:#E8B14C}.t-ok{color:#7FBE86}.t-dim{color:#7E7871}.t-acc{color:#E0805A}
+.caret{display:inline-block;width:7px;height:1.05em;vertical-align:text-bottom;
+  background:#E8B14C;animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
-/* bricks stacked behind terminal */
-.hero-stack{position:absolute;z-index:1;inset:0;pointer-events:none}
-.hbrick{
-  position:absolute;border-radius:10px;border:3px solid var(--ink);
-  animation:hdrop .8s cubic-bezier(.34,1.56,.64,1) backwards;
-}
-@keyframes hdrop{from{transform:translateY(-140px);opacity:0}to{transform:none;opacity:1}}
 
-/* ---------- marquee ---------- */
-.marquee{
-  background:var(--yellow);border-top:3px solid var(--ink);border-bottom:3px solid var(--ink);
-  overflow:hidden;padding:14px 0;margin-top:72px;position:relative;z-index:2;
-}
-.marquee-track{
-  display:flex;gap:48px;width:max-content;
-  animation:scrollx 26s linear infinite;
-  font-weight:900;font-size:1.05rem;letter-spacing:.04em;white-space:nowrap;
-}
-.marquee-track span{display:flex;align-items:center;gap:48px}
-.marquee:hover .marquee-track{animation-play-state:paused}
+/* mosaic canvas tile */
+#pieceCanvas{width:100%;height:100%;display:block}
+
+/* ---------- ticker ---------- */
+.ticker{overflow:hidden;padding:22px 0;margin-top:64px;border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);position:relative}
+.ticker::before,.ticker::after{content:"";position:absolute;top:0;bottom:0;width:120px;z-index:2}
+.ticker::before{left:0;background:linear-gradient(90deg,var(--bone),transparent)}
+.ticker::after{right:0;background:linear-gradient(270deg,var(--bone),transparent)}
+.tick-track{display:flex;gap:44px;width:max-content;animation:scrollx 36s linear infinite;
+  font-family:var(--mono);font-size:.8rem;color:var(--ink-3);white-space:nowrap;align-items:center}
+.tick-track b{color:var(--ink);font-weight:500}
+.tick-track i{color:var(--terra);font-style:normal}
+.ticker:hover .tick-track{animation-play-state:paused}
 @keyframes scrollx{to{transform:translateX(-50%)}}
 
-/* ---------- stats ---------- */
-.stats{padding:76px 0 10px;z-index:1}
-.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
-.stat{
-  background:var(--white);border:3px solid var(--ink);border-radius:var(--radius);
-  padding:26px 20px 22px;text-align:center;box-shadow:0 8px 0 var(--shadow);position:relative;
-  transition:transform .25s cubic-bezier(.34,1.56,.64,1);
-}
-.stat:hover{transform:translateY(-6px) rotate(-1deg)}
-.stat .studs{position:absolute;top:-10px;left:50%;transform:translateX(-50%);display:flex;gap:9px}
-.stat .num{font-size:2.6rem;font-weight:900;letter-spacing:-.03em}
-.stat .lbl{font-weight:800;color:var(--ink-soft);font-size:.92rem}
+/* ---------- sections ---------- */
+.sec{padding:110px 0}
+.sec-head{max-width:54rem;margin-bottom:56px}
+.sec-head.mid{margin-left:auto;margin-right:auto;text-align:center}
+.kick{display:inline-flex;align-items:center;gap:11px;font-family:var(--mono);font-size:.68rem;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--terra-d);margin-bottom:20px}
+.kick .num{background:var(--terra-soft);border-radius:6px;padding:3px 8px;color:var(--terra-d)}
+.sec-head h2{font-size:clamp(2.1rem,4.1vw,3.1rem)}
+.sec-head h2 .it{color:var(--terra)}
+.sec-head p{color:var(--ink-2);font-size:1.06rem;margin-top:20px;max-width:44rem}
+.sec-head p b{color:var(--ink);font-weight:600}
+.sec-head.mid p{margin-left:auto;margin-right:auto}
 
-/* ---------- section headers ---------- */
-.sec-head{text-align:center;max-width:46rem;margin:0 auto 60px}
-.kicker{
-  display:inline-flex;align-items:center;gap:8px;font-weight:900;font-size:.8rem;
-  text-transform:uppercase;letter-spacing:.14em;color:var(--white);
-  padding:6px 16px;border-radius:999px;border:2.5px solid var(--ink);
-  box-shadow:0 4px 0 var(--shadow);margin-bottom:20px;
-}
-.sec-head h2{font-size:clamp(1.9rem,3.6vw,2.7rem);margin-bottom:14px}
-.sec-head p{color:var(--ink-soft);font-weight:700;font-size:1.08rem}
-
-/* ---------- feature cards ---------- */
-.features{padding:90px 0}
-.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
-.card{
-  position:relative;background:var(--white);border:3px solid var(--ink);
-  border-radius:var(--radius);padding:30px 26px 26px;
-  box-shadow:0 9px 0 var(--shadow);
-  transition:transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .3s;
-}
-.card:hover{transform:translateY(-8px) rotate(-.7deg);box-shadow:0 15px 0 var(--shadow)}
-.card .card-studs{position:absolute;top:-9px;left:24px;display:flex;gap:10px}
-.card .cmd{
-  display:inline-block;font-family:var(--mono);font-weight:700;font-size:.8rem;
-  background:var(--paper-2);border:2px solid var(--ink);border-radius:8px;
-  padding:3px 10px;margin-bottom:16px;box-shadow:0 3px 0 var(--shadow);
-}
-.card h3{font-size:1.3rem;margin-bottom:10px}
-.card p{color:var(--ink-soft);font-weight:600;font-size:.97rem}
-.card .icon{
-  width:56px;height:56px;border-radius:14px;border:3px solid var(--ink);
-  display:grid;place-items:center;font-size:1.5rem;margin-bottom:18px;
-  box-shadow:0 5px 0 var(--shadow);
-  transition:transform .3s cubic-bezier(.34,1.56,.64,1);
-}
-.card:hover .icon{transform:rotate(-8deg) scale(1.1)}
-
-/* ---------- pipeline ---------- */
-.pipeline{padding:90px 0;background:var(--paper-2);border-top:3px solid var(--ink);border-bottom:3px solid var(--ink)}
-.pipe-row{display:flex;align-items:stretch;gap:0;justify-content:center;flex-wrap:wrap}
-.pipe-step{
-  position:relative;flex:1;min-width:150px;max-width:200px;
-  background:var(--white);border:3px solid var(--ink);border-radius:16px;
-  padding:24px 16px 20px;text-align:center;box-shadow:0 7px 0 var(--shadow);
-  transition:transform .35s cubic-bezier(.34,1.56,.64,1), background .35s, box-shadow .35s;
-}
-.pipe-step .studs{position:absolute;top:-9px;left:50%;transform:translateX(-50%);display:flex;gap:8px}
-.pipe-step .n{
-  width:34px;height:34px;margin:0 auto 12px;border-radius:50%;
-  display:grid;place-items:center;font-weight:900;color:#fff;
-  border:3px solid var(--ink);background:var(--ink-soft);
-  transition:background .35s, transform .35s;
-}
-.pipe-step h4{font-family:var(--mono);font-size:.95rem;letter-spacing:-.02em}
-.pipe-step p{font-size:.8rem;font-weight:700;color:var(--ink-soft);margin-top:6px}
-.pipe-step.active{transform:translateY(-10px) scale(1.04);box-shadow:0 13px 0 var(--shadow)}
-.pipe-step.active .n{transform:scale(1.15)}
-.pipe-step.active:nth-child(1) .n{background:var(--red)}
-.pipe-step.active:nth-child(3) .n{background:var(--yellow);color:var(--ink)}
-.pipe-step.active:nth-child(5) .n{background:var(--blue)}
-.pipe-step.active:nth-child(7) .n{background:var(--green)}
-.pipe-step.active:nth-child(9) .n{background:var(--orange)}
-.pipe-link{
-  align-self:center;width:52px;height:6px;position:relative;flex:none;
-  background:repeating-linear-gradient(90deg,var(--ink) 0 8px,transparent 8px 15px);
-  animation:dashmove 1s linear infinite;background-size:15px 6px;
-}
-@keyframes dashmove{to{background-position:15px 0}}
-
-/* ---------- cockpit / TUI ---------- */
-.cockpit{padding:96px 0}
-.tui{
-  background:#211B15;border:3px solid var(--ink);border-radius:var(--radius);
-  box-shadow:16px 16px 0 var(--shadow);overflow:hidden;
-  font-family:var(--mono);font-size:.85rem;color:#EFE6D5;
-}
-.tui-banner{display:flex;gap:6px;padding:20px 22px 6px;align-items:flex-end;flex-wrap:wrap}
-.tui-tile{
-  width:34px;height:34px;border-radius:6px;display:grid;place-items:center;
-  font-weight:700;color:#fff;position:relative;
-  box-shadow:inset 0 0 0 3px rgba(255,255,255,.16);
-  animation:tiledrop .7s cubic-bezier(.34,1.56,.64,1) backwards;
-}
-.tui-meta{margin-left:14px;color:#A6987F;font-size:.78rem;padding-bottom:4px}
-.tui-cols{display:grid;grid-template-columns:1.1fr 1fr;gap:16px;padding:16px 22px 22px}
-.tui-panel{border:2px solid #4A4033;border-radius:10px;padding:14px 16px;min-height:260px}
-.tui-panel .ph{color:#A6987F;font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
-.tui-brickrow{
-  display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:8px;margin-bottom:6px;
-  transition:background .25s, transform .25s;
-}
-.tui-brickrow:hover{background:#363028;transform:translateX(4px)}
-.tui-brickrow.sel{background:#3D362C;outline:2px solid var(--yellow)}
-.mini-brick{
-  width:30px;height:16px;border-radius:4px;position:relative;flex:none;
-  box-shadow:inset 0 0 0 2px rgba(255,255,255,.22);
-}
-.tui-footer{padding:10px 22px;border-top:2px solid #4A4033;color:#A6987F;font-size:.75rem;display:flex;gap:18px;flex-wrap:wrap}
-.tui-footer b{color:#E3B04B}
-.cockpit-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:52px;align-items:center}
-.checklist{list-style:none;margin-top:22px}
-.checklist li{
-  display:flex;gap:14px;margin-bottom:16px;font-weight:700;color:var(--ink-soft);align-items:flex-start;
-}
-.checklist .tick{
-  flex:none;width:28px;height:28px;border-radius:8px;border:3px solid var(--ink);
-  background:var(--green);color:#fff;display:grid;place-items:center;
-  font-size:.85rem;font-weight:900;box-shadow:0 3px 0 var(--shadow);margin-top:2px;
-}
-.checklist b{color:var(--ink)}
-
-/* ---------- architecture ---------- */
-.arch{padding:96px 0;background:var(--ink);color:#F2EBDD;border-top:3px solid var(--ink)}
-.arch .sec-head h2{color:#fff}
-.arch .sec-head p{color:#C7B9A2}
-.arch-diagram{max-width:760px;margin:0 auto;text-align:center}
-.arch-box{
-  display:inline-block;background:#3D362C;border:3px solid #5C5142;
-  border-radius:14px;padding:16px 34px;font-weight:800;position:relative;
-  box-shadow:0 7px 0 rgba(0,0,0,.3);
-}
-.arch-box small{display:block;font-weight:600;color:#C7B9A2;font-size:.8rem}
-.arch-box.engine{background:var(--red);border-color:#fff2}
-.arch-box.vault{background:var(--green);border-color:#fff2}
-.arch-adapters{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin:0}
-.arch-box.adp{background:var(--blue)}
-.arch-box.adp.ghosted{background:#3D362C;color:#A6987F;border-style:dashed}
-.arch-pipe{
-  width:6px;height:44px;margin:6px auto;border-radius:4px;
-  background:repeating-linear-gradient(180deg,#E3B04B 0 8px,transparent 8px 15px);
-  background-size:6px 15px;animation:dashy 1s linear infinite;
-}
-@keyframes dashy{to{background-position:0 15px}}
-.arch-note{margin-top:34px;color:#C7B9A2;font-weight:700;max-width:36rem;margin-left:auto;margin-right:auto}
-.arch-note code{background:#3D362C;padding:2px 8px;border-radius:6px;color:#E3B04B;font-size:.9em}
-
-/* ---------- docs ---------- */
-.docs{padding:96px 0}
-.tabs{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:36px}
-.tab-btn{
-  font-family:var(--font);font-weight:900;font-size:.95rem;cursor:pointer;
-  background:var(--white);color:var(--ink);border:3px solid var(--ink);border-radius:12px;
-  padding:10px 22px;box-shadow:0 5px 0 var(--shadow);
-  transition:transform .2s, background .2s, box-shadow .2s;
-}
-.tab-btn:hover{transform:translateY(-3px)}
-.tab-btn.active{background:var(--yellow);box-shadow:0 5px 0 var(--ink)}
-.tab-pane{display:none;animation:fadeup .45s cubic-bezier(.22,1.2,.36,1)}
-.tab-pane.active{display:block}
-@keyframes fadeup{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
-.doc-card{
-  background:var(--white);border:3px solid var(--ink);border-radius:var(--radius);
-  box-shadow:0 10px 0 var(--shadow);padding:34px;max-width:880px;margin:0 auto;
-}
-.doc-card h3{font-size:1.35rem;margin-bottom:8px}
-.doc-card .lead{color:var(--ink-soft);font-weight:700;margin-bottom:22px}
-.codeblock{
-  position:relative;background:#2B241C;color:#EFE6D5;border-radius:14px;
-  border:3px solid var(--ink);padding:20px 22px;margin:16px 0;
-  font-family:var(--mono);font-size:.84rem;line-height:1.8;overflow-x:auto;
-}
-.codeblock .copy{
-  position:absolute;top:10px;right:10px;font-family:var(--font);font-weight:800;font-size:.72rem;
-  background:var(--yellow);color:var(--ink);border:2px solid var(--ink);border-radius:8px;
-  padding:4px 10px;cursor:pointer;box-shadow:0 3px 0 var(--ink);transition:transform .15s;
-}
-.codeblock .copy:hover{transform:translateY(-2px)}
-.codeblock .c{color:#A6987F}
-.codeblock .y{color:#E8C468}
-.codeblock .g{color:#B3C878}
-.codeblock .b{color:#9CBBD4}
-.cmd-table{width:100%;border-collapse:separate;border-spacing:0;margin-top:10px;font-size:.93rem}
-.cmd-table th{
-  text-align:left;font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;
-  color:var(--ink-soft);padding:10px 14px;border-bottom:3px solid var(--ink);
-}
-.cmd-table td{padding:12px 14px;border-bottom:2px solid #E5DCC8;font-weight:600;color:var(--ink-soft)}
-.cmd-table tr:last-child td{border-bottom:none}
-.cmd-table tr{transition:background .2s}
-.cmd-table tbody tr:hover{background:var(--paper-2)}
-.cmd-table code{
-  background:var(--paper-2);border:2px solid var(--ink);border-radius:7px;
-  padding:2px 9px;font-size:.8rem;font-weight:700;color:var(--ink);white-space:nowrap;
-}
-.pill{
-  display:inline-block;font-size:.7rem;font-weight:900;padding:3px 10px;border-radius:999px;
-  border:2px solid var(--ink);text-transform:uppercase;letter-spacing:.06em;
-}
-.pill.ok{background:var(--green);color:#fff}
-.pill.soon{background:var(--yellow);color:var(--ink)}
-.pill.prev{background:var(--blue);color:#fff}
-
-/* ---------- roadmap ---------- */
-.roadmap{padding:96px 0;background:var(--paper-2);border-top:3px solid var(--ink)}
-.phases{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:10px}
-.phase{
-  background:var(--white);border:3px solid var(--ink);border-radius:var(--radius);
-  padding:26px 22px;box-shadow:0 8px 0 var(--shadow);position:relative;
-  transition:transform .3s cubic-bezier(.34,1.56,.64,1);
-}
-.phase:hover{transform:translateY(-7px)}
-.phase .studs{position:absolute;top:-9px;left:22px;display:flex;gap:9px}
-.phase h4{font-size:1.1rem;margin:4px 0 4px}
-.phase .ptag{font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft)}
-.phase ul{list-style:none;margin-top:14px}
-.phase li{
-  font-size:.87rem;font-weight:700;color:var(--ink-soft);
-  padding:5px 0 5px 26px;position:relative;
-}
-.phase li::before{
-  content:"";position:absolute;left:0;top:9px;width:14px;height:14px;border-radius:4px;
-  border:2.5px solid var(--ink);background:var(--white);
-}
-.phase li.done::before{background:var(--green)}
-.phase li.done{color:var(--ink)}
-.phase li.wip::before{background:var(--yellow)}
-.progressbar{height:12px;border:2.5px solid var(--ink);border-radius:99px;background:#fff;overflow:hidden;margin-top:16px}
-.progressbar i{display:block;height:100%;width:0;background:var(--green);border-radius:99px;transition:width 1.2s cubic-bezier(.22,1,.36,1)}
-
-/* ---------- CTA ---------- */
-.cta{padding:110px 0;text-align:center;position:relative;overflow:hidden}
-.cta h2{font-size:clamp(2rem,4.4vw,3.2rem);max-width:40rem;margin:0 auto 16px}
-.cta p{color:var(--ink-soft);font-weight:700;font-size:1.15rem;margin-bottom:36px}
-
-/* ---------- footer ---------- */
-footer{background:var(--ink);color:#C7B9A2;padding:0 0 40px;position:relative}
-.foot-studs{
-  display:flex;justify-content:center;gap:26px;transform:translateY(-14px);
-}
-.foot-studs .stud{width:28px;height:28px}
-.foot-inner{display:flex;justify-content:space-between;gap:30px;padding-top:30px;flex-wrap:wrap;font-weight:700}
-.foot-inner a:hover{color:#fff}
-.foot-brand{color:#fff;font-weight:900;font-size:1.2rem;display:flex;align-items:center;gap:10px}
-
-/* ---------- confetti ---------- */
-.confetti{position:fixed;width:12px;height:12px;border-radius:3px;pointer-events:none;z-index:999}
-
-/* ---------- responsive ---------- */
-@media(max-width:960px){
-  .hero-grid,.cockpit-grid{grid-template-columns:1fr}
-  .feat-grid{grid-template-columns:repeat(2,1fr)}
-  .stat-grid,.phases{grid-template-columns:repeat(2,1fr)}
+@media(max-width:1080px){
+  .bento.hero-bento{grid-template-columns:1fr 1fr}
   .nav-links{display:none}
-  .pipe-link{display:none}
-  .pipe-row{gap:18px}
 }
-@media(max-width:600px){
-  .feat-grid,.stat-grid,.phases{grid-template-columns:1fr}
-  .hero{padding-top:48px}
+@media(max-width:720px){
+  .bento.hero-bento{grid-template-columns:1fr}
+  .span2{grid-column:span 1}
+  .wrap{padding:0 22px}
 }
 @media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.001s !important;transition-duration:.001s !important}
+  *,*::before,*::after{animation-duration:.001s!important;transition-duration:.001s!important}
   html{scroll-behavior:auto}
+}
+/* ---------- generic bento grids ---------- */
+.b3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.b2{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.b21{display:grid;grid-template-columns:1.5fr 1fr;gap:20px}
+
+/* ---------- versus ---------- */
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px}
+.vs-card{border-radius:var(--r);padding:32px;position:relative;overflow:hidden}
+.vs-card.a{background:var(--card);box-shadow:var(--sh)}
+.vs-card.b{background:var(--dark);color:#F2EFEA}
+.vs-card .lab{font-family:var(--mono);font-size:.68rem;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-3);margin-bottom:14px;display:block}
+.vs-card.b .lab{color:#7E7871}
+.vs-card h3{font-size:2rem;margin-bottom:20px;letter-spacing:-.045em}
+.vs-card.a h3{color:var(--ink-3)}
+.vs-card.b h3{color:#fff}
+.vs-card ul{list-style:none;display:grid;gap:11px}
+.vs-card li{font-size:.93rem;padding-left:22px;position:relative;color:var(--ink-2)}
+.vs-card.b li{color:#A9A49C}
+.vs-card li::before{content:"";position:absolute;left:0;top:.52em;width:7px;height:7px;
+  border-radius:2px;transform:rotate(45deg);background:var(--line-2)}
+.vs-card.b li::before{background:var(--terra)}
+
+/* ---------- vision list ---------- */
+.vlist{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
+.vrow{display:grid;grid-template-columns:58px 1fr;gap:20px;padding:26px 32px;
+  border-bottom:1px solid var(--line);transition:background .4s,padding-left .4s var(--ease)}
+.vrow:last-child{border-bottom:none}
+.vrow:hover{background:var(--bone-2);padding-left:40px}
+.vrow .vn{font-family:var(--mono);font-size:.78rem;color:var(--terra);padding-top:4px}
+.vrow b{display:block;font-size:1.05rem;font-weight:600;margin-bottom:4px;letter-spacing:-.015em}
+.vrow span{color:var(--ink-2);font-size:.95rem}
+
+/* ---------- ladder ---------- */
+.ladder{display:grid;grid-template-columns:.85fr 1.15fr;gap:20px;align-items:start}
+.rungs{display:grid;gap:12px}
+.rung{background:var(--card);border-radius:var(--r-sm);padding:20px 24px;cursor:pointer;
+  box-shadow:var(--sh);position:relative;overflow:hidden;
+  transition:transform .5s var(--ease),box-shadow .5s,background .5s}
+.rung .bar{position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--terra);
+  transform:scaleY(0);transform-origin:top;transition:transform .55s var(--ease)}
+.rung.on{transform:translateX(10px);box-shadow:var(--sh-h);background:var(--terra-soft)}
+.rung.on .bar{transform:scaleY(1)}
+.rung-top{display:flex;align-items:baseline;gap:12px}
+.rung-name{font-size:1.16rem;font-weight:600;letter-spacing:-.025em}
+.rung.on .rung-name{color:var(--terra-d)}
+.rung-cost{font-family:var(--mono);font-size:.74rem;color:var(--ink-3);margin-left:auto}
+.rung.on .rung-cost{color:var(--terra)}
+.rung-for{font-size:.87rem;color:var(--ink-3);margin-top:5px}
+.rung.on .rung-for{color:var(--terra-d);opacity:.85}
+
+.rdetail{background:var(--dark);border-radius:var(--r);padding:30px;min-height:376px;color:#F2EFEA}
+.rdetail > .tl{font-family:var(--mono);font-size:.68rem;letter-spacing:.13em;
+  text-transform:uppercase;color:#7E7871;margin-bottom:16px;display:block}
+.rd{display:none}
+.rd.on{display:block;animation:fu .55s var(--ease)}
+@keyframes fu{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.rd pre{font-family:var(--mono);font-size:.76rem;line-height:1.8;color:#C9C4BC;
+  background:#0F1115;border-radius:14px;padding:18px;overflow-x:auto;margin-bottom:16px;white-space:pre}
+.rd .kk{color:#88A9C4}.rd .vv{color:#7FBE86}.rd .cc{color:#6E6862}.rd .oo{color:#E8B14C}
+.rd p{font-size:.92rem;color:#A9A49C}
+.rd p b{color:#fff}
+.rmeter{display:flex;align-items:center;gap:13px;margin-top:18px;font-family:var(--mono);
+  font-size:.7rem;color:#7E7871}
+.rmeter .tr{flex:1;height:7px;border-radius:99px;background:#22252B;overflow:hidden}
+.rmeter .tr i{display:block;height:100%;background:var(--terra);border-radius:99px;
+  transition:width 1s var(--ease)}
+
+/* ---------- econ bars ---------- */
+.econ{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:38px;margin-top:20px}
+.econ h3{font-size:1.5rem;margin-bottom:10px}
+.econ .q{color:var(--ink-2);font-size:.98rem;margin-bottom:30px;max-width:52rem}
+.bars{display:grid;gap:24px}
+.barrow{display:grid;grid-template-columns:200px 1fr 130px;gap:20px;align-items:center}
+.barrow .lbl{font-size:.9rem;font-weight:600;letter-spacing:-.015em}
+.barrow .lbl small{display:block;color:var(--ink-3);font-weight:400;font-size:.76rem;
+  font-family:var(--mono);margin-top:2px}
+.track{height:30px;border-radius:10px;background:var(--bone-2);overflow:hidden;position:relative}
+.track i{display:block;height:100%;width:0;border-radius:9px;transition:width 1.8s var(--ease)}
+.track i.good{background:var(--sage)}
+.track i.bad{background:var(--terra)}
+.barrow .val{font-family:var(--mono);font-size:1.06rem;text-align:right;font-weight:500}
+.barrow .val.good{color:var(--sage)}.barrow .val.bad{color:var(--terra)}
+.econ-foot{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:32px;
+  padding-top:28px;border-top:1px solid var(--line)}
+.econ-foot b{display:block;font-size:1.7rem;font-weight:700;letter-spacing:-.04em;margin-bottom:4px}
+.econ-foot div{font-size:.87rem;color:var(--ink-2)}
+
+/* ---------- MCP ---------- */
+.tools{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
+.tool{padding:20px 26px;border-bottom:1px solid var(--line);transition:background .35s}
+.tool:last-child{border-bottom:none}
+.tool:hover{background:var(--bone-2)}
+.tool code{font-size:.83rem;color:var(--terra-d);display:block;margin-bottom:5px}
+.tool code .arg{color:var(--ink-3)}
+.tool span{font-size:.88rem;color:var(--ink-2)}
+.flow{background:var(--dark);border-radius:var(--r);overflow:hidden}
+.flow-bar{display:flex;align-items:center;gap:8px;padding:16px 22px;border-bottom:1px solid #22252B}
+.flow-bar i{width:9px;height:9px;border-radius:50%;background:#33373F}
+.flow-bar i:first-child{background:var(--terra)}
+.flow-bar span{font-family:var(--mono);font-size:.7rem;color:#7E7871;margin-left:8px}
+.flow-body{padding:24px;display:grid;gap:13px;min-height:352px;font-family:var(--mono);font-size:.78rem}
+.fmsg{display:grid;grid-template-columns:60px 1fr;gap:13px;opacity:0;transform:translateY(10px);
+  transition:opacity .55s var(--ease),transform .55s var(--ease)}
+.fmsg.on{opacity:1;transform:none}
+.fmsg .who{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:#6E6862;padding-top:4px}
+.fmsg .bub{border-radius:12px;padding:11px 15px;line-height:1.6;background:#1C1F25;color:#A9A49C}
+.fmsg.user .bub{background:#22252B;color:#F2EFEA}
+.fmsg.tool .bub{background:rgba(94,122,90,.16);color:#8FCB96}
+.fmsg.win .bub{background:rgba(194,84,43,.18);color:#EFA07A}
+.fmsg .bub b{color:#fff}
+
+/* ---------- kinds ---------- */
+.kind{border-radius:var(--r);padding:28px;box-shadow:var(--sh);background:var(--card);
+  transition:transform .5s var(--ease),box-shadow .5s}
+.kind:hover{transform:translateY(-6px);box-shadow:var(--sh-h)}
+.kind .kh{display:flex;align-items:center;gap:11px;margin-bottom:16px}
+.kind .kn{font-family:var(--mono);font-size:.84rem;font-weight:700;color:var(--kc)}
+.kind .badge{margin-left:auto;font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);background:var(--bone-2);border-radius:6px;padding:4px 9px}
+.kind h4{font-size:1.02rem;margin-bottom:8px}
+.kind p{font-size:.89rem;color:var(--ink-2)}
+.kind .disc{margin-top:15px;padding-top:15px;border-top:1px solid var(--line);
+  font-size:.83rem;color:var(--ink-3)}
+.kind .disc b{color:var(--ink-2);font-weight:600}
+
+/* ---------- architecture ---------- */
+.rule{background:var(--dark);color:#fff;border-radius:var(--r);padding:36px 40px;margin-bottom:44px}
+.rule p{font-size:1.4rem;letter-spacing:-.03em;line-height:1.3;font-weight:600}
+.rule p .it{color:var(--terra)}
+.layers{display:grid;gap:16px}
+.layer{display:grid;grid-template-columns:86px 1fr auto;gap:26px;align-items:center;
+  background:var(--card);border-radius:var(--r);padding:28px 32px;box-shadow:var(--sh);
+  transition:transform .5s var(--ease),box-shadow .5s}
+.layer:hover{transform:translateX(8px);box-shadow:var(--sh-h)}
+.layer .ln{font-size:2.3rem;font-weight:700;color:var(--lc);letter-spacing:-.05em;line-height:1}
+.layer .ln small{display:block;font-family:var(--mono);font-size:.55rem;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--ink-3);font-weight:400;margin-top:4px}
+.layer h4{font-size:1.06rem;margin-bottom:6px}
+.layer p{font-size:.92rem;color:var(--ink-2)}
+.layer code{font-size:.85em;color:var(--terra-d)}
+.layer .pill{font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--lcs);color:var(--lc);border-radius:999px;padding:6px 14px;white-space:nowrap}
+.caps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:20px}
+
+/* ---------- graph ---------- */
+.kg{display:grid;grid-template-columns:1fr 1.05fr;gap:20px;align-items:center}
+.kg-svg{width:100%;height:auto;overflow:visible}
+.kg-svg .edge{stroke:var(--line-2);stroke-width:1.5;fill:none;stroke-dasharray:5 6;
+  animation:dash 1.8s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-22}}
+.kg-svg text{font-family:var(--mono);font-size:9.5px}
+.kg-svg .rel{font-size:7.5px;fill:#8B8177;letter-spacing:.08em}
+.rels{display:grid;gap:12px}
+.rel-row{display:flex;align-items:center;gap:16px;background:var(--card);border-radius:var(--r-sm);
+  padding:16px 22px;box-shadow:var(--sh);transition:transform .4s var(--ease),box-shadow .4s}
+.rel-row:hover{transform:translateX(6px);box-shadow:var(--sh-h)}
+.rel-row code{font-size:.82rem;color:var(--slate);min-width:112px}
+.rel-row span{font-size:.88rem;color:var(--ink-2)}
+
+/* ---------- docs ---------- */
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+.tb{font-family:var(--mono);font-size:.78rem;cursor:pointer;background:var(--card);
+  color:var(--ink-2);border:1px solid var(--line);border-radius:999px;padding:11px 22px;
+  box-shadow:var(--sh);transition:all .35s}
+.tb:hover{color:var(--ink)}
+.tb.on{background:var(--ink);color:var(--bone);border-color:var(--ink)}
+.pane{display:none}
+.pane.on{display:block;animation:fu .55s var(--ease)}
+.code{position:relative;background:var(--dark);border-radius:var(--r);padding:28px 30px;
+  font-family:var(--mono);font-size:.8rem;line-height:1.95;color:#C9C4BC;overflow-x:auto}
+.code .c{color:#6E6862}.code .y{color:#E8B14C}.code .g{color:#7FBE86}.code .b{color:#88A9C4}
+.code .copy{position:absolute;top:16px;right:16px;font-family:var(--sans);font-size:.68rem;
+  font-weight:600;background:#22252B;color:#C9C4BC;border:none;border-radius:8px;
+  padding:7px 14px;cursor:pointer;transition:all .3s}
+.code .copy:hover{background:var(--terra);color:#fff}
+.tblwrap{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
+table.t{width:100%;border-collapse:collapse;font-size:.9rem}
+table.t th{text-align:left;font-family:var(--mono);font-size:.64rem;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-3);padding:18px 22px;border-bottom:1px solid var(--line);font-weight:400}
+table.t td{padding:16px 22px;border-bottom:1px solid var(--line);color:var(--ink-2);vertical-align:top}
+table.t tr:last-child td{border-bottom:none}
+table.t tbody tr{transition:background .3s}
+table.t tbody tr:hover{background:var(--bone-2)}
+table.t code{font-size:.82rem;color:var(--ink);white-space:nowrap}
+table.t b{color:var(--ink);font-weight:600}
+.st{font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;
+  border-radius:6px;padding:4px 10px;white-space:nowrap}
+.st.ok{background:var(--sage-soft);color:#3F5A3C}
+.st.soon{background:var(--ochre-soft);color:#7E5C1F}
+.st.next{background:var(--slate-soft);color:#334A5C}
+
+/* ---------- roadmap ---------- */
+.phases{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.phase{background:var(--card);border-radius:var(--r);padding:28px;box-shadow:var(--sh);
+  transition:transform .5s var(--ease),box-shadow .5s}
+.phase:hover{transform:translateY(-7px);box-shadow:var(--sh-h)}
+.phase .dot{width:34px;height:34px;border-radius:11px;background:var(--pcs);
+  display:grid;place-items:center;margin-bottom:18px}
+.phase .dot i{width:11px;height:11px;border-radius:3px;transform:rotate(45deg);background:var(--pc)}
+.phase .pl{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--pc)}
+.phase h4{font-size:1.2rem;margin:8px 0 4px;letter-spacing:-.03em}
+.phase .hz{font-family:var(--mono);font-size:.7rem;color:var(--ink-3);margin-bottom:16px}
+.phase ul{list-style:none;display:grid;gap:9px;margin-bottom:18px}
+.phase li{font-size:.85rem;color:var(--ink-2);padding-left:17px;position:relative}
+.phase li::before{content:"";position:absolute;left:0;top:.5em;width:6px;height:6px;
+  transform:rotate(45deg);background:var(--pc);border-radius:1px}
+.phase .exit{border-top:1px solid var(--line);padding-top:15px;font-size:.82rem}
+.phase .exit b{display:block;font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3);margin-bottom:6px;font-weight:400}
+.phase .exit span{color:var(--ink-2)}
+
+/* ---------- metrics ---------- */
+.metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:20px}
+.metric{background:var(--card);border-radius:var(--r-sm);padding:26px 22px;box-shadow:var(--sh);
+  transition:transform .45s var(--ease)}
+.metric:hover{transform:translateY(-5px)}
+.metric .mi{font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--sage);margin-bottom:12px}
+.metric p{font-size:.86rem;color:var(--ink-2)}
+.pullquote{background:var(--ochre-soft);border-radius:var(--r);padding:36px 40px;margin-top:20px}
+.pullquote p{font-size:1.26rem;line-height:1.45;color:#5E4A1E;letter-spacing:-.025em}
+
+/* ---------- credits ---------- */
+.credits{padding:0 0 80px}
+.credits-card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:48px 52px;
+  display:flex;flex-direction:column;align-items:center;text-align:center;gap:24px;
+  position:relative;overflow:hidden}
+.credits-card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--terra),var(--ochre),var(--sage),var(--slate),var(--plum))}
+.credits-label{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-3);display:flex;align-items:center;gap:10px}
+.credits-label::before,.credits-label::after{content:"";width:28px;height:1px;background:var(--line-2)}
+.credits-team{font-size:1.6rem;font-weight:700;letter-spacing:-.035em}
+.credits-team .it{color:var(--terra)}
+.credits-org{font-size:.95rem;color:var(--ink-2);margin-top:-12px}
+.credits-org b{color:var(--ink);font-weight:600}
+.credits-divider{width:52px;height:3px;border-radius:99px;background:var(--line-2)}
+.credits-engineer{display:flex;align-items:center;gap:20px;background:var(--terra-soft);
+  border-radius:var(--r-sm);padding:22px 32px;max-width:100%}
+.credits-avatar{width:52px;height:52px;border-radius:50%;background:var(--terra);color:#fff;
+  display:grid;place-items:center;font-family:var(--serif);font-size:1.3rem;font-weight:700;
+  flex:none}
+.credits-info{text-align:left}
+.credits-name{font-size:1.18rem;font-weight:700;letter-spacing:-.025em;color:var(--terra-d)}
+.credits-role{font-size:.86rem;color:var(--ink-2);margin-top:2px}
+.credits-role b{color:var(--ink);font-weight:600}
+.credits-motto{font-family:var(--serif);font-style:italic;font-size:1rem;color:var(--ink-3)}
+
+/* ---------- CTA + footer ---------- */
+.cta{padding:40px 0 110px}
+.cta-card{background:var(--dark);border-radius:44px;padding:90px 60px;text-align:center;
+  position:relative;overflow:hidden}
+.cta-card h2{font-size:clamp(2.3rem,4.8vw,3.6rem);color:#fff;max-width:30ch;margin:0 auto 20px}
+.cta-card h2 .it{color:var(--terra)}
+.cta-card p{color:#A9A49C;font-size:1.08rem;max-width:38rem;margin:0 auto 38px}
+.cta-mosaic{position:absolute;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+  width:120px;opacity:.5}
+.cta-mosaic i{aspect-ratio:1;border-radius:5px}
+footer{padding:0 0 50px}
+.f-card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:48px 44px}
+.f-in{display:flex;justify-content:space-between;gap:44px;flex-wrap:wrap}
+.f-in h5{font-family:var(--mono);font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:15px;font-weight:400}
+.f-in a{display:block;font-size:.9rem;color:var(--ink-2);padding:5px 0;
+  transition:color .3s,transform .3s}
+.f-in a:hover{color:var(--terra);transform:translateX(4px)}
+.f-bot{margin-top:44px;padding-top:26px;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:.83rem;color:var(--ink-3)}
+.f-bot .fr{font-family:var(--serif);font-style:italic;color:var(--ink-2);font-size:1rem}
+
+@media(max-width:1080px){
+  .b3,.caps,.phases,.metrics{grid-template-columns:repeat(2,1fr)}
+  .ladder,.kg,.b21,.vs{grid-template-columns:1fr}
+  .econ-foot{grid-template-columns:1fr}
+}
+@media(max-width:720px){
+  .b3,.b2,.caps,.phases,.metrics{grid-template-columns:1fr}
+  .layer{grid-template-columns:1fr;gap:14px}
+  .barrow{grid-template-columns:1fr;gap:9px}
+  .barrow .val{text-align:left}
+  .cta-card{padding:60px 28px;border-radius:32px}
+  .sec{padding:80px 0}
 }
 </style>
 </head>
 <body>
 
-<!-- floating background bricks -->
-<div class="bg-bricks" id="bgBricks">
-  <div class="fbrick" style="top:8%;left:4%;width:90px;height:44px;background:var(--red);--dur:9s;--rot:-8deg"></div>
-  <div class="fbrick" style="top:22%;right:6%;width:70px;height:36px;background:var(--blue);--dur:12s;--rot:6deg"></div>
-  <div class="fbrick" style="top:55%;left:2%;width:60px;height:32px;background:var(--yellow);--dur:10s;--rot:10deg"></div>
-  <div class="fbrick" style="top:72%;right:3%;width:96px;height:46px;background:var(--green);--dur:13s;--rot:-5deg"></div>
-  <div class="fbrick" style="top:40%;right:22%;width:50px;height:28px;background:var(--orange);--dur:8s;--rot:12deg"></div>
-  <div class="fbrick" style="top:85%;left:30%;width:72px;height:36px;background:var(--blue);--dur:11s;--rot:-9deg"></div>
-</div>
-
 <!-- ================= NAV ================= -->
 <nav id="nav">
-  <div class="wrap nav-inner">
-    <a class="logo" href="#top">
-      <span class="logo-brick"></span> Bricolage
-    </a>
+  <div class="wrap nav-in">
+    <a class="brand" href="#top"><span class="mark"><i></i><i></i><i></i><i></i></span> Bricolage</a>
     <div class="nav-links">
-      <a href="#features">Features</a>
-      <a href="#pipeline">How it works</a>
-      <a href="#cockpit">Cockpit</a>
-      <a href="#docs">Docs</a>
+      <a href="#problem">Problem</a>
+      <a href="#ladder">Ladder</a>
+      <a href="#mcp">MCP</a>
+      <a href="#kinds">Kinds</a>
+      <a href="#architecture">Architecture</a>
       <a href="#roadmap">Roadmap</a>
+      <a href="#docs">Docs</a>
     </div>
-    <a class="btn small yellow" href="#docs" style="margin-left:auto">Get started</a>
+    <a class="btn sm" href="#docs">Get started</a>
   </div>
 </nav>
 
 <!-- ================= HERO ================= -->
 <header class="hero" id="top">
-  <div class="wrap hero-grid">
-    <div>
-      <span class="badge"><span class="dot"></span> Phase 1 shipped — the walking skeleton works end-to-end</span>
-      <h1>
-        Build it once.<br>
-        Snap it in <span class="brickword"><span class="tile">f</span><span class="tile">o</span><span class="tile">r</span><span class="tile">e</span></span>ver.
-      </h1>
-      <p class="defn"><b>bricolage</b> <span class="ipa">/bʁi.kɔ.laʒ/</span> — n. the art of building with whatever is at hand.</p>
-      <p class="sub">
-        Bricolage captures the best modules from your projects into a <strong>versioned Vault</strong>,
-        then composes them into your next application. Stop asking <em>"how do we build this?"</em>
-        Start asking <strong>"do we already have a piece for this?"</strong>
-      </p>
-      <div class="cta-row">
-        <a class="btn" href="#docs" id="ctaMain">Start building ▸</a>
-        <a class="btn ghost" href="#features">Explore features</a>
-      </div>
-      <div class="install-pill">
-        <span><span class="dollar">$</span> <span id="installCmd">go build -o brico ./cmd/brico</span></span>
-        <button id="copyInstall" title="Copy">⧉</button>
-      </div>
+  <div class="wrap">
+    <span class="eyebrow"><span class="live"></span> Phase 1 shipped · vision v2.0</span>
+    <h1 class="hh">Build it once.<br>Then <span class="it">compose</span> forever.</h1>
+    <p class="hero-sub">
+      Your organisation already solved this problem. Bricolage captures that work as
+      <b>versioned pieces</b> — code, prompts, skills, evals, pipelines — and serves it to your
+      team through a CLI and to your AI assistants through MCP.
+    </p>
+    <p class="defn"><b>bricolage</b> /bʁi.kɔ.laʒ/ — n. the art of building with what is at hand.</p>
+    <div class="cta-row">
+      <a class="btn terra" href="#docs">Start composing →</a>
+      <a class="btn ghost" href="#ladder">See the token economics</a>
+    </div>
+    <div class="hero-chips">
+      <span class="chip"><i class="tess" style="--c:var(--terra)"></i> <b>one static binary</b></span>
+      <span class="chip"><i class="tess" style="--c:var(--ochre)"></i> zero runtime deps</span>
+      <span class="chip"><i class="tess" style="--c:var(--sage)"></i> <b>git is the source of truth</b></span>
+      <span class="chip"><i class="tess" style="--c:var(--slate)"></i> offline-first</span>
     </div>
 
-    <div class="hero-visual">
-      <div class="hero-stack">
-        <div class="hbrick" style="--c:var(--yellow);background:var(--yellow);width:120px;height:52px;top:-30px;right:8%;animation-delay:.3s"></div>
-        <div class="hbrick" style="--c:var(--green);background:var(--green);width:88px;height:44px;bottom:-24px;left:-4%;animation-delay:.55s"></div>
-        <div class="hbrick" style="--c:var(--red);background:var(--red);width:70px;height:38px;bottom:30px;right:-5%;animation-delay:.8s"></div>
+    <!-- hero bento -->
+    <div class="bento hero-bento">
+      <div class="tile dark rv" style="grid-row:span 2;display:flex;flex-direction:column">
+        <span class="tl">live · brico cli</span>
+        <div class="term" id="term"></div>
+        <p style="margin-top:auto;padding-top:18px;font-size:.86rem">
+          Extract → capture → add → doctor. The full lifecycle, shipping today.
+        </p>
       </div>
-      <div class="terminal">
-        <div class="term-bar">
-          <span class="light" style="background:#FF5F57"></span>
-          <span class="light" style="background:#FEBC2E"></span>
-          <span class="light" style="background:#28C840"></span>
-          <span class="title">brico — zsh</span>
-        </div>
-        <div class="term-body" id="termBody"></div>
+
+      <div class="tile terra rv d1">
+        <span class="tl">token economics</span>
+        <div class="big" style="color:var(--terra-d)"><span data-count="300">0</span></div>
+        <p style="color:var(--terra-d);opacity:.85">tokens to answer “do we have JWT auth?” — against tens of thousands for a repo-indexing assistant.</p>
+      </div>
+
+      <div class="tile rv d2" style="grid-row:span 2;padding:0;overflow:hidden;min-height:280px">
+        <canvas id="pieceCanvas"></canvas>
+      </div>
+
+      <div class="tile sage rv d3">
+        <span class="tl">piece kinds</span>
+        <div class="big" style="color:#3F5A3C">6</div>
+        <p style="color:#3F5A3C;opacity:.85">code · prompt · skill · eval · dataset · pipeline — one manifest field, zero engine changes.</p>
       </div>
     </div>
   </div>
 
-  <!-- marquee -->
-  <div class="marquee">
-    <div class="marquee-track" id="marqueeTrack">
-      <span>◆ extract&nbsp;&nbsp;·&nbsp;&nbsp;📦 capture&nbsp;&nbsp;·&nbsp;&nbsp;🔍 search&nbsp;&nbsp;·&nbsp;&nbsp;⚡ add&nbsp;&nbsp;·&nbsp;&nbsp;🩺 doctor&nbsp;&nbsp;·&nbsp;&nbsp;🎛 ui&nbsp;&nbsp;·&nbsp;&nbsp;🗑 remove&nbsp;&nbsp;·&nbsp;&nbsp;🏛 vault&nbsp;&nbsp;·&nbsp;&nbsp;</span>
+  <div class="ticker">
+    <div class="tick-track" id="tick">
+      <span><i>◆</i> <b>brico extract</b> find what's reusable</span>
+      <span><i>◆</i> <b>brico capture</b> bottle the craftsmanship</span>
+      <span><i>◆</i> <b>brico add</b> snap it into a new app</span>
+      <span><i>◆</i> <b>brico mcp</b> serve it to any assistant</span>
+      <span><i>◆</i> <b>brico eval</b> regression-test your prompts</span>
+      <span><i>◆</i> <b>brico graph</b> query the relationships</span>
+      <span><i>◆</i> <b>brico stats</b> prove the token savings</span>
     </div>
   </div>
 </header>
 
-<!-- ================= STATS ================= -->
-<section class="stats">
-  <div class="wrap stat-grid">
-    <div class="stat reveal">
-      <div class="studs"><span class="stud" style="--c:var(--red)"></span><span class="stud" style="--c:var(--red)"></span></div>
-      <div class="num" data-count="1">0</div>
-      <div class="lbl">static binary — no runtime needed</div>
-    </div>
-    <div class="stat reveal d1">
-      <div class="studs"><span class="stud" style="--c:var(--yellow)"></span><span class="stud" style="--c:var(--yellow)"></span></div>
-      <div class="num" data-count="0">0</div>
-      <div class="lbl">runtime dependencies</div>
-    </div>
-    <div class="stat reveal d2">
-      <div class="studs"><span class="stud" style="--c:var(--blue)"></span><span class="stud" style="--c:var(--blue)"></span></div>
-      <div class="num" data-count="2">0</div>
-      <div class="lbl">frameworks today — adapters add more</div>
-    </div>
-    <div class="stat reveal d3">
-      <div class="studs"><span class="stud" style="--c:var(--green)"></span><span class="stud" style="--c:var(--green)"></span></div>
-      <div class="num">∞</div>
-      <div class="lbl">reuse of every captured piece</div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= FEATURES ================= -->
-<section class="features" id="features">
+<!-- ================= PROBLEM ================= -->
+<section class="sec" id="problem">
   <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="kicker" style="background:var(--red)">🧰 The atelier</span>
-      <h2>Every command is a piece that just fits.</h2>
-      <p>No boilerplate. No copy-paste archaeology. A complete lifecycle for reusable modules — from discovery to teardown.</p>
-    </div>
-
-    <div class="feat-grid">
-      <div class="card reveal">
-        <div class="card-studs"><span class="stud" style="--c:var(--red)"></span><span class="stud" style="--c:var(--red)"></span><span class="stud" style="--c:var(--red)"></span></div>
-        <div class="icon" style="background:#F3DCCE">🔎</div>
-        <span class="cmd">brico extract</span>
-        <h3>X-ray your codebase</h3>
-        <p>Point Bricolage at any NestJS or Next.js project and it surfaces the parts worth reusing — auth, mailers, payment flows — ranked by confidence. Your best work, found automatically.</p>
-      </div>
-
-      <div class="card reveal d1">
-        <div class="card-studs"><span class="stud" style="--c:var(--yellow)"></span><span class="stud" style="--c:var(--yellow)"></span><span class="stud" style="--c:var(--yellow)"></span></div>
-        <div class="icon" style="background:#F3E8C9">📦</div>
-        <span class="cmd">brico capture</span>
-        <h3>Bottle the craftsmanship</h3>
-        <p>One command snapshots a module — files, dependencies, env vars, wiring — into an immutable, semver'd piece with a manifest. Versions are never overwritten. History is forever.</p>
-      </div>
-
-      <div class="card reveal d2">
-        <div class="card-studs"><span class="stud" style="--c:var(--blue)"></span><span class="stud" style="--c:var(--blue)"></span><span class="stud" style="--c:var(--blue)"></span></div>
-        <div class="icon" style="background:#DBE3E9">⚡</div>
-        <span class="cmd">brico add</span>
-        <h3>Snap. Wired. Done.</h3>
-        <p>Resolves the right version, copies the files, records it in <code>brico.json</code>, merges required env vars into <code>.env.example</code>, and hands you exact framework wiring steps.</p>
-      </div>
-
-      <div class="card reveal">
-        <div class="card-studs"><span class="stud" style="--c:var(--green)"></span><span class="stud" style="--c:var(--green)"></span><span class="stud" style="--c:var(--green)"></span></div>
-        <div class="icon" style="background:#E4E8D2">🔍</div>
-        <span class="cmd">brico list · search</span>
-        <h3>Every piece, findable</h3>
-        <p>Search your entire Vault by name, tag, or description in milliseconds. A self-healing <code>index.json</code> means the catalog is always in sync — even after messy git merges.</p>
-      </div>
-
-      <div class="card reveal d1">
-        <div class="card-studs"><span class="stud" style="--c:var(--orange)"></span><span class="stud" style="--c:var(--orange)"></span><span class="stud" style="--c:var(--orange)"></span></div>
-        <div class="icon" style="background:#EADFE9">🩺</div>
-        <span class="cmd">brico doctor</span>
-        <h3>Green means go</h3>
-        <p>One command validates the engine, adapters, Vault, and your project — shown as a row of set-green and loose-red tiles. Trust your setup before every ship.</p>
-      </div>
-
-      <div class="card reveal d2">
-        <div class="card-studs"><span class="stud" style="--c:var(--red)"></span><span class="stud" style="--c:var(--yellow)"></span><span class="stud" style="--c:var(--blue)"></span></div>
-        <div class="icon" style="background:#EADFE9">🎛</div>
-        <span class="cmd">brico ui</span>
-        <h3>A cockpit in your terminal</h3>
-        <p>Browse the Vault as a living mosaic of your best work. Live filtering, spec sheets, version history, doctor and extract — all full-screen, all keyboard-driven, all beautiful.</p>
-      </div>
-
-      <div class="card reveal">
-        <div class="card-studs"><span class="stud" style="--c:var(--blue)"></span><span class="stud" style="--c:var(--blue)"></span><span class="stud" style="--c:var(--blue)"></span></div>
-        <div class="icon" style="background:#DBE3E9">🗑</div>
-        <span class="cmd">brico remove</span>
-        <h3>Un-snap cleanly</h3>
-        <p>Modules leave the way they came: files removed, records updated, cleanup steps printed. No orphaned imports, no mystery leftovers, no residue.</p>
-      </div>
-
-      <div class="card reveal d1">
-        <div class="card-studs"><span class="stud" style="--c:var(--green)"></span><span class="stud" style="--c:var(--green)"></span><span class="stud" style="--c:var(--green)"></span></div>
-        <div class="icon" style="background:#E4E8D2">🏛</div>
-        <span class="cmd">the Vault</span>
-        <h3>Your team's atelier</h3>
-        <p>Git-versioned, offline-first, immutable. Every publish is a deterministic commit — auditable and reproducible. Remote &amp; team Vaults arrive on the same layout.</p>
-      </div>
-
-      <div class="card reveal d2">
-        <div class="card-studs"><span class="stud" style="--c:var(--yellow)"></span><span class="stud" style="--c:var(--yellow)"></span><span class="stud" style="--c:var(--yellow)"></span></div>
-        <div class="icon" style="background:#F3E8C9">📜</div>
-        <span class="cmd">the Manifest</span>
-        <h3>Behavior as data</h3>
-        <p>Every piece carries a contract: identity, versions, deps, env vars, exports, compatibility, lifecycle hooks. The engine reads behavior from the manifest — never hardcodes it.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= PIPELINE ================= -->
-<section class="pipeline" id="pipeline">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="kicker" style="background:var(--blue)">⚙️ How it works</span>
-      <h2>From "that's clever" to "that's a piece" in five moves.</h2>
-      <p>One flow, end-to-end, working today. Watch it run.</p>
-    </div>
-
-    <div class="pipe-row reveal" id="pipeRow">
-      <div class="pipe-step">
-        <div class="studs"><span class="stud" style="--c:var(--red)"></span><span class="stud" style="--c:var(--red)"></span></div>
-        <div class="n">1</div><h4>extract</h4><p>Find what's reusable</p>
-      </div>
-      <div class="pipe-link"></div>
-      <div class="pipe-step">
-        <div class="studs"><span class="stud" style="--c:var(--yellow)"></span><span class="stud" style="--c:var(--yellow)"></span></div>
-        <div class="n">2</div><h4>capture</h4><p>Publish to the Vault</p>
-      </div>
-      <div class="pipe-link"></div>
-      <div class="pipe-step">
-        <div class="studs"><span class="stud" style="--c:var(--blue)"></span><span class="stud" style="--c:var(--blue)"></span></div>
-        <div class="n">3</div><h4>vault</h4><p>Versioned &amp; searchable</p>
-      </div>
-      <div class="pipe-link"></div>
-      <div class="pipe-step">
-        <div class="studs"><span class="stud" style="--c:var(--green)"></span><span class="stud" style="--c:var(--green)"></span></div>
-        <div class="n">4</div><h4>add</h4><p>Snap into a new app</p>
-      </div>
-      <div class="pipe-link"></div>
-      <div class="pipe-step">
-        <div class="studs"><span class="stud" style="--c:var(--orange)"></span><span class="stud" style="--c:var(--orange)"></span></div>
-        <div class="n">5</div><h4>doctor</h4><p>Validate everything</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= COCKPIT ================= -->
-<section class="cockpit" id="cockpit">
-  <div class="wrap cockpit-grid">
-    <div class="reveal">
-      <span class="kicker" style="background:var(--green)">🎛 The cockpit</span>
-      <h2 style="font-size:clamp(1.8rem,3.2vw,2.5rem);margin:18px 0 14px">Your Vault, as a mosaic.</h2>
-      <p style="color:var(--ink-soft);font-weight:700">
-        <code style="background:var(--paper-2);border:2px solid var(--ink);border-radius:8px;padding:2px 10px">brico ui</code>
-        opens a full-screen terminal interface. Presentation-only by design — every fact comes
-        from the same engine the CLI uses, so the two never drift.
+    <div class="sec-head rv">
+      <div class="kick"><span class="num">01</span> The problem</div>
+      <h2 class="split">Repositories are the unit of storage. A terrible unit of reuse.</h2>
+      <p>
+        The auth module your team perfected two projects ago is entangled with that project's
+        dependencies, invisible to search, and unversioned as an asset in its own right. The same
+        is now true of prompts, evals and agent skills — <b>valuable, untested, trapped.</b>
       </p>
-      <ul class="checklist">
-        <li><span class="tick">✓</span><span><b>Browse &amp; search live</b> — <kbd>/</kbd> filters by name, tag, or description as you type.</span></li>
-        <li><span class="tick">✓</span><span><b>Piece spec panel</b> — version history, tags, env vars, files &amp; deps straight from the manifest.</span></li>
-        <li><span class="tick">✓</span><span><b><kbd>d</kbd> doctor</b> — health checks rendered as set-green and loose-red tiles.</span></li>
-        <li><span class="tick">✓</span><span><b><kbd>e</kbd> extract</b> — reusable candidates in the current project, ranked by confidence.</span></li>
-      </ul>
     </div>
 
-    <div class="reveal d2">
-      <div class="tui">
-        <div class="tui-banner">
-          <span class="tui-tile" style="--cc:var(--red);background:var(--red);animation-delay:.1s">B</span>
-          <span class="tui-tile" style="--cc:var(--yellow);background:var(--yellow);color:var(--ink);animation-delay:.22s">R</span>
-          <span class="tui-tile" style="--cc:var(--blue);background:var(--blue);animation-delay:.34s">I</span>
-          <span class="tui-tile" style="--cc:var(--green);background:var(--green);animation-delay:.46s">C</span>
-          <span class="tui-tile" style="--cc:var(--orange);background:var(--orange);animation-delay:.58s">O</span>
-          <span class="tui-meta">vault ~/.brico/vault · 7 pieces · v0.1.0</span>
+    <div class="b3">
+      <div class="tile rv">
+        <div class="icn">🗄</div>
+        <span class="tl">3.1 · trapped knowledge</span>
+        <h3>Answers that can't be found</h3>
+        <p>Teams answer “how do we build this?” over and over, when the real question should be “do we already have a piece for this?” Prompts live in Notion, eval scripts rot in scratch folders, agent configs are copy-pasted between repos and silently drift apart.</p>
+      </div>
+      <div class="tile rv d1">
+        <div class="icn">🔁</div>
+        <span class="tl">3.2 · rediscovery tax</span>
+        <h3>AI regenerates instead of retrieving</h3>
+        <p>Assistants index whole repositories and stuff context windows to answer what the organisation already answered. Regenerating an auth module costs more than tokens: review time, subtle bugs, and a fourth slightly different implementation.</p>
+      </div>
+      <div class="tile rv d2">
+        <div class="icn">⏱</div>
+        <span class="tl">3.3 · why now</span>
+        <h3>Two trends just converged</h3>
+        <p>Context efficiency became a first-class engineering concern — teams track token spend like cloud spend. And MCP standardised how assistants consume external knowledge. Both point at a curated, versioned store of an organisation's best work.</p>
+      </div>
+    </div>
+
+    <div class="vs rv d2">
+      <div class="vs-card a">
+        <span class="lab">generation treated as free</span>
+        <h3>Regenerate</h3>
+        <ul>
+          <li>Scans the whole codebase for context</li>
+          <li>Writes novel code that must be reviewed</li>
+          <li>Introduces a fourth auth implementation</li>
+          <li>Tens of thousands of tokens per answer</li>
+        </ul>
+      </div>
+      <div class="vs-card b">
+        <span class="lab">reuse made the cheapest path</span>
+        <h3>Retrieve</h3>
+        <ul>
+          <li>Asks a librarian, not the whole library</li>
+          <li>Installs a verified, versioned piece</li>
+          <li>Wiring steps and decisions travel with it</li>
+          <li>≈300 tokens for “do we have JWT auth?”</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VISION ================= -->
+<section class="sec" id="vision">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="kick"><span class="num">02</span> The vision</div>
+      <h2 class="split">Pieces — not repositories — become the unit of <span class="it">engineering knowledge.</span></h2>
+      <p>
+        A <b>piece</b> is a versioned engineering asset: source files, a manifest describing its
+        behaviour, and a set of derived knowledge representations. Everything else follows.
+      </p>
+    </div>
+
+    <div class="vlist rv d1">
+      <div class="vrow"><span class="vn">01</span><span><b>Reuse engineering knowledge, not only code</b><span>Design decisions, wiring, trade-offs and evaluations travel with the asset.</span></span></div>
+      <div class="vrow"><span class="vn">02</span><span><b>Cut AI context cost</b><span>Retrieve only relevant pieces, at the cheapest sufficient fidelity.</span></span></div>
+      <div class="vrow"><span class="vn">03</span><span><b>Preserve organisational memory</b><span>Across teams and projects, in the organisation's own git — never locked into a vendor database.</span></span></div>
+      <div class="vrow"><span class="vn">04</span><span><b>Enable semantic discovery</b><span>“Something like rate limiting for our stack” — not keyword-only search.</span></span></div>
+      <div class="vrow"><span class="vn">05</span><span><b>Make relationships queryable</b><span>depends on · replaces · similar to · inspired by — facts, not tribal knowledge.</span></span></div>
+    </div>
+
+    <div class="b2 rv d2" style="margin-top:20px">
+      <div class="tile ochre">
+        <div class="icn" style="background:#fff">🪶</div>
+        <h3>Capture stays one command</h3>
+        <p style="color:#5E4A1E;opacity:.9">Knowledge systems die when the cost of contributing exceeds the value of retrieving — the fate of every abandoned internal wiki. Every representation beyond the raw files is derived and optional: generated at capture time or backfilled later, never demanded from the contributor.</p>
+      </div>
+      <div class="tile slate">
+        <div class="icn" style="background:#fff">⎇</div>
+        <h3>Git remains the source of truth</h3>
+        <p style="color:#334A5C;opacity:.9">Anything that looks like a database is a rebuildable projection of the Vault. That single rule buys database power — vector, full-text, graph — with none of the database liabilities: no migrations-as-truth, no sync conflicts, no server between a developer and their knowledge.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LADDER ================= -->
+<section class="sec" id="ladder">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="kick"><span class="num">03</span> The representation ladder</div>
+      <h2 class="split">Serve knowledge at the <span class="it">cheapest sufficient</span> fidelity.</h2>
+      <p>
+        Every piece carries a ladder of representations, each derived at capture time and stored as
+        plain files in its version directory. Consumers climb only as far as the task requires.
+      </p>
+    </div>
+
+    <div class="ladder rv d1">
+      <div class="rungs" id="rungs">
+        <div class="rung on" data-i="0"><span class="bar"></span>
+          <div class="rung-top"><span class="rung-name">Card</span><span class="rung-cost">~50 tokens</span></div>
+          <div class="rung-for">Search results · “do we have something for X?”</div>
         </div>
-        <div class="tui-cols">
-          <div class="tui-panel">
-            <div class="ph">Pieces</div>
-            <div class="tui-brickrow sel"><span class="mini-brick" style="background:var(--red)"></span> auth <span class="t-dim">0.2.0 · jwt, security</span></div>
-            <div class="tui-brickrow"><span class="mini-brick" style="background:var(--yellow)"></span> mailer <span class="t-dim">0.1.0 · smtp</span></div>
-            <div class="tui-brickrow"><span class="mini-brick" style="background:var(--blue)"></span> cache <span class="t-dim">0.3.1 · redis</span></div>
-            <div class="tui-brickrow"><span class="mini-brick" style="background:var(--green)"></span> logger <span class="t-dim">1.0.0 · pino</span></div>
-            <div class="tui-brickrow"><span class="mini-brick" style="background:var(--orange)"></span> payments <span class="t-dim">0.1.2 · stripe</span></div>
-            <div class="tui-brickrow"><span class="mini-brick" style="background:var(--red)"></span> queue <span class="t-dim">0.2.0 · bullmq</span></div>
-          </div>
-          <div class="tui-panel">
-            <div class="ph">Piece spec — auth</div>
-            <div class="ln"><span class="t-yellow">auth</span> <span class="t-dim">·</span> <span class="t-blue">nest</span> <span class="t-dim">· typescript</span></div>
-            <div class="ln t-dim">JWT authentication with Passport &amp; bcrypt</div>
-            <div class="ln" style="margin-top:10px"><span class="t-dim">versions</span>  0.1.0 → <span class="t-green">0.2.0 (latest)</span></div>
-            <div class="ln"><span class="t-dim">env</span>       JWT_SECRET, JWT_EXPIRES_IN</div>
-            <div class="ln"><span class="t-dim">deps</span>      @nestjs/jwt, passport, bcrypt</div>
-            <div class="ln"><span class="t-dim">files</span>     auth.service.ts, auth.module.ts, …</div>
-            <div class="ln" style="margin-top:12px"><span class="t-green">● compatible</span> <span class="t-dim">with this project</span></div>
-          </div>
+        <div class="rung" data-i="1"><span class="bar"></span>
+          <div class="rung-top"><span class="rung-name">Surface</span><span class="rung-cost">~200–400</span></div>
+          <div class="rung-for">Deciding fit · writing code that calls the piece</div>
         </div>
-        <div class="tui-footer">
-          <span><b>↑/↓</b> move</span><span><b>/</b> filter</span><span><b>d</b> doctor</span><span><b>e</b> extract</span><span><b>?</b> keys</span><span><b>q</b> quit</span>
+        <div class="rung" data-i="2"><span class="bar"></span>
+          <div class="rung-top"><span class="rung-name">Summary</span><span class="rung-cost">~500</span></div>
+          <div class="rung-for">Understanding why the piece works the way it does</div>
         </div>
+        <div class="rung" data-i="3"><span class="bar"></span>
+          <div class="rung-top"><span class="rung-name">Full source</span><span class="rung-cost">code cost</span></div>
+          <div class="rung-for">Modifying or extending the piece</div>
+        </div>
+      </div>
+
+      <div class="rdetail">
+        <span class="tl">what the consumer receives</span>
+        <div class="rd on" data-i="0">
+          <pre><span class="cc">// card — the whole thing</span>
+{
+  <span class="kk">"name"</span>: <span class="vv">"auth"</span>,
+  <span class="kk">"kind"</span>: <span class="vv">"code"</span>,
+  <span class="kk">"description"</span>: <span class="vv">"JWT auth with Passport &amp; bcrypt"</span>,
+  <span class="kk">"tags"</span>: [<span class="vv">"security"</span>, <span class="vv">"jwt"</span>],
+  <span class="kk">"framework"</span>: <span class="vv">"nest"</span>,
+  <span class="kk">"latest"</span>: <span class="vv">"0.2.0"</span>
+}</pre>
+          <p>Name, description, tags, kind, compatibility. Enough to answer existence questions across an entire Vault for the price of a sentence.</p>
+          <div class="rmeter"><span>cost</span><span class="tr"><i style="width:4%"></i></span><span>~50</span></div>
+        </div>
+        <div class="rd" data-i="1">
+          <pre><span class="cc">// surface — signatures, no bodies (from the AST)</span>
+<span class="oo">export class</span> AuthService {
+  signIn(dto: SignInDto): <span class="vv">Promise&lt;Session&gt;</span>
+  verify(token: string): <span class="vv">Promise&lt;Claims&gt;</span>
+}
+<span class="cc">env</span>   JWT_SECRET, JWT_EXPIRES_IN
+<span class="cc">wire</span>  add AuthModule to AppModule imports</pre>
+          <p>Exported types, function signatures, env vars and wiring steps — extracted from the AST, bodies omitted. Everything needed to call the piece correctly.</p>
+          <div class="rmeter"><span>cost</span><span class="tr"><i style="width:16%"></i></span><span>~200–400</span></div>
+        </div>
+        <div class="rd" data-i="2">
+          <pre><span class="cc"># summary.md — generated at capture</span>
+<span class="oo">## Why it works this way</span>
+Refresh tokens are rotated on every use and stored
+hashed, so a leaked token is single-use.
+
+<span class="oo">## Trade-offs</span>
+Stateful refresh store (Redis) was accepted to gain
+revocation; a pure-JWT design cannot revoke.</pre>
+          <p>Design decisions, trade-offs, architecture notes — the reasoning a senior engineer would otherwise have to be interrupted for.</p>
+          <div class="rmeter"><span>cost</span><span class="tr"><i style="width:26%"></i></span><span>~500</span></div>
+        </div>
+        <div class="rd" data-i="3">
+          <pre><span class="cc">// the files themselves</span>
+auth.service.ts        auth.module.ts
+auth.controller.ts     jwt.strategy.ts
+refresh-token.store.ts lego.manifest.json</pre>
+          <p>The top rung is rarely needed. And the largest saving isn't on this ladder at all: <b>not generating code in the first place.</b> <code style="color:#E8B14C">brico add</code> installs a verified, versioned piece for zero generation tokens, zero review of novel code, zero new bugs.</p>
+          <div class="rmeter"><span>cost</span><span class="tr"><i style="width:100%"></i></span><span>full</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="econ rv d2" id="econ">
+      <h3>“Do we have JWT auth for NestJS?”</h3>
+      <p class="q">The same question, answered two ways. Multiplied across every retrieval an assistant makes in a working day, this is the difference between AI that grazes the whole codebase and AI that asks a librarian.</p>
+      <div class="bars">
+        <div class="barrow">
+          <div class="lbl">Bricolage Vault<small>a few cards + one surface</small></div>
+          <div class="track"><i class="good" data-w="1.2"></i></div>
+          <div class="val good" data-count="300">0</div>
+        </div>
+        <div class="barrow">
+          <div class="lbl">Repo-indexing assistant<small>scanning source files</small></div>
+          <div class="track"><i class="bad" data-w="100"></i></div>
+          <div class="val bad" data-count="25000" data-suffix="+">0</div>
+        </div>
+      </div>
+      <div class="econ-foot">
+        <div><b style="color:var(--terra)">1–2</b>orders of magnitude cut on retrieval-heavy workflows</div>
+        <div><b style="color:var(--sage)">~40 MB</b>of vectors for a mature 10,000-piece Vault — smaller than one node_modules</div>
+        <div><b style="color:var(--slate)">brico stats</b>logs which pieces are served, turning the saving into a dashboard</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MCP ================= -->
+<section class="sec" id="mcp">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="kick"><span class="num">04</span> AI as a client</div>
+      <h2 class="split">One command turns the Vault into an <span class="it">MCP server.</span></h2>
+      <p>
+        <code style="color:var(--terra-d)">brico mcp</code> exposes the Vault over the Model Context
+        Protocol, making every MCP-capable assistant — Claude, IDE agents, internal copilots — a
+        consumer of your organisation's proven work. A thin protocol layer over the same engine and
+        index the CLI already uses.
+      </p>
+    </div>
+
+    <div class="b21 rv d1">
+      <div>
+        <div class="tools">
+          <div class="tool"><code>search_pieces(<span class="arg">query, kind?</span>)</code><span>Semantic + keyword search over the Vault; returns cards.</span></div>
+          <div class="tool"><code>get_piece(<span class="arg">name, level</span>)</code><span>Returns the requested rung: card, surface, summary, or source.</span></div>
+          <div class="tool"><code>plan_reuse(<span class="arg">task</span>)</code><span>Given a task description, returns candidate pieces with fit rationale.</span></div>
+          <div class="tool"><code>get_relations(<span class="arg">name, kind?</span>)</code><span>Graph neighbourhood: dependencies, dependents, replacements, similar pieces.</span></div>
+        </div>
+        <p style="color:var(--ink-3);font-size:.85rem;margin-top:18px">
+          All tools serve ladder representations — never raw repository scans.
+        </p>
+      </div>
+
+      <div class="flow">
+        <div class="flow-bar"><i></i><i></i><i></i><span>assistant ⇄ brico mcp</span></div>
+        <div class="flow-body" id="flowBody">
+          <div class="fmsg user"><span class="who">dev</span><span class="bub">“Add payments to the new service.”</span></div>
+          <div class="fmsg tool"><span class="who">tool</span><span class="bub">plan_reuse("add payments to a NestJS service")</span></div>
+          <div class="fmsg"><span class="who">vault</span><span class="bub">2 candidates · <b>payments@0.1.2</b> (stripe, proven in 3 projects)<br>· billing-webhooks@0.3.0 &nbsp;<span style="color:#6E6862">— 94 tokens</span></span></div>
+          <div class="fmsg tool"><span class="who">tool</span><span class="bub">get_piece("payments", level: "surface")</span></div>
+          <div class="fmsg"><span class="who">vault</span><span class="bub">signatures · env: STRIPE_SECRET, STRIPE_WEBHOOK_SECRET · wiring: 2 steps &nbsp;<span style="color:#6E6862">— 210 tokens</span></span></div>
+          <div class="fmsg win"><span class="who">agent</span><span class="bub">Recommends <b>brico add payments</b> — wiring steps included.<br>Zero generation tokens. Zero novel code to review.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= KINDS ================= -->
+<section class="sec" id="kinds">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="kick"><span class="num">05</span> Beyond code</div>
+      <h2 class="split">The set of things worth versioning has grown.</h2>
+      <p>
+        We do not build ML infrastructure — we <b>version AI engineering assets</b>. Model registries
+        and experiment tracking are owned territory; the unowned gap sits next to it: the day-to-day
+        assets teams scatter across wikis, gists and repos. The extension is a single
+        <code style="color:var(--terra-d)">kind</code> field and new adapters. The engine core does not change.
+      </p>
+    </div>
+
+    <div class="b3 rv d1">
+      <div class="kind" style="--kc:var(--terra)">
+        <div class="kh"><span class="kn">code</span><span class="badge">shipping</span></div>
+        <h4>Modules with their wiring</h4>
+        <p>Files, dependencies, env vars and framework wiring steps — captured, versioned, snappable.</p>
+        <div class="disc"><b>The discipline:</b> immutable versions; publish refuses to overwrite.</div>
+      </div>
+      <div class="kind" style="--kc:var(--ochre)">
+        <div class="kh"><span class="kn">prompt</span><span class="badge">phase B</span></div>
+        <h4>Prompts with evaluation cases</h4>
+        <p>Template file, input variables, target models, and attached evaluation cases.</p>
+        <div class="disc"><b>The discipline:</b> a prompt with versioned evals is to prompts what a module with tests is to code — prompt changes gain regression tests.</div>
+      </div>
+      <div class="kind" style="--kc:var(--sage)">
+        <div class="kh"><span class="kn">skill</span><span class="badge">phase B</span></div>
+        <h4>Agent skills</h4>
+        <p>Instructions plus scripts, in the emerging industry format.</p>
+        <div class="disc"><b>The discipline:</b> structurally identical to code pieces — captured and served over MCP, the Vault becomes a skill registry almost for free.</div>
+      </div>
+      <div class="kind" style="--kc:var(--plum)">
+        <div class="kh"><span class="kn">eval</span><span class="badge">phase C</span></div>
+        <h4>Benchmark suites</h4>
+        <p>Cases, scoring criteria, harness configuration — standalone and reusable.</p>
+        <div class="disc"><b>The discipline:</b> the shared yardstick that lets versions be compared honestly. A harness, deliberately not a platform.</div>
+      </div>
+      <div class="kind" style="--kc:var(--slate)">
+        <div class="kh"><span class="kn">dataset</span><span class="badge">phase C</span></div>
+        <h4>Pointers, never blobs</h4>
+        <p>URI, content hash, schema, license — identity and provenance without the payload.</p>
+        <div class="disc"><b>The discipline:</b> the pointer rule keeps the Vault fast and clones cheap while still versioning what matters.</div>
+      </div>
+      <div class="kind" style="--kc:#6B7A3F">
+        <div class="kh"><span class="kn">pipeline</span><span class="badge">phase C</span></div>
+        <h4>Compositions of other pieces</h4>
+        <p>RAG and agent configurations that reference other pieces by name and version.</p>
+        <div class="disc"><b>The discipline:</b> makes the relationship graph load-bearing — “which pipelines break if we bump the chunking prompt?” becomes a query.</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ================= ARCHITECTURE ================= -->
-<section class="arch" id="architecture">
+<section class="sec" id="architecture">
   <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="kicker" style="background:var(--red)">🏗 Architecture</span>
-      <h2>An engine that never learns your framework.</h2>
-      <p>All framework knowledge lives behind one stable Adapter interface. Adding a framework touches zero lines of the core.</p>
+    <div class="sec-head rv">
+      <div class="kick"><span class="num">06</span> Storage architecture</div>
+      <h2 class="split">Truth, index, and scale — in that order.</h2>
     </div>
 
-    <div class="arch-diagram reveal d1">
-      <div class="arch-box engine">Go Engine<small>one static binary — CLI · config · detection · scanning · versioning</small></div>
-      <div class="arch-pipe"></div>
-      <div class="arch-box">Adapter interface<small>6 methods · adapters self-register</small></div>
-      <div class="arch-pipe"></div>
-      <div class="arch-adapters">
-        <div class="arch-box adp">NestJS</div>
-        <div class="arch-box adp">Next.js</div>
-        <div class="arch-box adp ghosted">Express · Django · Spring · soon</div>
-      </div>
-      <div class="arch-pipe"></div>
-      <div class="arch-box vault">The Vault<small>local fs + git · immutable versions · searchable index</small></div>
-      <p class="arch-note">
-        The manifest is the contract: the engine reads behavior from
-        <code>brico.manifest.json</code> instead of hardcoding it — which is exactly what
-        makes community and third-party pieces possible.
-      </p>
+    <div class="rule rv">
+      <p>Files in git are the source of truth.<br><span class="it">Every database is a derived, rebuildable projection.</span></p>
     </div>
+
+    <div class="layers rv d1">
+      <div class="layer" style="--lc:var(--terra);--lcs:var(--terra-soft)">
+        <div class="ln">1<small>truth</small></div>
+        <div>
+          <h4>The Vault — a git directory</h4>
+          <p>Each version directory holds the piece's files, its manifest, and derived knowledge:
+          <code>summary.md</code>, <code>surface.json</code>, and embeddings as raw float32 vectors with a
+          sidecar recording the embedding model — because vectors from different models are not comparable.</p>
+        </div>
+        <span class="pill">offline · auditable</span>
+      </div>
+      <div class="layer" style="--lc:var(--sage);--lcs:var(--sage-soft)">
+        <div class="ln">2<small>index</small></div>
+        <div>
+          <h4>One embedded SQLite file</h4>
+          <p>A single database at <code>~/.brico/index.db</code>, compiled into the binary — still one static
+          binary, still zero runtime dependencies. It replaces index.json and provides every query capability
+          the first draft wanted five separate systems for.</p>
+        </div>
+        <span class="pill">boring on purpose</span>
+      </div>
+      <div class="layer" style="--lc:var(--slate);--lcs:var(--slate-soft)">
+        <div class="ln">3<small>scale</small></div>
+        <div>
+          <h4>A hosted tier — Postgres only, later</h4>
+          <p>pgvector, full-text, recursive CTEs. One well-understood database instead of five, entered only
+          when team Vaults demand it. Because of the source-of-truth rule it stays a projection: if the hosted
+          database dies, it is rebuilt from the repositories.</p>
+        </div>
+        <span class="pill">demand-gated</span>
+      </div>
+    </div>
+
+    <div class="caps rv d2">
+      <div class="tile">
+        <span class="tl" style="color:var(--sage)">semantic search</span>
+        <p>sqlite-vec — brute-force cosine is already single-digit milliseconds at 10k vectors.</p>
+        <p style="margin-top:10px;color:var(--ink-3)">“Something like rate limiting for our stack”</p>
+      </div>
+      <div class="tile">
+        <span class="tl" style="color:var(--sage)">keyword search</span>
+        <p>FTS5 full-text index with ranking.</p>
+        <p style="margin-top:10px;color:var(--ink-3)">“stripe”, “jwt”, tag and description matches</p>
+      </div>
+      <div class="tile">
+        <span class="tl" style="color:var(--sage)">graph queries</span>
+        <p>Relational tables plus recursive CTEs — a few lines of SQL.</p>
+        <p style="margin-top:10px;color:var(--ink-3)">“What breaks if redis is replaced?”</p>
+      </div>
+    </div>
+
+    <p class="rv d3" style="color:var(--ink-3);font-size:.9rem;margin-top:28px;max-width:56rem">
+      Any index can be deleted and rebuilt with one command — <code style="color:var(--terra-d)">brico reindex</code> —
+      the same philosophy as today's self-healing index.json, scaled up. Embedding generation is the only place a
+      network touches the pipeline, so it is fenced: always skippable, and
+      <code style="color:var(--terra-d)">brico reindex --embed</code> backfills later. Offline-first stays a hard
+      guarantee, not an asterisk.
+    </p>
   </div>
 </section>
 
-<!-- ================= DOCS ================= -->
-<section class="docs" id="docs">
+<!-- ================= GRAPH ================= -->
+<section class="sec" id="graph">
   <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="kicker" style="background:var(--yellow);color:var(--ink)">📚 Documentation</span>
-      <h2>From zero to first piece in five minutes.</h2>
-      <p>Everything you need to build, capture, and compose.</p>
+    <div class="sec-head rv">
+      <div class="kick"><span class="num">07</span> The knowledge graph</div>
+      <h2 class="split">Questions that required a senior engineer's memory become one-line queries.</h2>
+      <p>
+        Relationships are declared where everything else about a piece is declared: in the manifest.
+        The local index aggregates them into queryable tables — no graph database, no new mental model
+        for contributors.
+      </p>
     </div>
 
-    <div class="tabs reveal">
-      <button class="tab-btn active" data-tab="quickstart">🚀 Quick start</button>
-      <button class="tab-btn" data-tab="commands">⌨️ Commands</button>
-      <button class="tab-btn" data-tab="vault">🏛 The Vault</button>
-      <button class="tab-btn" data-tab="develop">🛠 Development</button>
-    </div>
-
-    <div class="tab-pane active" id="tab-quickstart">
-      <div class="doc-card">
-        <h3>Quick start</h3>
-        <p class="lead">Build the engine, capture your first module, and snap it into a fresh project.</p>
-        <div class="codeblock"><button class="copy">Copy</button><span class="c"># 1. Build the engine (single static binary, no runtime required)</span>
-<span class="y">cd</span> engine && go build -o ../brico ./cmd/brico && <span class="y">cd</span> ..
-
-<span class="c"># Use a local demo Vault for this walkthrough</span>
-<span class="y">export</span> BRICO_VAULT=<span class="g">"$PWD/.demo-vault"</span>
-
-<span class="c"># 2. See what's reusable in the sample source project</span>
-./brico --cwd examples/nest-source <span class="b">extract</span>
-
-<span class="c"># 3. Capture the auth module into the Vault</span>
-./brico --cwd examples/nest-source <span class="b">capture</span> auth -y \
-    -d <span class="g">"JWT authentication with Passport &amp; bcrypt"</span> -t security,jwt,auth
-
-<span class="c"># 4. Browse the Vault</span>
-./brico <span class="b">list</span>
-./brico <span class="b">search</span> jwt
-
-<span class="c"># 5. Drop it into a fresh project</span>
-./brico --cwd examples/nest-target <span class="b">add</span> auth -y
-
-<span class="c"># 6. Validate everything</span>
-./brico --cwd examples/nest-target <span class="b">doctor</span></div>
-        <p style="color:var(--ink-soft);font-weight:600;font-size:.95rem">
-          <code>add</code> copies the module's files, records it in <code>brico.json</code>, appends required
-          variables to <code>.env.example</code>, and prints framework-specific wiring steps —
-          like <em>"add AuthModule to the AppModule imports array."</em>
+    <div class="kg rv d1">
+      <div class="rels">
+        <div class="rel-row"><code>depends_on</code><span>What breaks if we replace the cache piece?</span></div>
+        <div class="rel-row"><code>replaces</code><span>What superseded the old mailer, and why?</span></div>
+        <div class="rel-row"><code>similar_to</code><span>Is there anything close to this already?</span></div>
+        <div class="rel-row"><code>inspired_by</code><span>Where did this design come from?</span></div>
+        <div class="rel-row"><code>used_by</code><span>Which pipelines are downstream of this prompt?</span></div>
+        <p style="color:var(--ink-3);font-size:.87rem;margin-top:10px">
+          Because pipeline pieces reference their components by name and version, the graph naturally spans
+          code and AI assets — impact analysis works identically whether the changed piece is a Redis client
+          or a chunking prompt.
         </p>
       </div>
-    </div>
 
-    <div class="tab-pane" id="tab-commands">
-      <div class="doc-card">
-        <h3>Command reference</h3>
-        <p class="lead">The full surface. Supported frameworks: <b>NestJS</b> and <b>Next.js</b> — adapters add more without touching the engine.</p>
-        <table class="cmd-table">
-          <thead><tr><th>Command</th><th>Status</th><th>What it does</th></tr></thead>
-          <tbody>
-            <tr><td><code>brico extract</code></td><td><span class="pill ok">working</span></td><td>Heuristically suggests reusable modules in a project</td></tr>
-            <tr><td><code>brico capture</code></td><td><span class="pill ok">working</span></td><td>Scans a module, builds a manifest, publishes to the Vault</td></tr>
-            <tr><td><code>brico list</code></td><td><span class="pill ok">working</span></td><td>Lists Vault modules</td></tr>
-            <tr><td><code>brico search</code></td><td><span class="pill ok">working</span></td><td>Searches by name / description / tags</td></tr>
-            <tr><td><code>brico add</code></td><td><span class="pill ok">working</span></td><td>Resolves a version, copies files, wires env &amp; config</td></tr>
-            <tr><td><code>brico remove</code></td><td><span class="pill ok">working</span></td><td>Removes an installed module + cleanup steps</td></tr>
-            <tr><td><code>brico doctor</code></td><td><span class="pill ok">working</span></td><td>Validates engine, adapters, Vault, and project</td></tr>
-            <tr><td><code>brico ui</code></td><td><span class="pill ok">working</span></td><td>Interactive terminal cockpit — browse the Vault as a mosaic</td></tr>
-            <tr><td><code>brico publish</code></td><td><span class="pill ok">working</span></td><td>Pushes the Vault (or one module) to a GitHub repo — <code>-l</code>/<code>--repo</code> for other repos</td></tr>
-            <tr><td><code>brico create</code></td><td><span class="pill prev">preview</span></td><td>Project generator (lands in the Templates phase)</td></tr>
-            <tr><td><code>pull · diff · update</code></td><td><span class="pill soon">planned</span></td><td>Remaining Vault sync commands (Phase 1 completion)</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="tab-pane" id="tab-vault">
-      <div class="doc-card">
-        <h3>The Vault &amp; the Manifest</h3>
-        <p class="lead">A local directory under git. Immutable history, self-healing index, offline-first.</p>
-        <div class="codeblock"><button class="copy">Copy</button>&lt;vault&gt;/
-  index.json                 <span class="c"># searchable summary of every module</span>
-  auth/
-    0.1.0/
-      brico.manifest.json     <span class="c"># the manifest for this snapshot</span>
-      auth.service.ts        <span class="c"># the module's files, exactly as declared</span>
-      ...
-    0.2.0/
-      ...</div>
-        <ul class="checklist" style="margin-top:24px">
-          <li><span class="tick">✓</span><span><b>Immutable history</b> — publish refuses to overwrite an existing version; changes require a version bump. Every publish is a deterministic git commit.</span></li>
-          <li><span class="tick">✓</span><span><b>Self-healing index</b> — <code>index.json</code> is rebuilt from disk after every publish, so a hand-edited or merged Vault reconciles automatically.</span></li>
-          <li><span class="tick">✓</span><span><b>Offline-first</b> — no network required. Git is the seam along which remote and team Vaults arrive later.</span></li>
-          <li><span class="tick">✓</span><span><b>The manifest is the contract</b> — identity, versions, deps, env vars, exports, compatibility, and lifecycle hooks. Behavior is data, not engine code.</span></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="tab-pane" id="tab-develop">
-      <div class="doc-card">
-        <h3>Developing Bricolage</h3>
-        <p class="lead">A single Go module. Minimal dependencies — cobra for the CLI; semver lives in-tree.</p>
-        <div class="codeblock"><button class="copy">Copy</button><span class="y">cd</span> engine
-go build ./...      <span class="c"># compile</span>
-go test ./...       <span class="c"># unit + integration tests</span>
-go vet ./...        <span class="c"># static checks</span></div>
-        <p style="color:var(--ink-soft);font-weight:600;font-size:.95rem;margin-top:10px">
-          Adding a framework = one new package implementing the 6-method <code>Adapter</code>
-          interface + one blank import. CI runs format, vet, build, and tests on
-          Linux, macOS, and Windows.
-        </p>
-        <div class="codeblock"><button class="copy">Copy</button><span class="b">type</span> <span class="y">Adapter</span> <span class="b">interface</span> {
-    ID() <span class="g">string</span>
-    Framework() <span class="g">string</span>
-    DefaultInstallPath(m *manifest.Manifest) <span class="g">string</span>
-    SuggestCaptures(projectRoot <span class="g">string</span>) ([]CaptureSuggestion, <span class="g">error</span>)
-    WireAdd(projectRoot <span class="g">string</span>, m *manifest.Manifest) []WireStep
-    WireRemove(projectRoot <span class="g">string</span>, m *manifest.Manifest) []WireStep
-}</div>
+      <div class="tile" style="padding:24px">
+        <svg class="kg-svg" viewBox="0 0 460 320" xmlns="http://www.w3.org/2000/svg">
+          <g stroke-linecap="round">
+            <path class="edge" d="M230,58 C180,88 150,118 120,148"/>
+            <path class="edge" d="M230,58 C280,88 310,118 340,148"/>
+            <path class="edge" d="M120,148 C110,198 130,233 170,256"/>
+            <path class="edge" d="M340,148 C350,198 330,233 290,256"/>
+            <path class="edge" d="M170,256 L290,256"/>
+            <path class="edge" d="M120,148 L340,148"/>
+          </g>
+          <g class="n"><circle cx="230" cy="58" r="21" fill="#F7EEDC" stroke="#B8873A" stroke-width="1.6"/>
+            <text x="230" y="61" text-anchor="middle" fill="#7E5C1F">prompt</text>
+            <text class="rel" x="230" y="27" text-anchor="middle">chunking-v3</text></g>
+          <g class="n"><circle cx="120" cy="148" r="21" fill="#E4EAEF" stroke="#4A6072" stroke-width="1.6"/>
+            <text x="120" y="151" text-anchor="middle" fill="#334A5C">pipeline</text>
+            <text class="rel" x="120" y="119" text-anchor="middle">rag-search</text></g>
+          <g class="n"><circle cx="340" cy="148" r="21" fill="#E4EAEF" stroke="#4A6072" stroke-width="1.6"/>
+            <text x="340" y="151" text-anchor="middle" fill="#334A5C">pipeline</text>
+            <text class="rel" x="340" y="119" text-anchor="middle">ingest</text></g>
+          <g class="n"><circle cx="170" cy="256" r="21" fill="#F6E7DF" stroke="#C2542B" stroke-width="1.6"/>
+            <text x="170" y="259" text-anchor="middle" fill="#9C4020">code</text>
+            <text class="rel" x="170" y="291" text-anchor="middle">cache</text></g>
+          <g class="n"><circle cx="290" cy="256" r="21" fill="#EEE5EC" stroke="#7D5670" stroke-width="1.6"/>
+            <text x="290" y="259" text-anchor="middle" fill="#5D3E52">eval</text>
+            <text class="rel" x="290" y="291" text-anchor="middle">recall@10</text></g>
+          <text class="rel" x="146" y="105" text-anchor="middle">used_by</text>
+          <text class="rel" x="318" y="105" text-anchor="middle">used_by</text>
+          <text class="rel" x="230" y="142" text-anchor="middle">similar_to</text>
+          <text class="rel" x="230" y="249" text-anchor="middle">depends_on</text>
+        </svg>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ================= ROADMAP ================= -->
-<section class="roadmap" id="roadmap">
+<section class="sec" id="roadmap">
   <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="kicker" style="background:var(--green)">🗺 Roadmap</span>
-      <h2>Built piece by piece — literally.</h2>
-      <p>Phase 1 is standing. Three more towers to go.</p>
+    <div class="sec-head rv">
+      <div class="kick"><span class="num">08</span> Roadmap</div>
+      <h2 class="split">Four phases, each gated on the last one shipping.</h2>
+      <p>Each phase preserves the one-binary, git-first identity. Everything heavier waits for the demand that justifies it.</p>
     </div>
 
-    <div class="phases">
-      <div class="phase reveal">
-        <div class="studs"><span class="stud" style="--c:var(--red)"></span><span class="stud" style="--c:var(--red)"></span></div>
-        <div class="ptag">Phase 1 · in progress</div>
-        <h4>Foundation</h4>
-        <div class="progressbar"><i data-w="70%"></i></div>
+    <div class="phases rv d1">
+      <div class="phase" style="--pc:var(--terra);--pcs:var(--terra-soft)">
+        <div class="dot"><i></i></div>
+        <div class="pl">Phase A</div><h4>Knowledge layer</h4><div class="hz">Weeks</div>
         <ul>
-          <li class="done">Go engine · single-binary CLI</li>
-          <li class="done">Manifest schema — the contract</li>
-          <li class="done">Nest + Next adapters</li>
-          <li class="done">Git-versioned Vault + search</li>
-          <li class="done">Full extract→doctor flow</li>
-          <li class="wip">Vault sync: push / pull / diff</li>
-          <li class="wip">Project templates for create</li>
+          <li>Representation ladder at capture</li>
+          <li>Semantic search over local vectors</li>
+          <li><code>brico mcp</code> with four core tools</li>
+          <li>SQLite index replacing index.json</li>
         </ul>
+        <div class="exit"><b>Exit criterion</b><span>An MCP-connected assistant answers “do we have a piece for X?” in under a second.</span></div>
       </div>
-      <div class="phase reveal d1">
-        <div class="studs"><span class="stud" style="--c:var(--yellow)"></span><span class="stud" style="--c:var(--yellow)"></span></div>
-        <div class="ptag">Phase 2</div>
-        <h4>Intelligence</h4>
-        <div class="progressbar"><i data-w="0%"></i></div>
+      <div class="phase" style="--pc:var(--ochre);--pcs:var(--ochre-soft)">
+        <div class="dot"><i></i></div>
+        <div class="pl">Phase B</div><h4>AI piece kinds</h4><div class="hz">1–2 months</div>
         <ul>
-          <li>TypeScript AST extraction</li>
-          <li>Automated AST wiring</li>
-          <li>AI-assisted module detection</li>
-          <li>Remote + team Vaults</li>
-          <li>Framework-aware generators</li>
+          <li><code>kind</code> field in the manifest</li>
+          <li>Prompt and skill adapters</li>
+          <li><code>brico eval</code> harness</li>
+          <li>3–4 polished example pieces</li>
         </ul>
+        <div class="exit"><b>Exit criterion</b><span>A prompt change is flagged by a failing versioned eval — regression testing for prompts, end to end.</span></div>
       </div>
-      <div class="phase reveal d2">
-        <div class="studs"><span class="stud" style="--c:var(--blue)"></span><span class="stud" style="--c:var(--blue)"></span></div>
-        <div class="ptag">Phase 3</div>
-        <h4>Ecosystem</h4>
-        <div class="progressbar"><i data-w="0%"></i></div>
+      <div class="phase" style="--pc:var(--sage);--pcs:var(--sage-soft)">
+        <div class="dot"><i></i></div>
+        <div class="pl">Phase C</div><h4>Accounting &amp; graph</h4><div class="hz">1–2 months</div>
         <ul>
-          <li>Enterprise / private registries</li>
-          <li>Module marketplace</li>
-          <li>VS Code + JetBrains extensions</li>
-          <li>Remote sync + opt-in analytics</li>
+          <li><code>brico stats</code> token accounting</li>
+          <li>Relationship fields + <code>brico graph</code></li>
+          <li>Eval and dataset kinds</li>
+          <li>Pipeline kind with cross-references</li>
         </ul>
+        <div class="exit"><b>Exit criterion</b><span>A team can show measured token savings and run impact analysis across code and AI pieces.</span></div>
       </div>
-      <div class="phase reveal d3">
-        <div class="studs"><span class="stud" style="--c:var(--green)"></span><span class="stud" style="--c:var(--green)"></span></div>
-        <div class="ptag">Phase 4</div>
-        <h4>Scale</h4>
-        <div class="progressbar"><i data-w="0%"></i></div>
+      <div class="phase" style="--pc:var(--slate);--pcs:var(--slate-soft)">
+        <div class="dot"><i></i></div>
+        <div class="pl">Phase D</div><h4>Team scale</h4><div class="hz">When pulled by real teams</div>
         <ul>
-          <li>Express · Django · Spring · Laravel adapters</li>
-          <li>Community packages</li>
-          <li>Cloud-hosted Vaults</li>
-          <li>Visual module explorer</li>
-          <li>AI-powered migrations</li>
+          <li>Remote / team Vaults, git-based first</li>
+          <li>Postgres-backed hosted tier, if scale demands</li>
+          <li>Registry / marketplace groundwork</li>
         </ul>
+        <div class="exit"><b>Exit criterion</b><span>First external team runs a shared Vault in production.</span></div>
+      </div>
+    </div>
+
+    <p class="rv d2" style="color:var(--ink-3);font-size:.88rem;margin-top:28px;max-width:58rem">
+      Deliberately absent: “autonomous assembly of systems from verified pieces.” It remains the long-range
+      north star — the natural consequence of a Vault an AI can query, trust, and wire — but it is a research
+      direction, not a committed phase.
+    </p>
+  </div>
+</section>
+
+<!-- ================= POSITIONING ================= -->
+<section class="sec" id="positioning">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="kick"><span class="num">09</span> Positioning</div>
+      <h2 class="split">Not a code generator. Not a boilerplate. <span class="it">Not an AI product.</span></h2>
+      <p>Bricolage is an <b>Engineering Knowledge Operating System</b> — it structures, versions, relates, and preserves engineering craftsmanship, serving it to humans through a CLI and cockpit, and to AI through MCP.</p>
+    </div>
+
+    <div class="tblwrap rv d1" style="overflow-x:auto">
+      <table class="t">
+        <thead><tr><th>Category</th><th>Representatives</th><th>Our differentiation</th></tr></thead>
+        <tbody>
+          <tr><td><b>Repo-indexing AI assistants</b></td><td>Sourcegraph/Cody, GitHub indexing, internal RAG</td><td>They retrieve from everything ever written; we retrieve from a curated Vault of proven pieces at ladder fidelity. <b>Recall of the best, not of the most.</b></td></tr>
+          <tr><td><b>Prompt management SaaS</b></td><td>LangSmith, PromptLayer, Humanloop</td><td>SaaS-first and heavyweight. Our wedge: offline, git-native, one binary — prompts versioned next to the code pieces they serve, which none of them do.</td></tr>
+          <tr><td><b>ML infrastructure</b></td><td>MLflow, Weights &amp; Biases, Hugging Face</td><td>Not competed with. We version AI engineering assets around their artifacts; dataset pieces point to them rather than replacing them.</td></tr>
+          <tr><td><b>Package registries</b></td><td>npm, PyPI, internal registries</td><td>Registries distribute libraries; the Vault captures your modules with wiring, environment, decisions and evals attached — knowledge a package cannot carry.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="rv d2" style="color:var(--ink-2);font-size:.98rem;margin-top:26px;max-width:56rem">
+      The through-line in every row: our moat is not a model or an index — it is the discipline of the Vault
+      and the trust it earns. <b style="color:var(--ink)">Models will churn; a decade of versioned organisational
+      craftsmanship only appreciates.</b>
+    </p>
+  </div>
+</section>
+
+<!-- ================= SUCCESS ================= -->
+<section class="sec" id="success">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="kick"><span class="num">10</span> What success looks like</div>
+      <h2 class="split">Measurable, phase-aligned, honest about what each number can prove.</h2>
+    </div>
+
+    <div class="metrics rv d1">
+      <div class="metric"><div class="mi">Adoption</div><p>Time from download to first captured piece stays under five minutes; weekly active Vaults grow phase over phase.</p></div>
+      <div class="metric"><div class="mi">Reuse rate</div><p><code>brico add</code> events per Vault per month — the direct measure of “reuse beats regeneration” happening.</p></div>
+      <div class="metric"><div class="mi">Token economics</div><p><code>brico stats</code> shows measured tokens served vs. full-file baseline; target 1–2 orders of magnitude.</p></div>
+      <div class="metric"><div class="mi">AI asset discipline</div><p>Share of prompt pieces carrying eval cases; eval pass-rate history visible across versions.</p></div>
+      <div class="metric"><div class="mi">Knowledge preservation</div><p>Pieces reused by someone other than their author — the truest signal that organisational memory is being built.</p></div>
+    </div>
+
+    <div class="pullquote rv d2">
+      <p>A new engineer joins, connects their assistant to the team Vault, and ships production-quality work on
+      day one using pieces they did not write and decisions they did not have to re-make. When that story is
+      routine, the Engineering Knowledge Operating System exists.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DOCS ================= -->
+<section class="sec" id="docs">
+  <div class="wrap">
+    <div class="sec-head mid rv">
+      <div class="kick" style="justify-content:center"><span class="num">11</span> Documentation</div>
+      <h2 class="split">From zero to first piece in five minutes.</h2>
+    </div>
+
+    <div class="tabs rv d1" style="justify-content:center">
+      <button class="tb on" data-t="start">Quick start</button>
+      <button class="tb" data-t="cmds">Commands</button>
+      <button class="tb" data-t="publish">Publishing</button>
+      <button class="tb" data-t="mcp2">MCP</button>
+    </div>
+
+    <div class="rv d2">
+      <div class="pane on" id="p-start">
+        <div class="code"><button class="copy">Copy</button><span class="c"># build the engine — one static binary</span>
+<span class="y">cd</span> engine && go build -o ../brico ./cmd/brico && <span class="y">cd</span> ..
+
+<span class="c"># capture your first piece</span>
+./brico <span class="b">extract</span>
+./brico <span class="b">capture</span> auth -y -d <span class="g">"JWT auth with Passport &amp; bcrypt"</span> -t security,jwt
+
+<span class="c"># browse, then compose into a new project</span>
+./brico <span class="b">list</span>
+./brico --cwd ../new-service <span class="b">add</span> auth -y
+./brico <span class="b">doctor</span></div>
+      </div>
+
+      <div class="pane" id="p-cmds">
+        <div class="tblwrap"><table class="t">
+          <thead><tr><th>Command</th><th>Status</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td><code>brico extract</code></td><td><span class="st ok">working</span></td><td>X-rays a NestJS or Next.js project, surfaces reusable candidates ranked by confidence</td></tr>
+            <tr><td><code>brico capture</code></td><td><span class="st ok">working</span></td><td>Snapshots a module into an immutable, semver'd piece with a manifest</td></tr>
+            <tr><td><code>brico add</code></td><td><span class="st ok">working</span></td><td>Resolves a version, copies files, merges env vars, prints wiring steps</td></tr>
+            <tr><td><code>brico list / search</code></td><td><span class="st ok">working</span></td><td>Finds any piece by name, tag, or description via a self-healing index</td></tr>
+            <tr><td><code>brico doctor</code></td><td><span class="st ok">working</span></td><td>Validates engine, adapters, Vault, and project</td></tr>
+            <tr><td><code>brico ui</code></td><td><span class="st ok">working</span></td><td>Full-screen terminal cockpit over the Vault</td></tr>
+            <tr><td><code>brico publish</code></td><td><span class="st ok">working</span></td><td>Pushes the Vault or a single piece to a GitHub repo</td></tr>
+            <tr><td><code>brico mcp</code></td><td><span class="st soon">phase A</span></td><td>Exposes the Vault as a Model Context Protocol server</td></tr>
+            <tr><td><code>brico eval</code></td><td><span class="st soon">phase B</span></td><td>Runs versioned evaluation cases for prompt pieces</td></tr>
+            <tr><td><code>brico stats</code></td><td><span class="st next">phase C</span></td><td>Local, opt-in token-savings accounting</td></tr>
+            <tr><td><code>brico graph</code></td><td><span class="st next">phase C</span></td><td>Queries the relationship graph — depends_on, replaces, similar_to</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <div class="pane" id="p-publish">
+        <div class="code"><button class="copy">Copy</button><span class="c"># push the whole Vault to your main GitHub repo</span>
+./brico <span class="b">publish</span>
+
+<span class="c"># publish a single piece — merges with what the target already holds</span>
+./brico <span class="b">publish</span> auth
+
+<span class="c"># publish to a different repo entirely</span>
+./brico <span class="b">publish</span> -l
+./brico <span class="b">publish</span> --repo git@github.com:you/team-vault.git</div>
+        <p style="color:var(--ink-2);font-size:.9rem;margin-top:16px;text-align:center">
+          The main repo is asked for once and saved to your global config — override with
+          <code style="color:var(--terra-d)">--repo</code>/<code style="color:var(--terra-d)">-l</code> or the
+          <code style="color:var(--terra-d)">LEGO_PUBLISH_REPO</code> environment variable. Pushes use your ambient git credentials.
+        </p>
+      </div>
+
+      <div class="pane" id="p-mcp2">
+        <div class="code"><button class="copy">Copy</button><span class="c"># expose the Vault to any MCP-capable assistant</span>
+./brico <span class="b">mcp</span>
+
+<span class="c"># tools served:</span>
+<span class="g">search_pieces</span>(query, kind?)   <span class="c">→ cards</span>
+<span class="g">get_piece</span>(name, level)      <span class="c">→ card | surface | summary | source</span>
+<span class="g">plan_reuse</span>(task)            <span class="c">→ candidates with fit rationale</span>
+<span class="g">get_relations</span>(name, kind?)  <span class="c">→ graph neighbourhood</span></div>
+        <p style="color:var(--ink-2);font-size:.9rem;margin-top:16px;text-align:center">
+          Days of work, not months — a thin protocol layer over the same engine and index the CLI already uses.
+        </p>
       </div>
     </div>
   </div>
@@ -994,188 +1212,296 @@ go vet ./...        <span class="c"># static checks</span></div>
 
 <!-- ================= CTA ================= -->
 <section class="cta">
-  <div class="wrap reveal">
-    <span class="kicker" style="background:var(--blue)">🧩 Ready?</span>
-    <h2>Stop rebuilding. Start composing.</h2>
-    <p>Your next app is already half-built — it's sitting in your last one.</p>
-    <div class="cta-row" style="justify-content:center">
-      <a class="btn" href="#docs" id="ctaBottom">Get started ▸</a>
-      <a class="btn ghost" href="#architecture">Read the architecture</a>
+  <div class="wrap">
+    <div class="cta-card rv">
+      <div class="cta-mosaic" style="top:44px;left:44px">
+        <i style="background:var(--terra)"></i><i style="background:#2A2E35"></i><i style="background:var(--ochre)"></i>
+        <i style="background:#2A2E35"></i><i style="background:var(--sage)"></i><i style="background:#2A2E35"></i>
+        <i style="background:var(--slate)"></i><i style="background:#2A2E35"></i><i style="background:var(--plum)"></i>
+      </div>
+      <div class="cta-mosaic" style="bottom:44px;right:44px">
+        <i style="background:#2A2E35"></i><i style="background:var(--plum)"></i><i style="background:#2A2E35"></i>
+        <i style="background:var(--sage)"></i><i style="background:#2A2E35"></i><i style="background:var(--terra)"></i>
+        <i style="background:#2A2E35"></i><i style="background:var(--ochre)"></i><i style="background:#2A2E35"></i>
+      </div>
+      <h2>Stop rebuilding.<br><span class="it">Start composing.</span></h2>
+      <p>Your next answer is already sitting in your last project. Reuse beats regeneration — enforced by making reuse the cheapest path.</p>
+      <div class="cta-row" style="justify-content:center">
+        <a class="btn terra" href="#docs" id="ctaMain">Get started →</a>
+        <a class="btn ghost" href="#architecture" style="color:#F2EFEA;border-color:#3A3E45">Read the architecture</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CREDITS ================= -->
+<section class="credits">
+  <div class="wrap">
+    <div class="credits-card rv">
+      <span class="credits-label">Conceived &amp; engineered by</span>
+      <div class="credits-team">G-Task-Force <span class="it">from</span> ScienceWerx</div>
+      <p class="credits-org">Innovation Lab — <b>ScienceWerx</b></p>
+      <div class="credits-divider"></div>
+      <div class="credits-engineer">
+        <div class="credits-avatar">YA</div>
+        <div class="credits-info">
+          <div class="credits-name">Youssef Ali</div>
+          <div class="credits-role">Senior Analyst / SWE at <b>ScienceWerx</b></div>
+        </div>
+      </div>
+      <span class="credits-motto">"Build it once. Then compose forever."</span>
     </div>
   </div>
 </section>
 
 <!-- ================= FOOTER ================= -->
 <footer>
-  <div class="foot-studs">
-    <span class="stud" style="--c:var(--red)"></span>
-    <span class="stud" style="--c:var(--yellow)"></span>
-    <span class="stud" style="--c:var(--blue)"></span>
-    <span class="stud" style="--c:var(--green)"></span>
-    <span class="stud" style="--c:var(--orange)"></span>
-  </div>
-  <div class="wrap foot-inner">
-    <div>
-      <div class="foot-brand"><span class="logo-brick" style="width:26px;height:26px;box-shadow:inset 0 0 0 3px var(--ink)"></span> Bricolage</div>
-      <p style="margin-top:10px;max-width:26rem;font-weight:600">
-        Not a code generator. Not a boilerplate. A platform that turns engineering
-        craftsmanship into reusable, evolving assets.
-      </p>
-    </div>
-    <div style="display:flex;gap:44px;flex-wrap:wrap">
-      <div>
-        <div style="color:#fff;font-weight:900;margin-bottom:10px">Product</div>
-        <div style="display:grid;gap:6px"><a href="#features">Features</a><a href="#cockpit">Cockpit</a><a href="#roadmap">Roadmap</a></div>
+  <div class="wrap">
+    <div class="f-card">
+      <div class="f-in">
+        <div style="max-width:23rem">
+          <div class="brand" style="margin-bottom:16px"><span class="mark"><i></i><i></i><i></i><i></i></span> Bricolage</div>
+          <p style="color:var(--ink-2);font-size:.9rem">The Engineering Knowledge Operating System. Structures, versions, relates, and preserves engineering craftsmanship — served to humans through a CLI, and to AI through MCP.</p>
+        </div>
+        <div><h5>Product</h5><a href="#problem">Problem</a><a href="#ladder">Ladder</a><a href="#mcp">MCP</a><a href="#kinds">Piece kinds</a></div>
+        <div><h5>Platform</h5><a href="#architecture">Architecture</a><a href="#graph">Knowledge graph</a><a href="#roadmap">Roadmap</a></div>
+        <div><h5>Resources</h5><a href="#docs">Documentation</a><a href="#positioning">Positioning</a><a href="#success">Success metrics</a></div>
       </div>
-      <div>
-        <div style="color:#fff;font-weight:900;margin-bottom:10px">Docs</div>
-        <div style="display:grid;gap:6px"><a href="#docs">Quick start</a><a href="#docs">Commands</a><a href="#architecture">Architecture</a></div>
+      <div class="f-bot">
+        <span class="fr">L'art de bâtir avec l'existant.</span>
+        <span>© 2026 Bricolage · Vision white paper v2.0</span>
       </div>
     </div>
-  </div>
-  <div class="wrap" style="margin-top:34px;padding-top:20px;border-top:1px solid #4A4033;font-size:.85rem;font-weight:600">
-    <i style="font-family:'Fraunces',Georgia,serif">L'art de bâtir avec l'existant.</i> · Compose software from reusable, versioned pieces. · © 2026 Bricolage
   </div>
 </footer>
 
 <script>
-/* ============ nav scroll state ============ */
+/* ===== nav ===== */
 const nav=document.getElementById('nav');
-addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>10),{passive:true});
+addEventListener('scroll',()=>nav.classList.toggle('on',scrollY>8),{passive:true});
 
-/* ============ scroll reveal ============ */
+/* ===== reveal ===== */
 const io=new IntersectionObserver(es=>es.forEach(e=>{
-  if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}
-}),{threshold:.15});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}
+}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 
-/* ============ hero terminal typing ============ */
-const SCRIPT=[
-  {t:'$ brico extract',cls:'t-cmd',pause:350},
-  {t:'  ◆ auth        confidence 92%   jwt · passport · bcrypt',cls:'t-blue',pause:120},
-  {t:'  ◆ mailer      confidence 81%   smtp · templates',cls:'t-blue',pause:320},
-  {t:'$ brico capture auth -y',cls:'t-cmd',pause:300},
-  {t:'  ✔ scanned 6 files · 3 deps · 2 env vars',cls:'t-green',pause:120},
-  {t:'  ✔ published auth@0.1.0 to the Vault',cls:'t-green',pause:380},
-  {t:'$ brico add auth -y',cls:'t-cmd',pause:300},
-  {t:'  ✔ resolved auth@0.1.0 · copied files · wired .env.example',cls:'t-green',pause:120},
-  {t:'  → add AuthModule to the AppModule imports array',cls:'t-yellow',pause:380},
-  {t:'$ brico doctor',cls:'t-cmd',pause:300},
-  {t:'  ✔ engine ✔ adapters ✔ vault ✔ project — every piece in place',cls:'t-green',pause:1600},
-];
-const term=document.getElementById('termBody');
-let li=0,ci=0,line=null,caret=document.createElement('span');caret.className='caret';
-function typeStep(){
-  if(li>=SCRIPT.length){
-    setTimeout(()=>{term.innerHTML='';li=0;ci=0;line=null;typeStep();},2600);
-    return;
-  }
-  const item=SCRIPT[li];
-  if(!line){
-    line=document.createElement('div');
-    line.className='ln '+(item.cls||'');
-    term.appendChild(line);
-    term.appendChild(caret);
-  }
-  if(ci<item.t.length){
-    line.textContent=item.t.slice(0,++ci);
-    term.insertBefore(line,caret);
-    setTimeout(typeStep,item.cls==='t-cmd'?38:6);
-  }else{
-    li++;ci=0;line=null;
-    setTimeout(typeStep,item.pause||150);
-  }
-}
-typeStep();
+/* ===== split headings ===== */
+document.querySelectorAll('.split').forEach(h=>{
+  const walk=n=>{
+    [...n.childNodes].forEach(c=>{
+      if(c.nodeType===3){
+        const f=document.createDocumentFragment();
+        c.textContent.split(/(\s+)/).forEach(tok=>{
+          if(/^\s+$/.test(tok)){f.appendChild(document.createTextNode(tok));return}
+          const w=document.createElement('span');
+          w.style.cssText='display:inline-block;white-space:nowrap';
+          [...tok].forEach(ch=>{
+            const s=document.createElement('span');
+            s.className='ch';s.textContent=ch;w.appendChild(s);
+          });
+          f.appendChild(w);
+        });
+        c.replaceWith(f);
+      } else if(c.nodeType===1){walk(c)}
+    });
+  };
+  walk(h);
+  h.querySelectorAll('.ch').forEach((c,i)=>c.style.transitionDelay=(i*12)+'ms');
+  new IntersectionObserver((es,o)=>es.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('on');o.unobserve(e.target)}
+  }),{threshold:.2}).observe(h);
+});
 
-/* ============ marquee duplication ============ */
-const track=document.getElementById('marqueeTrack');
-track.innerHTML=track.innerHTML.repeat(4);
-
-/* ============ count-up stats ============ */
+/* ===== count-up ===== */
 const cio=new IntersectionObserver(es=>es.forEach(e=>{
   if(!e.isIntersecting)return;
-  const el=e.target,end=+el.dataset.count,dur=900,t0=performance.now();
+  const el=e.target,end=+el.dataset.count,suf=el.dataset.suffix||'',t0=performance.now(),dur=1600;
   (function tick(t){
     const p=Math.min((t-t0)/dur,1);
-    el.textContent=Math.round(end*(1-Math.pow(1-p,3)));
+    el.textContent=Math.round(end*(1-Math.pow(1-p,3))).toLocaleString()+(p===1?suf:'');
     if(p<1)requestAnimationFrame(tick);
   })(t0);
   cio.unobserve(el);
-}),{threshold:.6});
-document.querySelectorAll('.num[data-count]').forEach(el=>cio.observe(el));
+}),{threshold:.5});
+document.querySelectorAll('[data-count]').forEach(el=>cio.observe(el));
 
-/* ============ pipeline loop ============ */
-const steps=[...document.querySelectorAll('.pipe-step')];
-let active=0;
-setInterval(()=>{
-  steps.forEach((s,i)=>s.classList.toggle('active',i===active));
-  active=(active+1)%steps.length;
-},1400);
+/* ===== ticker ===== */
+const tick=document.getElementById('tick');
+tick.innerHTML=tick.innerHTML+tick.innerHTML;
 
-/* ============ docs tabs ============ */
-document.querySelectorAll('.tab-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-    document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+/* ===== hero terminal ===== */
+(function(){
+  const SC=[
+    {t:'$ brico extract',c:'t-cmd',p:340},
+    {t:'  ◆ auth      confidence 92%   jwt · passport · bcrypt',c:'t-acc',p:110},
+    {t:'  ◆ mailer    confidence 81%   smtp · templates',c:'t-acc',p:300},
+    {t:'$ brico capture auth -y',c:'t-cmd',p:280},
+    {t:'  ✔ scanned 6 files · 3 deps · 2 env vars',c:'t-ok',p:110},
+    {t:'  ✔ published auth@0.1.0 to the Vault',c:'t-ok',p:340},
+    {t:'$ brico add auth -y',c:'t-cmd',p:280},
+    {t:'  ✔ resolved · copied files · wired .env.example',c:'t-ok',p:110},
+    {t:'  → add AuthModule to the AppModule imports',c:'t-dim',p:1500}
+  ];
+  const term=document.getElementById('term');
+  if(!term)return;
+  const caret=document.createElement('span');caret.className='caret';
+  let li=0,ci=0,line=null;
+  function step(){
+    if(li>=SC.length){setTimeout(()=>{term.innerHTML='';li=ci=0;line=null;step()},2600);return}
+    const it=SC[li];
+    if(!line){
+      line=document.createElement('div');line.className='ln '+it.c;
+      term.appendChild(line);term.appendChild(caret);
+    }
+    if(ci<it.t.length){
+      line.textContent=it.t.slice(0,++ci);
+      term.insertBefore(line,caret);
+      setTimeout(step,it.c==='t-cmd'?34:6);
+    } else {li++;ci=0;line=null;setTimeout(step,it.p)}
+  }
+  step();
+})();
+
+/* ===== ladder ===== */
+(function(){
+  const rungs=[...document.querySelectorAll('.rung')],panes=[...document.querySelectorAll('.rd')];
+  let idx=0,auto=true;
+  function show(i){
+    idx=i;
+    rungs.forEach((r,j)=>r.classList.toggle('on',j===i));
+    panes.forEach((p,j)=>p.classList.toggle('on',j===i));
+  }
+  rungs.forEach(r=>r.addEventListener('click',()=>{auto=false;show(+r.dataset.i)}));
+  setInterval(()=>{if(auto)show((idx+1)%rungs.length)},3400);
+})();
+
+/* ===== econ bars ===== */
+(function(){
+  const econ=document.getElementById('econ');
+  if(!econ)return;
+  new IntersectionObserver((es,o)=>es.forEach(e=>{
+    if(!e.isIntersecting)return;
+    econ.querySelectorAll('.track i').forEach(i=>i.style.width=i.dataset.w+'%');
+    o.unobserve(econ);
+  }),{threshold:.3}).observe(econ);
+})();
+
+/* ===== MCP flow ===== */
+(function(){
+  const body=document.getElementById('flowBody');
+  if(!body)return;
+  const msgs=[...body.querySelectorAll('.fmsg')];
+  let started=false;
+  function run(){
+    msgs.forEach(m=>m.classList.remove('on'));
+    msgs.forEach((m,i)=>setTimeout(()=>m.classList.add('on'),380+i*620));
+    setTimeout(run,380+msgs.length*620+3400);
+  }
+  new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting&&!started){started=true;run()}
+  }),{threshold:.25}).observe(body);
+})();
+
+/* ===== tabs ===== */
+document.querySelectorAll('.tb').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.tb').forEach(x=>x.classList.remove('on'));
+    document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
+    b.classList.add('on');
+    document.getElementById('p-'+b.dataset.t).classList.add('on');
   });
 });
 
-/* ============ copy buttons ============ */
-document.querySelectorAll('.codeblock .copy').forEach(btn=>{
+/* ===== copy ===== */
+document.querySelectorAll('.code .copy').forEach(btn=>{
   btn.addEventListener('click',()=>{
-    const clone=btn.parentElement.cloneNode(true);
-    clone.querySelector('.copy').remove();
-    navigator.clipboard.writeText(clone.textContent.trim()).then(()=>{
-      btn.textContent='Copied!';setTimeout(()=>btn.textContent='Copy',1400);
+    const c=btn.parentElement.cloneNode(true);
+    c.querySelector('.copy').remove();
+    navigator.clipboard.writeText(c.textContent.trim()).then(()=>{
+      btn.textContent='Copied';setTimeout(()=>btn.textContent='Copy',1400);
     });
   });
 });
-document.getElementById('copyInstall').addEventListener('click',e=>{
-  navigator.clipboard.writeText(document.getElementById('installCmd').textContent);
-  e.currentTarget.textContent='✓';setTimeout(()=>document.getElementById('copyInstall').textContent='⧉',1200);
+
+/* ===== graph hover ===== */
+document.querySelectorAll('.kg-svg g.n').forEach(g=>{
+  const c=g.querySelector('circle');
+  g.style.cursor='pointer';
+  g.addEventListener('mouseenter',()=>c.setAttribute('r','25'));
+  g.addEventListener('mouseleave',()=>c.setAttribute('r','21'));
 });
 
-/* ============ progress bars ============ */
-const pio=new IntersectionObserver(es=>es.forEach(e=>{
-  if(!e.isIntersecting)return;
-  e.target.querySelectorAll('.progressbar i').forEach(i=>i.style.width=i.dataset.w);
-  pio.unobserve(e.target);
-}),{threshold:.3});
-document.querySelectorAll('.roadmap').forEach(el=>pio.observe(el));
-
-/* ============ parallax background bricks ============ */
-const bg=document.getElementById('bgBricks');
-addEventListener('mousemove',e=>{
-  const x=(e.clientX/innerWidth-.5),y=(e.clientY/innerHeight-.5);
-  bg.style.transform=`translate(${x*-18}px,${y*-12}px)`;
-},{passive:true});
-
-/* ============ brick confetti on CTA ============ */
-const COLORS=['#C1552B','#D9A13B','#41617D','#7C8A4D','#8A5A83'];
-function confetti(x,y){
+/* ===== confetti ===== */
+const CC=['#C2542B','#B8873A','#5E7A5A','#4A6072','#7D5670'];
+document.getElementById('ctaMain').addEventListener('click',e=>{
   for(let i=0;i<26;i++){
-    const c=document.createElement('div');
-    c.className='confetti';
-    c.style.background=COLORS[i%COLORS.length];
-    c.style.left=x+'px';c.style.top=y+'px';
-    document.body.appendChild(c);
-    const ang=Math.random()*Math.PI*2,v=5+Math.random()*7;
-    let vx=Math.cos(ang)*v,vy=Math.sin(ang)*v-6,px=x,py=y,rot=0,life=0;
+    const d=document.createElement('div');
+    d.style.cssText='position:fixed;width:9px;height:9px;border-radius:2px;pointer-events:none;z-index:999';
+    d.style.background=CC[i%CC.length];
+    d.style.left=e.clientX+'px';d.style.top=e.clientY+'px';
+    document.body.appendChild(d);
+    const a=Math.random()*Math.PI*2,v=5+Math.random()*6.5;
+    let vx=Math.cos(a)*v,vy=Math.sin(a)*v-6,px=e.clientX,py=e.clientY,rot=45,life=0;
     (function fall(){
-      vy+=.45;px+=vx;py+=vy;rot+=vx*4;life++;
-      c.style.transform=`translate(${px-x}px,${py-y}px) rotate(${rot}deg)`;
-      c.style.opacity=1-life/60;
-      if(life<60)requestAnimationFrame(fall);else c.remove();
+      vy+=.44;px+=vx;py+=vy;rot+=vx*3.4;life++;
+      d.style.transform=`translate(${px-e.clientX}px,${py-e.clientY}px) rotate(${rot}deg)`;
+      d.style.opacity=1-life/58;
+      if(life<58)requestAnimationFrame(fall);else d.remove();
     })();
   }
-}
-['ctaMain','ctaBottom'].forEach(id=>{
-  const el=document.getElementById(id);
-  el&&el.addEventListener('click',e=>confetti(e.clientX,e.clientY));
 });
+
+/* ===== hero mosaic canvas: pieces assembling ===== */
+(function(){
+  const cv=document.getElementById('pieceCanvas');
+  if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const COL=['#C2542B','#B8873A','#5E7A5A','#4A6072','#7D5670'];
+  let W,H,DPR,tiles=[],t=0;
+  function size(){
+    DPR=Math.min(devicePixelRatio||1,2);
+    W=cv.clientWidth;H=cv.clientHeight;
+    cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);
+    build();
+  }
+  function build(){
+    tiles=[];
+    const cell=Math.max(26,Math.min(W,H)/7);
+    const cols=Math.ceil(W/cell),rows=Math.ceil(H/cell);
+    for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
+      const lit=Math.random()<.34;
+      tiles.push({x:c*cell,y:r*cell,s:cell,
+        col:lit?COL[Math.floor(Math.random()*COL.length)]:null,
+        ph:Math.random()*Math.PI*2,sp:.5+Math.random()*.9});
+    }
+  }
+  function frame(){
+    t+=.012;
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='#F7F4EE';ctx.fillRect(0,0,W,H);
+    tiles.forEach(tl=>{
+      const pad=tl.s*.16;
+      const pulse=(Math.sin(t*tl.sp+tl.ph)+1)/2;
+      if(tl.col){
+        ctx.globalAlpha=.25+pulse*.7;
+        ctx.fillStyle=tl.col;
+      } else {
+        ctx.globalAlpha=.5;
+        ctx.fillStyle='#E4DDD1';
+      }
+      const r=tl.s*.18;
+      const x=tl.x+pad,y=tl.y+pad,w=tl.s-pad*2,h=tl.s-pad*2;
+      ctx.beginPath();
+      ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);
+      ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();ctx.fill();
+    });
+    ctx.globalAlpha=1;
+    requestAnimationFrame(frame);
+  }
+  addEventListener('resize',size);
+  size();frame();
+})();
 </script>
 </body>
 </html>
