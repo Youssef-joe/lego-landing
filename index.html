@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bricolage — The Engineering Knowledge Operating System</title>
-<meta name="description" content="Bricolage captures your organisation's best engineering work as versioned pieces, then serves it to your team through a CLI and to your AI assistants through MCP. Reuse beats regeneration.">
+<title>BricoWerx — The Engineering Knowledge Operating System</title>
+<meta name="description" content="BricoWerx captures your organisation's best engineering work as versioned pieces, then serves it to your team through a CLI and to your AI assistants through MCP. Reuse beats regeneration.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='14' y='40' width='38' height='38' rx='7' transform='rotate(45 33 59)' fill='%23C2542B'/%3E%3Crect x='52' y='12' width='27' height='27' rx='5.5' transform='rotate(45 65.5 25.5)' fill='%23B8873A'/%3E%3Crect x='60' y='56' width='22' height='22' rx='4.5' transform='rotate(45 71 67)' fill='%235E7A5A'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -83,15 +84,12 @@ nav{position:sticky;top:0;z-index:60;background:rgba(247,244,238,.82);
 nav.on{box-shadow:0 1px 0 var(--line);background:rgba(247,244,238,.95)}
 .nav-in{display:flex;align-items:center;gap:34px;height:80px}
 .brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:1.16rem;letter-spacing:-.03em}
-.mark{width:30px;height:30px;border-radius:9px;flex:none;display:grid;
-  grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:2.5px;
-  transition:transform .6s var(--spring)}
-.mark i{border-radius:2.5px}
-.mark i:nth-child(1){background:var(--terra)}
-.mark i:nth-child(2){background:var(--ochre)}
-.mark i:nth-child(3){background:var(--sage)}
-.mark i:nth-child(4){background:var(--slate)}
-.brand:hover .mark{transform:rotate(90deg)}
+.mark{width:32px;height:32px;flex:none;overflow:visible;
+  transition:transform .7s var(--spring)}
+.brand:hover .mark{transform:rotate(90deg) scale(1.06)}
+.mark .t1,.mark .t2,.mark .t3{transition:transform .7s var(--spring)}
+.brand:hover .mark .t2{transform:translate(4px,-4px)}
+.brand:hover .mark .t3{transform:translate(3px,3px)}
 .nav-links{display:flex;gap:28px;margin-left:auto;font-size:.9rem;font-weight:500}
 .nav-links a{color:var(--ink-2);transition:color .25s}
 .nav-links a:hover{color:var(--ink)}
@@ -436,32 +434,6 @@ table.t b{color:var(--ink);font-weight:600}
 .pullquote{background:var(--ochre-soft);border-radius:var(--r);padding:36px 40px;margin-top:20px}
 .pullquote p{font-size:1.26rem;line-height:1.45;color:#5E4A1E;letter-spacing:-.025em}
 
-/* ---------- credits ---------- */
-.credits{padding:0 0 80px}
-.credits-card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:48px 52px;
-  display:flex;flex-direction:column;align-items:center;text-align:center;gap:24px;
-  position:relative;overflow:hidden}
-.credits-card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;
-  background:linear-gradient(90deg,var(--terra),var(--ochre),var(--sage),var(--slate),var(--plum))}
-.credits-label{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--ink-3);display:flex;align-items:center;gap:10px}
-.credits-label::before,.credits-label::after{content:"";width:28px;height:1px;background:var(--line-2)}
-.credits-team{font-size:1.6rem;font-weight:700;letter-spacing:-.035em}
-.credits-team .it{color:var(--terra)}
-.credits-org{font-size:.95rem;color:var(--ink-2);margin-top:-12px}
-.credits-org b{color:var(--ink);font-weight:600}
-.credits-divider{width:52px;height:3px;border-radius:99px;background:var(--line-2)}
-.credits-engineer{display:flex;align-items:center;gap:20px;background:var(--terra-soft);
-  border-radius:var(--r-sm);padding:22px 32px;max-width:100%}
-.credits-avatar{width:52px;height:52px;border-radius:50%;background:var(--terra);color:#fff;
-  display:grid;place-items:center;font-family:var(--serif);font-size:1.3rem;font-weight:700;
-  flex:none}
-.credits-info{text-align:left}
-.credits-name{font-size:1.18rem;font-weight:700;letter-spacing:-.025em;color:var(--terra-d)}
-.credits-role{font-size:.86rem;color:var(--ink-2);margin-top:2px}
-.credits-role b{color:var(--ink);font-weight:600}
-.credits-motto{font-family:var(--serif);font-style:italic;font-size:1rem;color:var(--ink-3)}
-
 /* ---------- CTA + footer ---------- */
 .cta{padding:40px 0 110px}
 .cta-card{background:var(--dark);border-radius:44px;padding:90px 60px;text-align:center;
@@ -501,10 +473,18 @@ footer{padding:0 0 50px}
 </head>
 <body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="bwm" viewBox="0 0 100 100">
+    <rect class="t1" x="14" y="40" width="38" height="38" rx="7" transform="rotate(45 33 59)" fill="#C2542B"/>
+    <rect class="t2" x="52" y="12" width="27" height="27" rx="5.5" transform="rotate(45 65.5 25.5)" fill="#B8873A"/>
+    <rect class="t3" x="60" y="56" width="22" height="22" rx="4.5" transform="rotate(45 71 67)" fill="#5E7A5A"/>
+  </symbol>
+</svg>
+
 <!-- ================= NAV ================= -->
 <nav id="nav">
   <div class="wrap nav-in">
-    <a class="brand" href="#top"><span class="mark"><i></i><i></i><i></i><i></i></span> Bricolage</a>
+    <a class="brand" href="#top"><svg class="mark" aria-hidden="true"><use href="#bwm"/></svg> BricoWerx</a>
     <div class="nav-links">
       <a href="#problem">Problem</a>
       <a href="#ladder">Ladder</a>
@@ -524,11 +504,11 @@ footer{padding:0 0 50px}
     <span class="eyebrow"><span class="live"></span> Phase 1 shipped · vision v2.0</span>
     <h1 class="hh">Build it once.<br>Then <span class="it">compose</span> forever.</h1>
     <p class="hero-sub">
-      Your organisation already solved this problem. Bricolage captures that work as
+      Your organisation already solved this problem. BricoWerx captures that work as
       <b>versioned pieces</b> — code, prompts, skills, evals, pipelines — and serves it to your
       team through a CLI and to your AI assistants through MCP.
     </p>
-    <p class="defn"><b>bricolage</b> /bʁi.kɔ.laʒ/ — n. the art of building with what is at hand.</p>
+    <p class="defn"><b>brico</b> — from <i>bricolage</i> /bʁi.kɔ.laʒ/, French: to build with what you already have in your hands. <b>werx</b> — where it gets made.</p>
     <div class="cta-row">
       <a class="btn terra" href="#docs">Start composing →</a>
       <a class="btn ghost" href="#ladder">See the token economics</a>
@@ -564,6 +544,18 @@ footer{padding:0 0 50px}
         <span class="tl">piece kinds</span>
         <div class="big" style="color:#3F5A3C">6</div>
         <p style="color:#3F5A3C;opacity:.85">code · prompt · skill · eval · dataset · pipeline — one manifest field, zero engine changes.</p>
+      </div>
+
+      <div class="tile span2 rv d4" style="display:flex;align-items:center;gap:28px;flex-wrap:wrap">
+        <svg width="72" height="72" viewBox="0 0 100 100" style="flex:none" aria-hidden="true"><use href="#bwm"/></svg>
+        <div style="flex:1;min-width:240px">
+          <span class="tl">the name</span>
+          <p style="font-size:1.02rem;color:var(--ink)">
+            <b>Brico</b> — from the French <span class="it" style="color:var(--terra)">bricolage</span>:
+            building with what you already have in your hands.
+            <b>Werx</b> — the workshop where it happens.
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -761,7 +753,7 @@ refresh-token.store.ts lego.manifest.json</pre>
       <p class="q">The same question, answered two ways. Multiplied across every retrieval an assistant makes in a working day, this is the difference between AI that grazes the whole codebase and AI that asks a librarian.</p>
       <div class="bars">
         <div class="barrow">
-          <div class="lbl">Bricolage Vault<small>a few cards + one surface</small></div>
+          <div class="lbl">BricoWerx Vault<small>a few cards + one surface</small></div>
           <div class="track"><i class="good" data-w="1.2"></i></div>
           <div class="val good" data-count="300">0</div>
         </div>
@@ -1081,7 +1073,7 @@ refresh-token.store.ts lego.manifest.json</pre>
     <div class="sec-head rv">
       <div class="kick"><span class="num">09</span> Positioning</div>
       <h2 class="split">Not a code generator. Not a boilerplate. <span class="it">Not an AI product.</span></h2>
-      <p>Bricolage is an <b>Engineering Knowledge Operating System</b> — it structures, versions, relates, and preserves engineering craftsmanship, serving it to humans through a CLI and cockpit, and to AI through MCP.</p>
+      <p>BricoWerx is an <b>Engineering Knowledge Operating System</b> — it structures, versions, relates, and preserves engineering craftsmanship, serving it to humans through a CLI and cockpit, and to AI through MCP.</p>
     </div>
 
     <div class="tblwrap rv d1" style="overflow-x:auto">
@@ -1234,34 +1226,14 @@ refresh-token.store.ts lego.manifest.json</pre>
   </div>
 </section>
 
-<!-- ================= CREDITS ================= -->
-<section class="credits">
-  <div class="wrap">
-    <div class="credits-card rv">
-      <span class="credits-label">Conceived &amp; engineered by</span>
-      <div class="credits-team">G-Task-Force <span class="it">from</span> ScienceWerx</div>
-      <p class="credits-org">Innovation Lab — <b>ScienceWerx</b></p>
-      <div class="credits-divider"></div>
-      <div class="credits-engineer">
-        <div class="credits-avatar">YA</div>
-        <div class="credits-info">
-          <div class="credits-name">Youssef Ali</div>
-          <div class="credits-role">Senior Analyst / SWE at <b>ScienceWerx</b></div>
-        </div>
-      </div>
-      <span class="credits-motto">"Build it once. Then compose forever."</span>
-    </div>
-  </div>
-</section>
-
 <!-- ================= FOOTER ================= -->
 <footer>
   <div class="wrap">
     <div class="f-card">
       <div class="f-in">
         <div style="max-width:23rem">
-          <div class="brand" style="margin-bottom:16px"><span class="mark"><i></i><i></i><i></i><i></i></span> Bricolage</div>
-          <p style="color:var(--ink-2);font-size:.9rem">The Engineering Knowledge Operating System. Structures, versions, relates, and preserves engineering craftsmanship — served to humans through a CLI, and to AI through MCP.</p>
+          <div class="brand" style="margin-bottom:16px"><svg class="mark" aria-hidden="true"><use href="#bwm"/></svg> BricoWerx</div>
+          <p style="color:var(--ink-2);font-size:.9rem"><b style="color:var(--ink)">Brico</b>, from the French <i>bricolage</i> — the art of building with what you already have in your hands. <b style="color:var(--ink)">Werx</b>, the workshop where it happens.</p><p style="color:var(--ink-2);font-size:.9rem;margin-top:12px">The Engineering Knowledge Operating System: structures, versions, relates and preserves engineering craftsmanship — served to humans through a CLI, and to AI through MCP.</p>
         </div>
         <div><h5>Product</h5><a href="#problem">Problem</a><a href="#ladder">Ladder</a><a href="#mcp">MCP</a><a href="#kinds">Piece kinds</a></div>
         <div><h5>Platform</h5><a href="#architecture">Architecture</a><a href="#graph">Knowledge graph</a><a href="#roadmap">Roadmap</a></div>
@@ -1269,7 +1241,7 @@ refresh-token.store.ts lego.manifest.json</pre>
       </div>
       <div class="f-bot">
         <span class="fr">L'art de bâtir avec l'existant.</span>
-        <span>© 2026 Bricolage · Vision white paper v2.0</span>
+        <span>© 2026 BricoWerx · Vision white paper v2.0</span>
       </div>
     </div>
   </div>
