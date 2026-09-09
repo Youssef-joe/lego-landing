@@ -188,6 +188,7 @@ nav.on{border-color:var(--line);background:rgba(244,239,230,.92)}
 .paper{background:#FBF8F2;border:1px solid var(--text);padding:38px 40px 36px;position:relative;
   box-shadow:14px 14px 0 rgba(27,31,28,.08)}
 .paper-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:34px;padding-bottom:14px;border-bottom:1px solid var(--line-2);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase}
+.paper-top .live{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--mint);margin-right:8px;vertical-align:middle;animation:live 2.2s infinite}
 .dots{display:inline-flex;gap:6px}.dots i{width:7px;height:7px;border-radius:50%;background:var(--text)}
 .dots i:nth-child(2){background:var(--amber)}.dots i:nth-child(3){background:var(--violet)}
 h1.hh{display:grid;gap:2px;letter-spacing:0;line-height:1.02}
@@ -234,6 +235,47 @@ h1.hh .it{font-size:clamp(3.2rem,6.4vw,5.4rem);color:var(--amber);line-height:.9
 .brico-def p{color:var(--text-2);font-size:.98rem}
 .brico-def p b{color:var(--text);font-weight:600}
 .strip .ticker{margin-top:40px}
+
+/* ---------- launch ---------- */
+.launch{padding-bottom:40px}
+.launch-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:40px;align-items:center}
+.launch .kick .num{background:var(--mint-soft);border-color:rgba(94,122,90,.35);color:var(--mint);font-size:.5rem;padding:5px 7px;animation:live 2.2s infinite;border-radius:50%}
+.launch h2{font-size:clamp(2rem,3.9vw,2.9rem);margin-bottom:16px}
+.launch .muted{max-width:34rem}
+.wl{margin-top:26px;background:var(--panel);border:1px solid var(--text);padding:20px 22px;position:relative;box-shadow:10px 10px 0 rgba(27,31,28,.08)}
+.wl .row{display:flex;gap:10px}
+.wl input[type=email]{flex:1;min-width:0;background:#fff;border:1px solid var(--line-2);color:var(--text);font-family:var(--sans);font-size:.98rem;padding:13px 16px;border-radius:6px;outline:none;transition:border-color .3s,box-shadow .3s}
+.wl input[type=email]:focus{border-color:var(--amber);box-shadow:0 0 0 3px var(--amber-soft)}
+.wl input[type=email]::placeholder{color:var(--text-3)}
+.wl-meta{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:.78rem}
+.wl-count{font-family:var(--mono);color:var(--mint);font-size:.74rem}
+.wl-count b{font-weight:700}
+.wl .msg{display:none;margin-top:12px;font-size:.9rem;padding:12px 14px;border:1px solid}
+.wl .msg.ok{display:block;color:#2F4A2C;background:var(--mint-soft);border-color:rgba(94,122,90,.35)}
+.wl .msg.err{display:block;color:var(--amber-d);background:var(--amber-soft);border-color:rgba(194,84,43,.35)}
+.wl.done .row,.wl.done .wl-meta{display:none}
+.perks{list-style:none;display:grid;gap:10px;margin-top:24px}
+.perks li{font-size:.92rem;color:var(--text-2);padding-left:24px;position:relative}
+.perks li b{color:var(--text);font-weight:600}
+.perks li::before{content:"";position:absolute;left:2px;top:.5em;width:9px;height:9px;background:var(--amber);transform:rotate(45deg);border-radius:2px}
+.perks li:nth-child(2)::before{background:var(--violet)}.perks li:nth-child(3)::before{background:var(--mint)}
+
+.teaser{margin:0}
+.teaser-frame{position:relative;aspect-ratio:16/9;background:#1B1F1C;border:1px solid var(--text);box-shadow:14px 14px 0 rgba(27,31,28,.08);overflow:hidden}
+.teaser-frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;background:#1B1F1C}
+.teaser-frame::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(27,31,28,0) 55%,rgba(27,31,28,.45));opacity:1;transition:opacity .4s}
+.teaser-frame.playing::after{opacity:0}
+.play{position:absolute;inset:0;width:100%;height:100%;display:grid;place-items:center;align-content:center;gap:14px;background:rgba(244,239,230,.18);
+  border:none;cursor:pointer;color:#FBF7F0;font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;transition:background .3s,opacity .3s;backdrop-filter:blur(2px)}
+.play svg{filter:drop-shadow(0 12px 30px rgba(27,31,28,.5));transition:transform .5s var(--spring)}
+.play:hover{background:rgba(244,239,230,.28)}
+.play:hover svg{transform:scale(1.08) rotate(-6deg)}
+.play span{background:rgba(27,31,28,.75);padding:7px 12px;border:1px solid rgba(251,247,240,.35)}
+.teaser-frame.playing .play{opacity:0;pointer-events:none}
+.teaser-missing{position:absolute;left:16px;right:16px;bottom:16px;background:rgba(251,248,242,.94);border:1px dashed var(--amber);padding:12px 14px;font-size:.85rem;color:var(--text-2)}
+.teaser-missing b{color:var(--text)}.teaser-missing code{color:var(--amber);font-size:.85em}
+.teaser figcaption{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:.85rem;color:var(--text-2)}
+.teaser figcaption .mono{font-size:.68rem;letter-spacing:.12em;color:var(--text-3)}
 
 /* manifesto */
 .mani{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
@@ -287,7 +329,7 @@ h1.hh .it{font-size:clamp(3.2rem,6.4vw,5.4rem);color:var(--amber);line-height:.9
 .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .g2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
 .g21{display:grid;grid-template-columns:1.4fr 1fr;gap:18px}
-.g2>*,.g3>*,.g21>*,.ladder>*,.anat>*,.hero-grid>*,.news>*,.steps>*,.ba>*,.posts>*,.mani>*,.hero-cards>*{min-width:0}
+.g2>*,.g3>*,.g21>*,.ladder>*,.anat>*,.hero-grid>*,.news>*,.steps>*,.ba>*,.posts>*,.mani>*,.hero-cards>*,.launch-grid>*{min-width:0}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:28px;box-shadow:var(--sh);
   position:relative;overflow:hidden;transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .4s}
 .card:hover{transform:translateY(-4px) rotate(-.35deg);box-shadow:var(--sh-h);border-color:var(--line-2)}
@@ -554,7 +596,7 @@ footer{padding:0 0 48px}
 .f-bot{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:.82rem;color:var(--text-3)}
 
 @media(max-width:1080px){
-  .hero-grid,.g3,.steps,.anat,.ladder,.g21,.ba,.posts,.news,.mani{grid-template-columns:1fr}
+  .hero-grid,.g3,.steps,.anat,.ladder,.g21,.ba,.posts,.news,.mani,.launch-grid{grid-template-columns:1fr}
   .hero{min-height:0;padding:40px 0 80px}
   .hero-legend{display:none}
   .g3,.phases{grid-template-columns:repeat(2,1fr)}
@@ -570,7 +612,8 @@ footer{padding:0 0 48px}
   .cta-card{padding:56px 24px;border-radius:22px}
   .sec{padding:76px 0}
   .news,.reader article{padding:28px 22px}
-  .nform .row{flex-direction:column}
+  .nform .row,.wl .row{flex-direction:column}
+  .wl{box-shadow:6px 6px 0 rgba(27,31,28,.08)}
   .brico-def{grid-template-columns:1fr}
   .paper{padding:26px 22px;box-shadow:8px 8px 0 rgba(27,31,28,.08)}
   .hero-cards{grid-template-columns:1fr}
@@ -611,6 +654,7 @@ footer{padding:0 0 48px}
       <span class="wordmark">BricoWerx<small>BWX</small></span>
     </a>
     <div class="nav-links">
+      <a href="#launch">Launch</a>
       <a href="#why">Why</a>
       <a href="#how">How it works</a>
       <a href="#piece">Pieces</a>
@@ -619,11 +663,11 @@ footer{padding:0 0 48px}
       <a href="#blog">Blog</a>
       <a href="#docs">Docs</a>
     </div>
-    <a class="btn sm nav-cta" href="#docs">Get started</a>
+    <a class="btn sm nav-cta" href="#launch">Join the waitlist</a>
     <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
   </div>
   <div class="mnav" id="mnav">
-    <a href="#why">Why</a><a href="#how">How it works</a><a href="#piece">Pieces</a><a href="#ai">For AI assistants</a>
+    <a href="#launch">Launch</a><a href="#why">Why</a><a href="#how">How it works</a><a href="#piece">Pieces</a><a href="#ai">For AI assistants</a>
     <a href="#inside">Inside</a><a href="#blog">Blog</a><a href="#newsletter">Newsletter</a><a href="#docs">Docs</a>
   </div>
 </nav>
@@ -642,7 +686,7 @@ footer{padding:0 0 48px}
   <div class="hero-veil"></div>
   <div class="wrap hero-grid">
     <div class="paper rv">
-      <div class="paper-top"><span class="dots"><i></i><i></i><i></i></span><span class="mono dim">BWX &middot; case 00 &middot; open source</span></div>
+      <div class="paper-top"><span class="dots"><i></i><i></i><i></i></span><span class="mono dim"><i class="live"></i> launching soon &middot; open source</span></div>
       <h1 class="hh">
         <span class="caps">Your team already</span>
         <span class="it">built it.</span>
@@ -650,7 +694,7 @@ footer{padding:0 0 48px}
       </h1>
       <p class="hero-sub">BricoWerx keeps the best parts of your projects as <b>reusable pieces</b>: modules, prompts, agent skills, evals. Engineers find them from the terminal. AI assistants find them over MCP. Nobody regenerates what already exists.</p>
       <div class="cta-row">
-        <a class="btn" href="#docs">Capture your first piece</a>
+        <a class="btn" href="#launch">Join the waitlist</a>
         <a class="btn ghost" href="#how">How it works</a>
       </div>
       <div class="hero-facts">
@@ -697,6 +741,64 @@ footer{padding:0 0 48px}
       <span><i></i><b>brico mcp</b> let your AI assistant use the same library</span>
       <span><i></i><b>brico eval</b> regression-test your prompts</span>
       <span><i></i><b>brico graph</b> ask what depends on what</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LAUNCH: waitlist + teaser ================= -->
+<!--
+  Waitlist: the form posts JSON to data-endpoint (default /api/waitlist, served by waitlist/main.go).
+  If the page is hosted on a different origin than the service, set data-endpoint to the full URL
+  and ALLOWED_ORIGIN on the service. The live counter appears once the count reaches data-min-count.
+
+  Teaser: drop your file at media/teaser.mp4 (H.264, 1920x1080 or 1600x900) and optionally
+  media/teaser.webm, plus a still at media/teaser-poster.jpg. Nothing else to change.
+-->
+<section class="sec launch" id="launch">
+  <div class="wrap">
+    <div class="launch-grid">
+      <div class="launch-copy rv">
+        <div class="kick"><span class="num">&#9679;</span> Launching soon</div>
+        <h2>The Vault opens soon. <span class="it hi">Be in the first cohort.</span></h2>
+        <p class="muted">We are finishing Phase A: summaries at capture, meaning-based search and the MCP server. Leave your email and you get the first binary before anyone else, a founding badge in your Vault, and a say in what ships next.</p>
+
+        <form class="wl" id="wlForm" method="post" action="/api/waitlist" data-endpoint="/api/waitlist" data-min-count="10" novalidate>
+          <label for="wlEmail" class="tl">Work email</label>
+          <div class="row">
+            <input type="email" id="wlEmail" name="email" placeholder="you@company.com" autocomplete="email" required>
+            <button class="btn" type="submit" id="wlBtn">Join the waitlist</button>
+          </div>
+          <input type="hidden" name="source" value="launch">
+          <div class="hp" aria-hidden="true"><label>Company<input type="text" name="company" tabindex="-1" autocomplete="off"></label></div>
+          <div class="wl-meta">
+            <span class="wl-count" id="wlCount" hidden><b>0</b> engineers already waiting</span>
+            <span class="dim">No spam. One email when we open, one when the binary is yours.</span>
+          </div>
+          <div class="msg" id="wlMsg" role="status" aria-live="polite"></div>
+        </form>
+
+        <ul class="perks">
+          <li><b>First binary.</b> Phase A build, before the public release.</li>
+          <li><b>Founding badge.</b> A marker in your Vault manifest that says you were here first.</li>
+          <li><b>A vote.</b> The first cohort picks which piece kind ships next: prompt or skill.</li>
+        </ul>
+      </div>
+
+      <figure class="teaser rv d1">
+        <div class="teaser-frame">
+          <video id="teaser" preload="none" poster="media/teaser-poster.jpg" playsinline aria-label="BricoWerx teaser">
+            <source src="media/teaser.mp4" type="video/mp4">
+          </video>
+          <button class="play" id="teaserPlay" aria-label="Play the teaser">
+            <svg viewBox="0 0 100 100" width="76" height="76" aria-hidden="true"><use href="#bwx"/></svg>
+            <span>Play the teaser</span>
+          </button>
+          <div class="teaser-missing" id="teaserMissing" hidden>
+            <b>Teaser goes here.</b> Drop <code>teaser.mp4</code> into the <code>media/</code> folder and reload.
+          </div>
+        </div>
+        <figcaption><span class="mono">TEASER &middot; 00:45</span><span>What a Vault looks like when three teams share one.</span></figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -1313,8 +1415,8 @@ refresh-token.store.ts manifest.json</pre>
       <h2>Your next module is already sitting <span class="it hi">in your last project.</span></h2>
       <p>Capture it once. Let your team and your AI assistants reuse it forever. One binary, your own git repo, nothing to sign up for.</p>
       <div class="cta-row" style="justify-content:center">
-        <a class="btn amber" href="#docs">Get started &rarr;</a>
-        <a class="btn ghost" href="#newsletter">Get the monthly letter</a>
+        <a class="btn amber" href="#launch">Join the waitlist &rarr;</a>
+        <a class="btn ghost" href="#docs">Try the CLI today</a>
       </div>
     </div>
   </div>
@@ -1332,7 +1434,7 @@ refresh-token.store.ts manifest.json</pre>
         </div>
         <div><h5>Product</h5><a href="#why">Why</a><a href="#how">How it works</a><a href="#piece">Pieces</a><a href="#ai">For AI assistants</a><a href="#kinds">Piece kinds</a></div>
         <div><h5>Inside</h5><a href="#inside">Architecture</a><a href="#inside">Roadmap</a><a href="#faq">Plain answers</a></div>
-        <div><h5>Follow</h5><a href="#blog">Blog</a><a href="#newsletter">Newsletter</a><a href="#docs">Documentation</a></div>
+        <div><h5>Follow</h5><a href="#launch">Waitlist</a><a href="#blog">Blog</a><a href="#newsletter">Newsletter</a><a href="#docs">Documentation</a></div>
       </div>
       <div class="f-bot">
         <span>L'art de b&acirc;tir avec l'existant.</span>
@@ -1675,6 +1777,54 @@ saved              ~98.5%</pre>
   if(location.hash.startsWith('#post-')){
     const p=POSTS.find(x=>x.slug===location.hash.slice(6));
     if(p)setTimeout(()=>openReader(p),300);
+  }
+})();
+
+/* =========================================================
+   WAITLIST  (posts to waitlist/main.go)
+   ========================================================= */
+(function(){
+  const f=document.getElementById('wlForm');
+  if(!f)return;
+  const email=document.getElementById('wlEmail'),btn=document.getElementById('wlBtn'),msg=document.getElementById('wlMsg'),
+        cnt=document.getElementById('wlCount'),endpoint=f.dataset.endpoint||'/api/waitlist',minCount=+(f.dataset.minCount||10);
+  const show=(cls,text)=>{msg.className='msg '+cls;msg.textContent=text};
+  const fmt=n=>n.toLocaleString('en-GB');
+  function setCount(n){if(n>=minCount){cnt.querySelector('b').textContent=fmt(n);cnt.hidden=false}}
+  // live count
+  fetch(endpoint+'/count',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{if(j&&typeof j.count==='number')setCount(j.count)}).catch(()=>{});
+  // no-JS fallback landed here after a classic POST
+  if(new URLSearchParams(location.search).get('joined')==='1'){f.classList.add('done');show('ok','You are on the list. We will write when the Vault opens.');history.replaceState(null,'','#launch')}
+  f.addEventListener('submit',e=>{
+    e.preventDefault();
+    const v=email.value.trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)){show('err','Please enter a valid email address.');email.focus();return}
+    btn.disabled=true;btn.textContent='Joining';
+    fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},
+      body:JSON.stringify({email:v,source:f.querySelector('[name=source]').value,company:f.querySelector('[name=company]').value})})
+      .then(async r=>{const j=await r.json().catch(()=>({}));
+        if(r.ok&&j.ok){f.classList.add('done');show('ok',j.already?'You were already on the list. Same place in line, promise.':'You are on the list. We will write when the Vault opens.');if(typeof j.count==='number')setCount(j.count)}
+        else{show('err',j.error||'Something went wrong. Please try again.');btn.disabled=false;btn.textContent='Join the waitlist'}})
+      .catch(()=>{show('err','Could not reach the waitlist service. Please try again in a moment.');btn.disabled=false;btn.textContent='Join the waitlist'});
+  });
+})();
+
+/* ===== teaser player ===== */
+(function(){
+  const v=document.getElementById('teaser'),b=document.getElementById('teaserPlay'),fr=v&&v.closest('.teaser-frame'),miss=document.getElementById('teaserMissing');
+  if(!v)return;
+  b.addEventListener('click',()=>{v.controls=true;v.play().catch(()=>{})});
+  v.addEventListener('play',()=>fr.classList.add('playing'));
+  v.addEventListener('pause',()=>{if(v.currentTime===0)fr.classList.remove('playing')});
+  v.addEventListener('ended',()=>fr.classList.remove('playing'));
+  // is there a teaser file yet? (the page works either way)
+  const gone=()=>{miss.hidden=false;b.style.opacity=.35;b.disabled=true};
+  // A real decode failure is the only reliable signal; fetch() cannot be used
+  // because it is blocked for file:// URLs when the page is opened from disk.
+  v.addEventListener('error',gone);
+  const mp4=v.querySelector('source[type="video/mp4"]');
+  if(/^https?:$/.test(location.protocol)){
+    fetch(mp4.src,{method:'HEAD'}).then(r=>{if(!r.ok)throw 0}).catch(gone);
   }
 })();
 
