@@ -316,6 +316,129 @@ $ brico add auth
       </div>
     </div>
   </section>
+\n
+  <!-- Band B: How it works & Pieces -->
+  <section id="how" class="alt fade-up">
+    <div class="container">
+      <div class="sec-head" style="margin-bottom: 56px;">
+        <span class="eyebrow">HOW IT WORKS</span>
+        <h2>Capture once. Find it anywhere. Add it in one command.</h2>
+        <p class="body-l" style="margin-top: 16px;">
+          Three verbs, one binary. Everything lives in a git folder on your machine called the Vault &mdash; no server, no account.
+        </p>
+      </div>
+
+      <div class="grid-12" style="margin-bottom: 80px; align-items: stretch;">
+        <!-- Step 1 -->
+        <div style="grid-column: span 4; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 24px; display: flex; flex-direction: column;">
+          <div style="font-family: var(--display); font-size: 2rem; color: var(--reuse); font-weight: 700; line-height: 1; margin-bottom: 12px;">1</div>
+          <h3 style="margin-bottom: 8px;">Capture</h3>
+          <p style="color: var(--text-2); font-size: 0.95rem; margin-bottom: 16px;">Save the piece to your Vault. The CLI extracts the files, asks you for context, and generates the summaries.</p>
+          <div class="terminal" style="margin-top: auto;">
+            <div class="terminal-header"><span style="color: var(--on-ink-2); font-size: 0.75rem; font-family: var(--mono); margin-left: 4px;">HUMAN</span></div>
+            <div class="terminal-body" style="padding: 16px; min-height: 120px;">
+              <div class="cmd">$ brico capture</div>
+              <div class="dim">Select files: [src/auth/*]</div>
+              <div class="ok">Captured auth@0.1.0</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div style="grid-column: span 4; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 24px; display: flex; flex-direction: column;">
+          <div style="font-family: var(--display); font-size: 2rem; color: var(--reuse); font-weight: 700; line-height: 1; margin-bottom: 12px;">2</div>
+          <h3 style="margin-bottom: 8px;">Find</h3>
+          <p style="color: var(--text-2); font-size: 0.95rem; margin-bottom: 16px;">Search by name, capability, or meaning. The local SQLite index finds it instantly.</p>
+          <div class="terminal" style="margin-top: auto;">
+            <div class="terminal-header"><span style="color: var(--on-ink-2); font-size: 0.75rem; font-family: var(--mono); margin-left: 4px;">HUMAN / AI ASSISTANT</span></div>
+            <div class="terminal-body" style="padding: 16px; min-height: 120px;">
+              <div class="cmd">$ brico search "auth"</div>
+              <div class="ok">auth@0.2.0 (proven)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div style="grid-column: span 4; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 24px; display: flex; flex-direction: column;">
+          <div style="font-family: var(--display); font-size: 2rem; color: var(--reuse); font-weight: 700; line-height: 1; margin-bottom: 12px;">3</div>
+          <h3 style="margin-bottom: 8px;">Add</h3>
+          <p style="color: var(--text-2); font-size: 0.95rem; margin-bottom: 16px;">Copy the files into your working directory and get the exact wiring steps.</p>
+          <div class="terminal" style="margin-top: auto;">
+            <div class="terminal-header"><span style="color: var(--on-ink-2); font-size: 0.75rem; font-family: var(--mono); margin-left: 4px;">HUMAN</span></div>
+            <div class="terminal-body" style="padding: 16px; min-height: 120px;">
+              <div class="cmd">$ brico add auth</div>
+              <div class="dim">Copied to src/auth/</div>
+              <div class="ok">Done.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- What is a piece -->
+      <div id="piece" style="padding-top: 40px; border-top: 1px solid var(--line);">
+        <div class="sec-head" style="margin-bottom: 40px;">
+          <span class="eyebrow">WHAT IS A PIECE</span>
+          <h2>Code, plus everything you'd otherwise have to ask a colleague about.</h2>
+        </div>
+
+        <div class="grid-12">
+          <!-- Left: File tree -->
+          <div style="grid-column: span 5; background: var(--ink); border: 1px solid var(--ink-2); border-radius: 8px; padding: 24px; font-family: var(--mono); font-size: 0.875rem; color: var(--on-ink); line-height: 1.8;">
+            <div style="color: var(--on-ink-2); margin-bottom: 16px;">vault/pieces/auth/0.2.0/</div>
+            <div style="display: flex; justify-content: space-between;"><span style="color: var(--reuse);">manifest.yaml</span><span style="color: var(--on-ink-2); font-size: 0.75rem;">Card ~50</span></div>
+            <div style="display: flex; justify-content: space-between;"><span style="color: var(--ai);">interface.ts</span><span style="color: var(--on-ink-2); font-size: 0.75rem;">Surface ~200</span></div>
+            <div style="display: flex; justify-content: space-between;"><span style="color: var(--on-ink);">README.md</span><span style="color: var(--on-ink-2); font-size: 0.75rem;">Summary ~500</span></div>
+            <div style="display: flex; justify-content: space-between;"><span style="color: var(--verified);">src/</span><span style="color: var(--on-ink-2); font-size: 0.75rem;">Full source</span></div>
+            <div style="padding-left: 16px;">
+              <div>jwt.strategy.ts</div>
+              <div>auth.module.ts</div>
+              <div>auth.service.ts</div>
+            </div>
+          </div>
+          
+          <!-- Right: Selector -->
+          <div style="grid-column: span 7; display: flex; flex-direction: column; gap: 12px;">
+            <div style="background: var(--card); border: 1px solid var(--reuse); border-radius: 8px; padding: 20px; box-shadow: 0 4px 12px rgba(194,84,43,0.1);">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
+                <h4 style="font-size: 1.1rem; color: var(--reuse);">Card ~50</h4>
+                <span style="font-family: var(--mono); font-size: 0.75rem; color: var(--text-3);">"Do we have something for X?"</span>
+              </div>
+              <p style="font-size: 0.9rem; color: var(--text-2);">Name, tags, capabilities, and dependencies. Enough to match a search query.</p>
+            </div>
+            
+            <div style="background: var(--paper-2); border: 1px solid var(--line); border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
+                <h4 style="font-size: 1.1rem;">Surface ~200&ndash;400</h4>
+                <span style="font-family: var(--mono); font-size: 0.75rem; color: var(--text-3);">"How do I call it?"</span>
+              </div>
+              <p style="font-size: 0.9rem; color: var(--text-2);">The API signature, exported types, and wiring instructions.</p>
+            </div>
+
+            <div style="background: var(--paper-2); border: 1px solid var(--line); border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
+                <h4 style="font-size: 1.1rem;">Summary ~500</h4>
+                <span style="font-family: var(--mono); font-size: 0.75rem; color: var(--text-3);">"Why was it built this way?"</span>
+              </div>
+              <p style="font-size: 0.9rem; color: var(--text-2);">The human-written or AI-generated explanation of architectural choices.</p>
+            </div>
+
+            <div style="background: var(--paper-2); border: 1px solid var(--line); border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
+                <h4 style="font-size: 1.1rem;">Full source</h4>
+                <span style="font-family: var(--mono); font-size: 0.75rem; color: var(--text-3);">"I need to change it."</span>
+              </div>
+              <p style="font-size: 0.9rem; color: var(--text-2);">The actual code files. Read only when a modification is necessary.</p>
+            </div>
+          </div>
+        </div>
+        
+        <p style="margin-top: 32px; text-align: center; font-size: 1.1rem; color: var(--text);">
+          Whoever is asking &mdash; human or AI &mdash; climbs only as high as the task needs.
+        </p>
+      </div>
+
+    </div>
+  </section>
 \n</main>
 
 <script>
