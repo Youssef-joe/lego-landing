@@ -840,7 +840,215 @@ code, .mono { font-family: var(--ff-mono); font-size: 0.85em; letter-spacing: 0;
   </div>
 </section>
 
-<!-- Sections S9–S13 will be added in the next commit -->
+<!-- ==================== S9: INSIDE ==================== -->
+<section id="inside" class="section-gap">
+  <div class="container">
+    <h2 class="reveal" style="text-align:center;max-width:24ch;margin:0 auto">Boring on purpose: files in git, one SQLite index, one binary.</h2>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:64px" class="reveal">
+      <div class="card">
+        <span style="font-size:14px;font-weight:500;color:var(--terracotta-d);margin-bottom:12px;display:block">Truth</span>
+        <h3>The Vault is a git directory</h3>
+        <p style="margin-top:12px;font-size:16px">Plain files you can read, diff, review and revert. History is git history.</p>
+      </div>
+      <div class="card">
+        <span style="font-size:14px;font-weight:500;color:var(--terracotta-d);margin-bottom:12px;display:block">Index</span>
+        <h3>One index.db</h3>
+        <p style="margin-top:12px;font-size:16px">sqlite-vec plus FTS5, zero runtime dependencies. Delete it and it rebuilds.</p>
+      </div>
+      <div class="card">
+        <span style="font-size:14px;font-weight:500;color:var(--terracotta-d);margin-bottom:12px;display:block">Scale</span>
+        <h3>Hosted tier, later</h3>
+        <p style="margin-top:12px;font-size:16px">An optional Postgres tier for teams that outgrow a folder. Optional, and later.</p>
+      </div>
+    </div>
+    
+    <p class="reveal" style="text-align:center;margin-top:48px;font-size:18px;color:var(--body)">Embedding generation is the only step that touches a network, and it is always skippable.</p>
+  </div>
+</section>
+
+<!-- ==================== S10: ROADMAP ==================== -->
+<section class="section-gap">
+  <div class="container">
+    <h2 class="reveal" style="text-align:center;max-width:22ch;margin:0 auto;margin-bottom:64px">Four phases, in this order.</h2>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px" class="reveal">
+      <div class="card" style="background:var(--wash-ochre)">
+        <span class="chip chip-sage" style="margin-bottom:16px">A · Now</span>
+        <h3>Knowledge layer</h3>
+        <p style="margin-top:12px;font-size:16px">Summaries at capture · meaning-based search · the MCP server.</p>
+      </div>
+      <div class="card">
+        <span class="chip" style="margin-bottom:16px">B</span>
+        <h3>AI piece kinds</h3>
+        <p style="margin-top:12px;font-size:16px">Prompts and agent skills captured and versioned like code.</p>
+      </div>
+      <div class="card">
+        <span class="chip" style="margin-bottom:16px">C</span>
+        <h3>Accounting & graph</h3>
+        <p style="margin-top:12px;font-size:16px">What was reused where, and what depends on what.</p>
+      </div>
+      <div class="card">
+        <span class="chip" style="margin-bottom:16px">D</span>
+        <h3>Team scale</h3>
+        <p style="margin-top:12px;font-size:16px">Shared Vaults, review flow, an optional hosted tier.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== S11: FAQ ==================== -->
+<section class="section-gap">
+  <div class="container">
+    <h2 class="reveal" style="text-align:center;margin-bottom:64px">Questions worth asking.</h2>
+    <div class="faq-list reveal">
+      <details class="faq-item" open>
+        <summary>So what is BricoWerx, in one breath?</summary>
+        <div class="faq-answer-wrap"><div class="faq-answer">
+          <p><strong>A command-line tool that keeps your team's proven code as versioned, searchable pieces — so engineers and AI assistants reuse them instead of rebuilding them.</strong></p>
+        </div></div>
+      </details>
+      <details class="faq-item">
+        <summary>Is it a code generator?</summary>
+        <div class="faq-answer-wrap"><div class="faq-answer">
+          <p>No. BricoWerx does not generate code. It indexes, searches, and manages code your team has already written and validated, allowing you to reuse what works instead of generating a new, unproven version.</p>
+        </div></div>
+      </details>
+      <details class="faq-item">
+        <summary>Is it a package registry like npm?</summary>
+        <div class="faq-answer-wrap"><div class="faq-answer">
+          <p>No. It operates within your own repository (or a shared local Vault) directly on source files. There is no external registry, no publishing step, and no hidden node_modules folder. Pieces are copied directly into your project where you can see and modify them.</p>
+        </div></div>
+      </details>
+      <details class="faq-item">
+        <summary>Do I need a server, an account, or a database?</summary>
+        <div class="faq-answer-wrap"><div class="faq-answer">
+          <p>None of the above. The Vault is a plain git directory on your local machine. The search index is a local SQLite database that the binary manages for you. It works completely offline.</p>
+        </div></div>
+      </details>
+      <details class="faq-item">
+        <summary>Which stacks does it support today?</summary>
+        <div class="faq-answer-wrap"><div class="faq-answer">
+          <p>Because pieces are just files, BricoWerx supports any stack. However, the automated wiring (like updating imports) currently works best for TypeScript/JavaScript ecosystems.</p>
+        </div></div>
+      </details>
+      <details class="faq-item">
+        <summary>Where does the name come from?</summary>
+        <div class="faq-answer-wrap"><div class="faq-answer">
+          <p><strong>Bricolage — building from the parts already at hand, rather than starting from raw material every time. Werx is the workshop where that happens.</strong></p>
+        </div></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== S12: WAITLIST ==================== -->
+<section id="launch" class="section-gap">
+  <div class="container">
+    <div class="band-dark reveal" style="display:grid;grid-template-columns:1.2fr 1fr;gap:64px;align-items:center">
+      <div>
+        <h2 class="h2-sm">The Vault opens soon. Be in the first cohort.</h2>
+        <p style="margin-top:24px;font-size:18px;max-width:40ch">We're finishing Phase A: summaries at capture, meaning-based search, and the MCP server.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:32px">
+          <span class="chip">First binary</span>
+          <span class="chip">Founding badge</span>
+          <span class="chip">A vote on what ships next</span>
+        </div>
+      </div>
+      <div class="card" style="color:var(--ink);padding:40px">
+        <form class="wl-form" id="waitlist-form" novalidate>
+          <div class="wl-field">
+            <label for="wl-email">Work email</label>
+            <input type="email" id="wl-email" required placeholder="you@company.com" aria-describedby="email-error">
+            <span class="wl-error" id="email-error">Please provide a valid work email address.</span>
+          </div>
+          <div class="wl-field">
+            <label for="wl-company">Company (optional)</label>
+            <input type="text" id="wl-company">
+          </div>
+          <button type="submit" class="btn-fill" style="margin-top:8px" id="wl-submit">Join the waitlist</button>
+          <p class="wl-micro" style="text-align:center;margin-top:8px">No spam. One email when we open, one when the binary is yours.</p>
+        </form>
+        <div id="wl-success" style="display:none;text-align:center;padding:24px 0">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--sage)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:16px"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          <h3 style="margin-bottom:8px">You're on the list</h3>
+          <p style="color:var(--body);font-size:15px">We'll be in touch soon.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== S13: BLOG & FOOTER ==================== -->
+<footer class="site-footer">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px">
+      <h2 style="font-size:24px;color:var(--ink)">From the workshop</h2>
+      <a href="/blog" class="btn-text">All posts →</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:96px">
+      <a href="#" class="card" style="text-decoration:none;transition:transform 0.2s">
+        <span class="chip" style="margin-bottom:24px">Engineering</span>
+        <h3 style="font-size:20px;color:var(--ink);margin-bottom:16px">[POST TITLE]</h3>
+        <p style="font-size:14px;color:var(--body)">[DATE] · [N] min</p>
+      </a>
+      <a href="#" class="card" style="text-decoration:none;transition:transform 0.2s">
+        <span class="chip" style="margin-bottom:24px">Product</span>
+        <h3 style="font-size:20px;color:var(--ink);margin-bottom:16px">[POST TITLE]</h3>
+        <p style="font-size:14px;color:var(--body)">[DATE] · [N] min</p>
+      </a>
+      <a href="#" class="card" style="text-decoration:none;transition:transform 0.2s">
+        <span class="chip" style="margin-bottom:24px">AI Assistants</span>
+        <h3 style="font-size:20px;color:var(--ink);margin-bottom:16px">[POST TITLE]</h3>
+        <p style="font-size:14px;color:var(--body)">[DATE] · [N] min</p>
+      </a>
+    </div>
+
+    <div class="footer-grid">
+      <div>
+        <a href="#" class="footer-brand" style="text-decoration:none;display:flex;align-items:center;gap:8px">
+          <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+            <rect x="2" y="2" width="8" height="8" rx="2" transform="rotate(45 6 6)" fill="#B8883A"/>
+            <rect x="2" y="13" width="8" height="8" rx="2" transform="rotate(45 6 17)" fill="#C2542B"/>
+            <rect x="13" y="13" width="8" height="8" rx="2" transform="rotate(45 17 17)" fill="#5F7B5B"/>
+          </svg>
+          <span>BricoWerx</span>
+        </a>
+        <p>Building from the parts already at hand.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#why">Why BricoWerx</a></li>
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#ai">For AI assistants</a></li>
+          <li><a href="#inside">Architecture</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="/docs">Documentation</a></li>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="/docs/mcp">MCP reference</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Elsewhere</h4>
+        <ul>
+          <li><a href="#">GitHub</a></li>
+          <li><a href="#">Twitter</a></li>
+          <li><a href="#">Discord</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <span>© [YEAR] BricoWerx</span>
+      <span>Open source · offline-first · git is the source of truth</span>
+    </div>
+  </div>
+</footer>
 </main>
 
 <script>
@@ -944,6 +1152,55 @@ initTabs('level-tabs', (tab) => {
     p.style.display = p.id === 'level-' + target ? '' : 'none';
   });
 });
+
+/* ========== FAQ Accordion ========== */
+document.querySelectorAll('.faq-item summary').forEach(summary => {
+  summary.addEventListener('click', (e) => {
+    e.preventDefault();
+    const details = summary.parentElement;
+    if (details.hasAttribute('open')) {
+      details.removeAttribute('open');
+    } else {
+      // Optional: close others
+      document.querySelectorAll('.faq-item').forEach(item => {
+        if (item !== details) item.removeAttribute('open');
+      });
+      details.setAttribute('open', '');
+    }
+  });
+});
+
+/* ========== Waitlist Form ========== */
+const form = document.getElementById('waitlist-form');
+if (form) {
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const emailInput = document.getElementById('wl-email');
+    const field = emailInput.closest('.wl-field');
+    const email = emailInput.value.trim();
+    
+    // Basic validation
+    if (!email || !email.includes('@') || !email.includes('.')) {
+      field.classList.add('has-error');
+      return;
+    }
+    field.classList.remove('has-error');
+    
+    // Simulate submit
+    const btn = document.getElementById('wl-submit');
+    btn.textContent = 'Joining...';
+    btn.disabled = true;
+    
+    setTimeout(() => {
+      form.style.display = 'none';
+      document.getElementById('wl-success').style.display = 'block';
+    }, 800);
+  });
+  
+  document.getElementById('wl-email').addEventListener('input', (e) => {
+    e.target.closest('.wl-field').classList.remove('has-error');
+  });
+}
 </script>
 </body>
 </html>
