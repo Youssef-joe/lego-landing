@@ -545,7 +545,75 @@ code, .mono { font-family: var(--ff-mono); font-size: 0.85em; letter-spacing: 0;
   </div>
 </section>
 
-<!-- Sections S4–S13 will be added in subsequent commits -->
+<!-- ==================== S4: THE PROBLEM ==================== -->
+<section id="why" class="section-gap">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:48px" class="reveal">
+      <span class="chip">For engineering leaders</span>
+    </div>
+    <h2 class="reveal" style="text-align:center;max-width:22ch;margin:0 auto">Every team rebuilds the same things. Then their AI rebuilds them again.</h2>
+    <p class="reveal" style="text-align:center;margin:24px auto 0;font-size:20px;line-height:1.5;max-width:60ch;color:var(--body)">The auth module your team perfected two projects ago still exists — buried in that repo, tangled with its dependencies, invisible to search. So the next project writes a new one, and an assistant asked the same question writes a third.</p>
+
+    <!-- 3 wash cards -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:64px" class="reveal">
+      <div class="card" style="background:var(--wash-ochre)">
+        <h3>Knowledge nobody can find</h3>
+        <p style="margin-top:12px">It is in a repo, in a head, or in a pull request from 2023 — never in one searchable place.</p>
+      </div>
+      <div class="card" style="background:var(--wash-sage)">
+        <h3>AI that regenerates</h3>
+        <p style="margin-top:12px">An assistant with no memory of what you own writes a fresh version every time it is asked.</p>
+      </div>
+      <div class="card" style="background:var(--wash-terracotta)">
+        <h3>Why it matters now</h3>
+        <p style="margin-top:12px">Generation is cheap; review is not. Every regenerated module is another one to maintain.</p>
+      </div>
+    </div>
+
+    <!-- Before / After -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:64px" class="reveal">
+      <!-- Before -->
+      <div class="card" style="background:var(--mist)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
+          <span style="font-family:var(--ff-head);font-weight:500;color:var(--ink)">Today, without BWX</span>
+          <span class="chip" style="background:var(--inset);font-size:13px">regenerated ×4</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;font-size:16px">
+          <p><strong style="color:var(--ink)">"We need JWT auth in the new service."</strong></p>
+          <p>Someone remembers "we did this before" but not where.</p>
+          <p>The assistant scans the whole codebase for context.</p>
+          <p>It writes a fresh implementation that must be reviewed line by line.</p>
+          <p>You now maintain a fourth, slightly different auth module.</p>
+          <div style="margin-top:8px;padding-top:16px;border-top:1px solid var(--hairline);font-family:var(--ff-mono);font-size:14px;color:var(--body)">
+            <strong style="color:var(--ink)">Cost:</strong> tens of thousands of tokens, a review cycle, new bugs
+          </div>
+        </div>
+      </div>
+      <!-- After -->
+      <div class="card" style="box-shadow:var(--shadow-hero)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
+          <span style="font-family:var(--ff-head);font-weight:500;color:var(--ink)">With BWX</span>
+          <span class="chip chip-sage" style="font-size:13px">reused</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;font-size:16px">
+          <p><strong style="color:var(--ink)">"Do we have JWT auth?"</strong></p>
+          <p>The assistant asks the Vault, not the codebase.</p>
+          <p>The Vault answers with a card: <code style="color:var(--terracotta-d)">auth@0.2.0</code>, nest, jwt, proven in 3 projects.</p>
+          <p><code style="color:var(--terracotta-d)">brico add auth</code> copies the piece and prints the two wiring steps.</p>
+          <p>Nothing new was written. Nothing new needs review.</p>
+          <div style="margin-top:8px;padding-top:16px;border-top:1px solid var(--hairline);font-family:var(--ff-mono);font-size:14px;color:var(--sage);font-weight:500">
+            Cost: about 300 tokens and one command
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Closing line -->
+    <h2 class="h2-sm reveal" style="text-align:center;margin-top:80px;max-width:24ch;margin-left:auto;margin-right:auto">The knowledge was never lost. It was never findable.</h2>
+  </div>
+</section>
+
+<!-- Sections S5–S13 will be added in subsequent commits -->
 </main>
 
 <script>
