@@ -252,7 +252,71 @@ $ brico add auth
     </div>
   </section>
 
-</main>
+
+  <!-- Band A: The Problem -->
+  <section id="why" class="fade-up">
+    <div class="container">
+      <div class="sec-head" style="margin-bottom: 48px; max-width: 800px;">
+        <span class="eyebrow">THE PROBLEM</span>
+        <h2>Every team rebuilds the same things. Then their AI rebuilds them again.</h2>
+        <p class="body-l" style="margin-top: 16px;">
+          The auth module your team perfected two projects ago still exists — buried in that repo, tangled with its dependencies, invisible to search. So the next project writes a new one, and an assistant asked the same question writes a third.
+        </p>
+      </div>
+
+      <!-- Before / After -->
+      <div class="grid-12" style="margin-bottom: 64px;">
+        <div style="grid-column: span 6; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 32px;">
+          <span class="meta" style="color: var(--text-3); display: block; margin-bottom: 16px;">TODAY, WITHOUT BWX &mdash; regenerated &times;4</span>
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <p><strong>"We need JWT auth in the new service."</strong></p>
+            <p>Someone remembers "we did this before" but not where.</p>
+            <p>The assistant scans the whole codebase for context.</p>
+            <p>It writes a fresh implementation that must be reviewed line by line.</p>
+            <p>You now maintain a fourth, slightly different auth module.</p>
+            <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 0.8125rem;">
+              <strong>cost:</strong> tens of thousands of tokens, a review cycle, new bugs
+            </div>
+          </div>
+        </div>
+        
+        <div style="grid-column: span 6; background: rgba(194,84,43,0.05); border: 1px solid var(--reuse); border-radius: 8px; padding: 32px; box-shadow: 0 0 0 1px rgba(194,84,43,0.1), 0 20px 40px -20px rgba(194,84,43,0.15);">
+          <span class="meta" style="color: var(--reuse); display: block; margin-bottom: 16px;">WITH BWX &mdash; reused</span>
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <p><strong>"Do we have JWT auth?"</strong></p>
+            <p>The assistant asks the Vault, not the codebase.</p>
+            <p>The Vault answers with a card: <code style="color: var(--reuse); font-family: var(--mono);">auth@0.2.0</code>, nest, jwt, proven in 3 projects.</p>
+            <p><code style="color: var(--reuse); font-family: var(--mono);">brico add auth</code> copies the piece and prints the two wiring steps.</p>
+            <p>Nothing new was written. Nothing new needs review.</p>
+            <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(194,84,43,0.2); font-family: var(--mono); font-size: 0.8125rem; color: var(--verified); font-weight: 600;">
+              cost: about 300 tokens and one command
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 Compact Cards -->
+      <div class="grid-12" style="margin-bottom: 64px;">
+        <div style="grid-column: span 4; background: var(--paper-2); border: 1px solid var(--line); border-radius: 8px; padding: 24px;">
+          <h3 style="margin-bottom: 8px;">Knowledge nobody can find</h3>
+          <p style="font-size: 0.95rem; color: var(--text-2);">Engineering teams lose their best work because it gets buried in old repos, stripped of the context explaining why it was built.</p>
+        </div>
+        <div style="grid-column: span 4; background: var(--paper-2); border: 1px solid var(--line); border-radius: 8px; padding: 24px;">
+          <h3 style="margin-bottom: 8px;">AI that regenerates</h3>
+          <p style="font-size: 0.95rem; color: var(--text-2);">AI assistants default to generating new code from scratch, which increases your maintenance burden and introduces subtle bugs.</p>
+        </div>
+        <div style="grid-column: span 4; background: var(--paper-2); border: 1px solid var(--line); border-radius: 8px; padding: 24px;">
+          <h3 style="margin-bottom: 8px;">Why this matters now</h3>
+          <p style="font-size: 0.95rem; color: var(--text-2);">With AI making code generation free, the new bottleneck is review and maintenance; reusing proven pieces is the only way to scale.</p>
+        </div>
+      </div>
+      
+      <div style="text-align: center;">
+        <h2 style="font-size: clamp(1.8rem, 3vw, 2.4rem);">The knowledge was never lost. <br/><span style="color: var(--reuse);">It was never findable.</span></h2>
+      </div>
+    </div>
+  </section>
+\n</main>
 
 <script>
 // Intersection Observer for fade-ups
