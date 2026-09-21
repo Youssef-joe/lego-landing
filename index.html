@@ -415,6 +415,101 @@
     .text-verified { color: var(--verified); }
     .statement { margin-top: 96px; margin-bottom: 48px; }
 
+    /* Band B */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 1024px) {
+      .steps-grid { grid-template-columns: 1fr; }
+    }
+    .step-card {
+      background-color: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+    }
+    .step-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--reuse);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .step-card .title { margin-bottom: 12px; }
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-top: 24px;
+      margin-bottom: 8px;
+    }
+    .tab {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--line);
+      color: var(--text-3);
+    }
+    .human-tab.active { background-color: rgba(85, 112, 79, 0.15); color: var(--verified); border-color: rgba(85, 112, 79, 0.3); }
+    .ai-tab.active { background-color: rgba(70, 97, 122, 0.15); color: var(--ai); border-color: rgba(70, 97, 122, 0.3); }
+    
+    .piece-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: center;
+    }
+    @media (max-width: 1024px) {
+      .piece-grid { grid-template-columns: 1fr; }
+    }
+    .file-tree {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .level-selector {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .level {
+      background-color: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 24px;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+    .level:hover {
+      border-color: var(--line-2);
+      transform: translateX(4px);
+    }
+    .level.active {
+      border-color: rgba(194,84,43,.4);
+      background-color: var(--paper-2);
+    }
+    .level.active::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background-color: var(--reuse);
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+    }
+    .level h4 { margin-bottom: 8px; font-size: 1.125rem; font-family: 'Space Grotesk', sans-serif; }
+
     /* Scroll animation */
     .fade-up {
       opacity: 0;
@@ -560,6 +655,113 @@
     </section>
     
     <!-- BAND B -->
+    <section id="how" class="bg-paper fade-up">
+      <div class="container">
+        <div class="band-label" style="margin-bottom: 48px;">FOR ENGINEERS</div>
+        <div class="sec-header">
+          <span class="eyebrow">HOW IT WORKS</span>
+          <h2 class="display-l">Capture once. Find it anywhere. Add it in one command.</h2>
+          <p class="body-l">Three verbs, one binary. Everything lives in a git folder on your machine called the Vault — no server, no account.</p>
+        </div>
+
+        <div class="steps-grid">
+          <!-- Step 1 -->
+          <div class="step-card">
+            <div class="step-num">1</div>
+            <h3 class="title">Capture</h3>
+            <p class="text-2">Point <span class="mono">brico</span> at a project. It suggests which modules are worth keeping. Pick one, and it is saved to the Vault as an immutable, versioned piece with a manifest, its env vars, and its wiring steps.</p>
+            <div class="tabs">
+              <span class="tab active human-tab">HUMAN</span>
+            </div>
+            <div class="terminal" aria-label="Terminal output for Capture step">
+<span class="comment">$</span> <span class="cmd">brico extract</span>
+  auth      92%  jwt, passport, bcrypt
+  mailer    81%  smtp, templates
+<span class="comment">$</span> <span class="cmd">brico capture auth</span>
+  <span class="text-3">saved auth@0.1.0 to the Vault</span>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="step-card">
+            <div class="step-num">2</div>
+            <h3 class="title">Find</h3>
+            <p class="text-2">Search by name, tag, or plain-language meaning. Engineers use the CLI or the terminal UI. AI assistants use the exact same library over MCP, so they answer "do we have X?" from your Vault instead of guessing.</p>
+            <div class="tabs">
+              <span class="tab active human-tab">HUMAN</span>
+              <span class="tab ai-tab">AI ASSISTANT</span>
+            </div>
+            <div class="terminal" aria-label="Terminal output for Find step">
+<span class="comment">$</span> <span class="cmd">brico search "token auth for nest"</span>
+  auth@0.2.0   jwt, passport   3 projects
+<span class="comment">$</span> <span class="cmd">brico mcp</span>   <span class="text-3">serving 4 tools to your assistant</span>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="step-card">
+            <div class="step-num">3</div>
+            <h3 class="title">Add</h3>
+            <p class="text-2">One command copies the piece into a new project, merges env vars into your example file, and prints the manual steps that remain. You reuse verified code instead of reviewing generated code.</p>
+            <div class="tabs">
+              <span class="tab active human-tab">HUMAN</span>
+              <span class="tab ai-tab">AI ASSISTANT</span>
+            </div>
+            <div class="terminal" aria-label="Terminal output for Add step">
+<span class="comment">$</span> <span class="cmd">brico add auth</span>
+  <span class="text-3">copied 6 files, wired .env.example</span>
+  next: add AuthModule to AppModule imports
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="piece" class="bg-paper fade-up" style="padding-top: 0;">
+      <div class="container">
+        <div class="sec-header">
+          <span class="eyebrow">WHAT IS A PIECE</span>
+          <h2 class="display-l">Code, plus everything you'd otherwise have to ask a colleague about.</h2>
+        </div>
+        
+        <div class="piece-grid">
+          <!-- File tree -->
+          <div class="file-tree terminal">
+            <div><span class="text-3">vault/pieces/</span>auth/0.2.0/</div>
+            <div>&nbsp;&nbsp;src/ <span class="text-3" style="float: right">the files themselves</span></div>
+            <div>&nbsp;&nbsp;&nbsp;&nbsp;auth.service.ts</div>
+            <div>&nbsp;&nbsp;&nbsp;&nbsp;auth.module.ts</div>
+            <div>&nbsp;&nbsp;&nbsp;&nbsp;jwt.strategy.ts</div>
+            <div>&nbsp;&nbsp;<span style="color: var(--reuse);">manifest.json</span> <span class="text-3" style="float: right">name, kind, deps, env, wiring, relations</span></div>
+            <div>&nbsp;&nbsp;<span style="color: var(--verified);">card.json</span> <span class="text-3" style="float: right">~50 tokens: what it is</span></div>
+            <div>&nbsp;&nbsp;<span style="color: var(--verified);">surface.json</span> <span class="text-3" style="float: right">~300 tokens: how to call it</span></div>
+            <div>&nbsp;&nbsp;<span style="color: var(--verified);">summary.md</span> <span class="text-3" style="float: right">~500 tokens: why it works</span></div>
+            <div>&nbsp;&nbsp;<span class="text-3">embeddings.f32</span> <span class="text-3" style="float: right">for meaning-based search</span></div>
+          </div>
+
+          <!-- Selector -->
+          <div class="level-selector">
+            <div class="level active">
+              <h4>Card <span class="text-3 mono-text">~50</span></h4>
+              <p class="meta">"Do we have something for X?"</p>
+            </div>
+            <div class="level">
+              <h4>Surface <span class="text-3 mono-text">~200–400</span></h4>
+              <p class="meta">"How do I call it?"</p>
+            </div>
+            <div class="level">
+              <h4>Summary <span class="text-3 mono-text">~500</span></h4>
+              <p class="meta">"Why was it built this way?"</p>
+            </div>
+            <div class="level">
+              <h4>Full source</h4>
+              <p class="meta">"I need to change it."</p>
+            </div>
+          </div>
+        </div>
+        <p class="body-l" style="margin-top: 48px; text-align: center; margin-inline: auto;">Whoever is asking — human or AI — climbs only as high as the task needs.</p>
+      </div>
+    </section>
 
     <!-- BAND C -->
 
