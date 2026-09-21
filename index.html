@@ -306,6 +306,115 @@
       max-width: 20ch;
     }
 
+    /* Band A: The Problem */
+    .band-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      border: 1px solid var(--line);
+      border-radius: 99px;
+      padding: 6px 12px;
+      display: inline-block;
+      margin-bottom: 48px;
+    }
+    
+    .sec-header {
+      margin-bottom: 64px;
+    }
+    
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 64px;
+    }
+    @media (max-width: 768px) {
+      .cards-grid { grid-template-columns: 1fr; }
+    }
+    .card {
+      background-color: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 32px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+    .card .title { margin-bottom: 12px; font-family: 'Space Grotesk', sans-serif; }
+    
+    .compare-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 96px;
+    }
+    @media (max-width: 768px) {
+      .compare-container { grid-template-columns: 1fr; }
+    }
+    .compare-card {
+      background-color: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+    }
+    .compare-card.after {
+      border: 2px solid var(--verified);
+      background-color: #F8FAF7;
+    }
+    .compare-list {
+      list-style: none;
+      padding: 0;
+      margin: 32px 0;
+      counter-reset: step;
+      display: grid;
+      gap: 16px;
+      flex-grow: 1;
+    }
+    .compare-list li {
+      position: relative;
+      padding-left: 36px;
+      color: var(--text-2);
+      counter-increment: step;
+    }
+    .compare-list li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 2px;
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      background-color: var(--paper-2);
+      color: var(--text-3);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .compare-card.after .compare-list li::before {
+      background-color: rgba(85, 112, 79, 0.15);
+      color: var(--verified);
+    }
+    .compare-card code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85em;
+      background-color: rgba(0,0,0,0.05);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .compare-footer {
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8125rem;
+    }
+    .text-reuse { color: var(--reuse); }
+    .text-verified { color: var(--verified); }
+    .statement { margin-top: 96px; margin-bottom: 48px; }
+
     /* Scroll animation */
     .fade-up {
       opacity: 0;
@@ -389,6 +498,66 @@
     </div>
 
     <!-- BAND A -->
+    <section id="why" class="bg-paper-2 fade-up">
+      <div class="container">
+        <div class="band-label">FOR ENGINEERING LEADERS</div>
+        
+        <div class="sec-header">
+          <span class="eyebrow">THE PROBLEM</span>
+          <h2 class="display-l">Every team rebuilds the same things. Then their AI rebuilds them again.</h2>
+          <p class="body-l">The auth module your team perfected two projects ago still exists — buried in that repo, tangled with its dependencies, invisible to search. So the next project writes a new one, and an assistant asked the same question writes a third.</p>
+        </div>
+
+        <div class="cards-grid">
+          <div class="card">
+            <h3 class="title">Knowledge nobody can find</h3>
+            <p class="text-2">Past work is trapped in old repositories, undocumented and inaccessible to the people building today.</p>
+          </div>
+          <div class="card">
+            <h3 class="title">AI that regenerates</h3>
+            <p class="text-2">Without a way to find proven code, assistants waste tokens and time generating fresh, untested variants.</p>
+          </div>
+          <div class="card">
+            <h3 class="title">Why this matters now</h3>
+            <p class="text-2">The bottleneck has moved from writing code to reviewing and maintaining it.</p>
+          </div>
+        </div>
+
+        <div class="compare-container">
+          <div class="compare-card before">
+            <div class="meta text-3" style="margin-bottom: 16px;">TODAY, WITHOUT BWX — regenerated ×4</div>
+            <ul class="compare-list">
+              <li>"We need JWT auth in the new service."</li>
+              <li>Someone remembers "we did this before" but not where.</li>
+              <li>The assistant scans the whole codebase for context.</li>
+              <li>It writes a fresh implementation that must be reviewed line by line.</li>
+              <li>You now maintain a fourth, slightly different auth module.</li>
+            </ul>
+            <div class="compare-footer text-reuse">
+              <b>cost:</b> tens of thousands of tokens, a review cycle, new bugs
+            </div>
+          </div>
+          
+          <div class="compare-card after">
+            <div class="meta text-verified" style="margin-bottom: 16px;">WITH BWX — reused</div>
+            <ul class="compare-list">
+              <li>"Do we have JWT auth?"</li>
+              <li>The assistant asks the Vault, not the codebase.</li>
+              <li>The Vault answers with a card: <code>auth@0.2.0</code>, nest, jwt, proven in 3 projects.</li>
+              <li><code>brico add auth</code> copies the piece and prints the two wiring steps.</li>
+              <li>Nothing new was written. Nothing new needs review.</li>
+            </ul>
+            <div class="compare-footer text-verified">
+              <b>cost:</b> about 300 tokens and one command
+            </div>
+          </div>
+        </div>
+
+        <div class="statement fade-up">
+          <h3 class="display-l" style="text-align: center; max-width: 24ch; margin: 0 auto; letter-spacing: -0.04em;">The knowledge was never lost.<br>It was never findable.</h3>
+        </div>
+      </div>
+    </section>
     
     <!-- BAND B -->
 
