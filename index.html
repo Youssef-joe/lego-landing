@@ -613,7 +613,234 @@ code, .mono { font-family: var(--ff-mono); font-size: 0.85em; letter-spacing: 0;
   </div>
 </section>
 
-<!-- Sections S5–S13 will be added in subsequent commits -->
+<!-- ==================== S5: HOW IT WORKS ==================== -->
+<section id="how" class="section-gap">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:48px" class="reveal">
+      <span class="chip">For engineers</span>
+    </div>
+    <h2 class="reveal" style="text-align:center;max-width:22ch;margin:0 auto">Capture once. Find it anywhere. Add it in one command.</h2>
+    <p class="reveal" style="text-align:center;margin:24px auto 0;font-size:20px;line-height:1.5;max-width:60ch;color:var(--body)">Three verbs, one binary. Everything lives in a git folder on your machine called the Vault — no server, no account.</p>
+
+    <!-- Step 1: Capture -->
+    <div class="card reveal" style="margin-top:64px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start">
+      <div>
+        <h3>Capture</h3>
+        <p style="margin-top:12px">Point BWX at a folder that works. It reads the code, writes the summaries, and versions the result into the Vault as a piece.</p>
+        <p style="margin-top:16px;font-family:var(--ff-mono);font-size:14px;color:var(--terracotta-d)">vault/pieces/auth/0.1.0/</p>
+      </div>
+      <div class="term">
+        <div class="term-bar"><div class="term-dot"></div><div class="term-dot"></div><div class="term-dot"></div></div>
+        <div class="term-body">
+          <div class="prompt">$ brico capture ./src/auth --name auth</div>
+          <div>  read 6 files · 412 lines</div>
+          <div>  wrote card, surface, summary</div>
+          <div class="ok">  saved auth@0.1.0 to the Vault</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Find -->
+    <div class="card reveal" style="margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start">
+      <div>
+        <h3>Find</h3>
+        <p style="margin-top:12px">Search by meaning, not by filename. The same index answers a human at the terminal and an assistant over MCP.</p>
+        <div role="tablist" aria-label="Find mode" style="display:flex;gap:8px;margin-top:20px" id="find-tabs">
+          <button role="tab" aria-selected="true" class="chip" style="cursor:pointer;background:var(--terracotta);color:var(--on-dark);border-color:var(--terracotta)" data-tab="find-human">Human</button>
+          <button role="tab" aria-selected="false" class="chip" style="cursor:pointer" data-tab="find-ai">AI assistant</button>
+        </div>
+      </div>
+      <div>
+        <div class="term" id="find-human">
+          <div class="term-bar"><div class="term-dot"></div><div class="term-dot"></div><div class="term-dot"></div></div>
+          <div class="term-body">
+            <div class="prompt">$ brico search "token auth for nest"</div>
+            <div>  auth@0.2.0   jwt, passport, nest</div>
+            <div>    proven in 3 projects · updated 4 mo ago</div>
+            <div>  session@0.3.1 redis-backed sessions</div>
+          </div>
+        </div>
+        <div class="term" id="find-ai" style="display:none">
+          <div class="term-bar"><div class="term-dot"></div><div class="term-dot"></div><div class="term-dot"></div></div>
+          <div class="term-body">
+            <div class="prompt">search_pieces("token auth for nest")</div>
+            <div>  → auth@0.2.0   jwt, passport, nest</div>
+            <div>    proven in 3 projects · updated 4 mo ago</div>
+            <div>  → session@0.3.1 redis-backed sessions</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: Add -->
+    <div class="card reveal" style="margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start">
+      <div>
+        <h3>Add</h3>
+        <p style="margin-top:12px">One command copies the piece into the project, wires what it can, and prints the steps only you can decide.</p>
+        <p style="margin-top:12px;font-size:15px;color:var(--body);font-style:italic">No install step. No registry.</p>
+      </div>
+      <div class="term">
+        <div class="term-bar"><div class="term-dot"></div><div class="term-dot"></div><div class="term-dot"></div></div>
+        <div class="term-body">
+          <div class="prompt">$ brico add auth</div>
+          <div>  copied 6 files → src/auth/</div>
+          <div>  wired .env.example</div>
+          <div class="ok">  next: add AuthModule to AppModule imports</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== S6: WHAT A PIECE IS ==================== -->
+<section id="piece" class="section-gap">
+  <div class="container">
+    <h2 class="reveal" style="text-align:center;max-width:24ch;margin:0 auto">Code, plus everything you'd otherwise have to ask a colleague about.</h2>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:64px" class="reveal">
+      <!-- File tree -->
+      <div class="card">
+        <span style="font-size:14px;font-weight:500;color:var(--terracotta-d);margin-bottom:16px;display:block">On disk</span>
+        <div class="card-inset" style="font-family:var(--ff-mono);font-size:14px;line-height:2;color:var(--ink)">
+          vault/pieces/auth/0.2.0/<br>
+          ├── card.md&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~50 tokens<br>
+          ├── surface.md&nbsp;&nbsp;&nbsp;~200–400<br>
+          ├── summary.md&nbsp;&nbsp;&nbsp;~500<br>
+          ├── piece.toml<br>
+          └── src/<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;├── auth.module.ts<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;├── jwt.strategy.ts<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;└── …4 more
+        </div>
+      </div>
+
+      <!-- Level selector -->
+      <div class="card">
+        <div role="tablist" aria-label="Detail level" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px" id="level-tabs">
+          <button role="tab" aria-selected="true" class="chip" style="cursor:pointer;background:var(--terracotta);color:var(--on-dark);border-color:var(--terracotta)" data-level="card">Card ~50</button>
+          <button role="tab" aria-selected="false" class="chip" style="cursor:pointer" data-level="surface">Surface ~200–400</button>
+          <button role="tab" aria-selected="false" class="chip" style="cursor:pointer" data-level="summary">Summary ~500</button>
+          <button role="tab" aria-selected="false" class="chip" style="cursor:pointer" data-level="source">Full source</button>
+        </div>
+
+        <div id="level-card" class="level-panel">
+          <p style="font-family:var(--ff-head);font-size:28px;font-weight:500;color:var(--ink);line-height:1.2;margin-bottom:20px">"Do we have something for X?"</p>
+          <div class="card-inset" style="font-family:var(--ff-mono);font-size:14px;line-height:1.7;color:var(--ink)">
+            auth@0.2.0<br>
+            JWT + refresh tokens for NestJS services.<br>
+            kind: code · nest, jwt, passport<br>
+            proven in 3 projects
+          </div>
+        </div>
+        <div id="level-surface" class="level-panel" style="display:none">
+          <p style="font-family:var(--ff-head);font-size:28px;font-weight:500;color:var(--ink);line-height:1.2;margin-bottom:20px">"How do I call it?"</p>
+          <div class="card-inset" style="font-family:var(--ff-mono);font-size:14px;line-height:1.7;color:var(--ink)">The API signature, exported types, and wiring instructions.</div>
+        </div>
+        <div id="level-summary" class="level-panel" style="display:none">
+          <p style="font-family:var(--ff-head);font-size:28px;font-weight:500;color:var(--ink);line-height:1.2;margin-bottom:20px">"Why was it built this way?"</p>
+          <div class="card-inset" style="font-family:var(--ff-mono);font-size:14px;line-height:1.7;color:var(--ink)">The human-written or AI-generated explanation of architectural choices.</div>
+        </div>
+        <div id="level-source" class="level-panel" style="display:none">
+          <p style="font-family:var(--ff-head);font-size:28px;font-weight:500;color:var(--ink);line-height:1.2;margin-bottom:20px">"I need to change it."</p>
+          <div class="card-inset" style="font-family:var(--ff-mono);font-size:14px;line-height:1.7;color:var(--ink)">The actual code files. Read only when a modification is necessary.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Level questions -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:32px" class="reveal">
+      <div style="text-align:center">
+        <span style="font-family:var(--ff-head);font-weight:500;color:var(--ink)">Surface</span>
+        <p style="font-size:15px;margin-top:4px">"How do I call it?"</p>
+      </div>
+      <div style="text-align:center">
+        <span style="font-family:var(--ff-head);font-weight:500;color:var(--ink)">Summary</span>
+        <p style="font-size:15px;margin-top:4px">"Why was it built this way?"</p>
+      </div>
+      <div style="text-align:center">
+        <span style="font-family:var(--ff-head);font-weight:500;color:var(--ink)">Source</span>
+        <p style="font-size:15px;margin-top:4px">"I need to change it."</p>
+      </div>
+    </div>
+
+    <p class="reveal" style="text-align:center;margin-top:48px;font-size:18px;color:var(--body)">Whoever is asking — human or AI — climbs only as high as the task needs.</p>
+  </div>
+</section>
+
+<!-- ==================== S7: FOR AI ASSISTANTS ==================== -->
+<section id="ai" class="section-gap">
+  <div class="container">
+    <div class="band-dark reveal">
+      <div style="text-align:center;margin-bottom:48px">
+        <span class="chip">For AI assistants</span>
+      </div>
+      <h2 style="text-align:center;max-width:22ch;margin:0 auto">Your assistant gets a librarian instead of the whole library.</h2>
+      <p style="text-align:center;margin:24px auto 0;font-size:20px;line-height:1.5;max-width:60ch"><code style="color:var(--code-accent);font-size:16px">brico mcp</code> exposes the Vault over the Model Context Protocol. Claude, Cursor, IDE agents, internal copilots — any MCP-capable assistant can search your pieces and recommend reuse before writing anything new.</p>
+
+      <!-- 4 tool cards -->
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:48px">
+        <div style="background:rgba(255,255,255,0.06);border-radius:20px;padding:24px">
+          <code style="color:var(--code-accent);font-size:15px;display:block;margin-bottom:8px">search_pieces(query, kind?)</code>
+          <p style="font-size:15px">Meaning-based search across the Vault.</p>
+        </div>
+        <div style="background:rgba(255,255,255,0.06);border-radius:20px;padding:24px">
+          <code style="color:var(--code-accent);font-size:15px;display:block;margin-bottom:8px">get_piece(name, level)</code>
+          <p style="font-size:15px">Card, surface, summary or source — the caller picks.</p>
+        </div>
+        <div style="background:rgba(255,255,255,0.06);border-radius:20px;padding:24px">
+          <code style="color:var(--code-accent);font-size:15px;display:block;margin-bottom:8px">plan_reuse(task)</code>
+          <p style="font-size:15px">What to reuse for a task, and what is genuinely new.</p>
+        </div>
+        <div style="background:rgba(255,255,255,0.06);border-radius:20px;padding:24px">
+          <code style="color:var(--code-accent);font-size:15px;display:block;margin-bottom:8px">get_relations(name, kind?)</code>
+          <p style="font-size:15px">What this piece depends on, and what depends on it.</p>
+        </div>
+      </div>
+
+      <!-- Conversation trace -->
+      <div style="margin-top:48px">
+        <p style="font-family:var(--ff-head);font-weight:500;font-size:20px;color:var(--on-dark);margin-bottom:24px">One exchange</p>
+        <div style="display:flex;flex-direction:column;gap:12px;font-family:var(--ff-mono);font-size:14px;line-height:1.7">
+          <div style="display:flex;gap:16px"><span style="color:var(--on-dark-3);min-width:56px">DEV →</span><span style="color:var(--on-dark)">"add jwt auth to the billing service"</span></div>
+          <div style="display:flex;gap:16px"><span style="color:var(--code-accent);min-width:56px">TOOL →</span><span style="color:var(--on-dark-3)">plan_reuse("jwt auth, nest")</span><span style="margin-left:auto;color:var(--on-dark-3)">· 38 tok</span></div>
+          <div style="display:flex;gap:16px"><span style="color:var(--terracotta);min-width:56px">VAULT →</span><span style="color:var(--on-dark-3)">auth@0.2.0 · card + surface</span><span style="margin-left:auto;color:var(--on-dark-3)">· 244 tok</span></div>
+          <div style="display:flex;gap:16px"><span style="color:var(--code-accent);min-width:56px">TOOL →</span><span style="color:var(--on-dark-3)">"reuse auth@0.2.0; new: billing webhooks"</span></div>
+        </div>
+      </div>
+
+      <!-- Comparison -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px">
+        <div style="background:rgba(255,255,255,0.06);border-radius:20px;padding:24px;text-align:center">
+          <p style="font-family:var(--ff-head);font-weight:500;font-size:28px;color:var(--on-dark)">~300</p>
+          <p style="font-size:15px;margin-top:8px">tokens · Vault answer</p>
+        </div>
+        <div style="background:rgba(255,255,255,0.06);border-radius:20px;padding:24px;text-align:center">
+          <p style="font-family:var(--ff-head);font-weight:500;font-size:18px;color:var(--on-dark)">Full repo scan</p>
+          <p style="font-size:15px;margin-top:8px">Repo-indexing assistant</p>
+        </div>
+      </div>
+
+      <p style="text-align:center;margin-top:32px;font-size:16px;color:var(--on-dark-3)">A 10,000-piece Vault carries about 40 MB of vectors — it fits on the laptop that asks the question.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== S8: PIECE KINDS ==================== -->
+<section class="section-gap reveal">
+  <div class="container" style="text-align:center">
+    <p style="font-size:18px;color:var(--body);margin-bottom:32px;max-width:60ch;margin-left:auto;margin-right:auto">Modules today; prompts, agent skills, evals, datasets and pipelines are the same structure with a different kind.</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+      <span class="chip" style="font-family:var(--ff-mono)">code <span class="chip chip-sage" style="font-size:12px;padding:3px 10px;margin-left:6px">Shipping</span></span>
+      <span class="chip" style="font-family:var(--ff-mono)">prompt <span class="chip chip-warm" style="font-size:12px;padding:3px 10px;margin-left:6px">Next</span></span>
+      <span class="chip" style="font-family:var(--ff-mono)">skill <span class="chip chip-warm" style="font-size:12px;padding:3px 10px;margin-left:6px">Next</span></span>
+      <span class="chip" style="font-family:var(--ff-mono)">eval <span class="chip" style="font-size:12px;padding:3px 10px;margin-left:6px;background:var(--mist)">Later</span></span>
+      <span class="chip" style="font-family:var(--ff-mono)">dataset <span class="chip" style="font-size:12px;padding:3px 10px;margin-left:6px;background:var(--mist)">Later</span></span>
+      <span class="chip" style="font-family:var(--ff-mono)">pipeline <span class="chip" style="font-size:12px;padding:3px 10px;margin-left:6px;background:var(--mist)">Later</span></span>
+    </div>
+  </div>
+</section>
+
+<!-- Sections S9–S13 will be added in the next commit -->
 </main>
 
 <script>
@@ -671,6 +898,52 @@ window.addEventListener('scroll', () => {
   if (!body) return;
   // The hero step terminals are static; this is reserved for future typing animation
 })();
+
+/* ========== Tab switching (Find tabs + Level pills) ========== */
+function initTabs(tablistId, showCallback) {
+  const tablist = document.getElementById(tablistId);
+  if (!tablist) return;
+  const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => activateTab(tab));
+    tab.addEventListener('keydown', e => {
+      let idx = tabs.indexOf(tab);
+      if (e.key === 'ArrowRight') idx = (idx + 1) % tabs.length;
+      else if (e.key === 'ArrowLeft') idx = (idx - 1 + tabs.length) % tabs.length;
+      else return;
+      e.preventDefault();
+      tabs[idx].focus();
+      activateTab(tabs[idx]);
+    });
+  });
+
+  function activateTab(active) {
+    tabs.forEach(t => {
+      const isActive = t === active;
+      t.setAttribute('aria-selected', isActive);
+      t.style.background = isActive ? 'var(--terracotta)' : '';
+      t.style.color = isActive ? 'var(--on-dark)' : '';
+      t.style.borderColor = isActive ? 'var(--terracotta)' : '';
+    });
+    if (showCallback) showCallback(active);
+  }
+}
+
+// Find tabs
+initTabs('find-tabs', (tab) => {
+  const target = tab.dataset.tab;
+  document.getElementById('find-human').style.display = target === 'find-human' ? '' : 'none';
+  document.getElementById('find-ai').style.display = target === 'find-ai' ? '' : 'none';
+});
+
+// Level pills
+initTabs('level-tabs', (tab) => {
+  const target = tab.dataset.level;
+  document.querySelectorAll('.level-panel').forEach(p => {
+    p.style.display = p.id === 'level-' + target ? '' : 'none';
+  });
+});
 </script>
 </body>
 </html>
