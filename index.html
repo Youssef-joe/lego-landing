@@ -3,951 +3,606 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BricoWerx: Your team already built it. Stop rebuilding it.</title>
+<title>BricoWerx — Developers don't have to start from scratch</title>
 <meta name="description" content="BricoWerx keeps your team's proven code as versioned, searchable pieces — so engineers and AI assistants reuse them instead of rebuilding them.">
-<!-- Preserve existing SVG favicon from the old file -->
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%0A  %3ClinearGradient id='gT' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23D3663B'/%3E%3Cstop offset='1' stop-color='%23B04A24'/%3E%3C/linearGradient%3E%0A  %3ClinearGradient id='gO' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23C99A4C'/%3E%3Cstop offset='1' stop-color='%23A67830'/%3E%3C/linearGradient%3E%0A  %3ClinearGradient id='gS' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236C8A68'/%3E%3Cstop offset='1' stop-color='%234F6B4C'/%3E%3C/linearGradient%3E%0A%3C/defs%3E%0A%3Cg %3E%3Crect x='14' y='40' width='38' height='38' rx='8' transform='rotate(45 33 59)' fill='url(%23gT)'/%3E%0A  %3Crect x='14' y='40' width='38' height='38' rx='8' transform='rotate(45 33 59)' fill='none' stroke='rgba(255,255,255,.22)' stroke-width='1'/%3E%0A  %3Cpath transform='translate(33 59) scale(2.3)' d='M-3.4,-5 V5 H1 A2.6,2.6 0 0 0 1,-0.2 H-3.4 M-3.4,-0.2 H0.6 A2.4,2.4 0 0 0 0.6,-5 H-3.4' fill='none' stroke='%23FBF7F0' stroke-width='1.55' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/g%3E%0A%3Cg %3E%3Crect x='52' y='12' width='27' height='27' rx='6' transform='rotate(45 65.5 25.5)' fill='url(%23gO)'/%3E%0A  %3Crect x='52' y='12' width='27' height='27' rx='6' transform='rotate(45 65.5 25.5)' fill='none' stroke='rgba(255,255,255,.22)' stroke-width='1'/%3E%0A  %3Cpath transform='translate(65.5 25.5) scale(1.7)' d='M-4.4,-5 L-2.2,5 L0,-1.6 L2.2,5 L4.4,-5' fill='none' stroke='%23FBF7F0' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/g%3E%0A%3Cg %3E%3Crect x='60' y='56' width='22' height='22' rx='5' transform='rotate(45 71 67)' fill='url(%23gS)'/%3E%0A  %3Crect x='60' y='56' width='22' height='22' rx='5' transform='rotate(45 71 67)' fill='none' stroke='rgba(255,255,255,.22)' stroke-width='1'/%3E%0A  %3Cpath transform='translate(71 67) scale(1.45)' d='M-4,-5 L4,5 M4,-5 L-4,5' fill='none' stroke='%23FBF7F0' stroke-width='1.7' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='12' y='12' width='30' height='30' rx='6' transform='rotate(45 27 27)' fill='%23B8883A'/%3E%3Crect x='12' y='55' width='30' height='30' rx='6' transform='rotate(45 27 70)' fill='%23C2542B'/%3E%3Crect x='55' y='55' width='30' height='30' rx='6' transform='rotate(45 70 70)' fill='%235F7B5B'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
 <style>
-/* Base variables & new visual system */
+/* ========== TOKENS ========== */
 :root {
-  --paper: #F6F2EA;
-  --paper-2: #EFE9DE;
-  --card: #FFFDF9;
-  --ink: #15181A;
-  --ink-2: #1E2326;
-  
-  --text: #15181A;
-  --text-2: #575D59;
-  --text-3: #8A8F89;
-  --on-ink: #EDE7DB;
-  --on-ink-2: #9AA29B;
-  
-  --line: #E3DCCD;
-  --line-2: #CCC3B1;
-  
-  /* Semantic accents */
-  --reuse: #C2542B; /* terracotta */
-  --verified: #55704F; /* sage */
-  --ai: #46617A; /* slate */
+  --page:        #ffffff;
+  --card:        #F7F4EE;
+  --inset:       #EDE8DF;
+  --mist:        #EAE5DC;
+  --espresso:    #2E2420;
 
-  --display: 'Space Grotesk', system-ui, sans-serif;
-  --sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --mono: 'JetBrains Mono', ui-monospace, monospace;
+  --terracotta:  #C2542B;
+  --terracotta-d:#A8461F;
+  --sage:        #5F7B5B;
+  --ochre:       #B8883A;
+
+  --wash-ochre:      #F0E2CC;
+  --wash-sage:       #DEE6D7;
+  --wash-terracotta: #F4DBC8;
+  --wash-warm:       #E7D9C4;
+
+  --ink:      #241C17;
+  --body:     #5C5750;
+  --on-dark:  #ffffff;
+  --on-dark-2:#E6DFD6;
+  --on-dark-3:#C9BFB4;
+  --code-accent: #F0A878;
+
+  --hairline: #DED6C8;
+
+  --ff-head: 'Inter Tight', system-ui, sans-serif;
+  --ff-body: 'Geist', system-ui, sans-serif;
+  --ff-mono: 'Geist Mono', ui-monospace, 'SF Mono', monospace;
+
+  --shadow-btn: 0 1px 2px rgba(74,30,12,0.45), 0 0 0 1px #8E3C1E;
+  --shadow-hero: rgba(74,45,30,0.10) 0px 14px 20px 4px;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* ========== RESET ========== */
+*,*::before,*::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--paper);
-  color: var(--text);
-  font-family: var(--sans);
-  line-height: 1.7;
-  font-size: 1rem;
+  background: var(--page);
+  color: var(--body);
+  font-family: var(--ff-body);
+  font-size: 17px;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Typography Scale */
-h1, h2, h3, h4 { font-family: var(--display); font-weight: 700; color: var(--text); }
-h1 { font-size: clamp(2.75rem, 6vw, 4.5rem); line-height: 1.02; letter-spacing: -0.03em; }
-h2 { font-size: clamp(2rem, 3.6vw, 2.9rem); line-height: 1.08; letter-spacing: -0.02em; }
-h3 { font-size: 1.25rem; line-height: 1.3; }
+/* ========== TYPOGRAPHY ========== */
+h1, h2, h3 { font-family: var(--ff-head); font-weight: 500; color: var(--ink); }
+h1 { font-size: clamp(2.75rem, 7vw, 6rem); line-height: 1.02; letter-spacing: -0.03em; }
+h2 { font-size: clamp(2rem, 4.5vw, 4rem); line-height: 1.08; letter-spacing: -0.03em; }
+h3 { font-size: clamp(1.5rem, 2vw, 1.75rem); line-height: 1.2; letter-spacing: -0.02em; }
+.h2-sm { font-size: clamp(1.75rem, 4vw, 3.5rem); line-height: 1.1; letter-spacing: -0.03em; }
 p { max-width: 68ch; }
-.body-l { font-size: 1.125rem; line-height: 1.65; max-width: 60ch; }
-.meta { font-size: 0.8125rem; line-height: 1.4; letter-spacing: 0.06em; text-transform: uppercase; }
-.mono { font-family: var(--mono); font-size: 0.875rem; line-height: 1.55; }
+a { color: var(--terracotta-d); text-decoration: none; }
+a:hover { text-decoration: underline; }
+code, .mono { font-family: var(--ff-mono); font-size: 0.85em; letter-spacing: 0; }
 
-/* Accessible focus ring */
-:focus-visible { outline: 2px solid var(--reuse); outline-offset: 2px; }
+/* ========== FOCUS ========== */
+:focus-visible { outline: 2px solid var(--terracotta); outline-offset: 2px; }
 
-/* Layout Grid */
-.container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
-@media (max-width: 768px) { .container { padding: 0 16px; } }
-.grid-12 { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; }
-@media (max-width: 768px) { .grid-12 { grid-template-columns: 1fr; gap: 16px; } }
+/* ========== LAYOUT ========== */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.section-gap { padding: 96px 0; }
+@media (min-width: 1024px) { .section-gap { padding: 120px 0; } }
 
-/* Rhythm */
-section { padding: clamp(72px, 9vw, 128px) 0; }
-section.alt { background: var(--paper-2); }
-section.dark { background: var(--ink); color: var(--on-ink); }
-section.dark h2, section.dark h3 { color: var(--on-ink); }
-section.dark p { color: var(--on-ink-2); }
+/* ========== COMPONENTS: CHIPS ========== */
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 16px; border-radius: 9999px;
+  font-family: var(--ff-body); font-size: 14px; font-weight: 500;
+  line-height: 1.5; white-space: nowrap;
+  background: var(--page); border: 1px solid var(--inset); color: var(--body);
+}
+.chip-launch { border-color: var(--wash-warm); color: var(--terracotta-d); }
+.chip-sage { background: var(--wash-sage); border-color: var(--wash-sage); color: var(--sage); font-family: var(--ff-mono); }
+.chip-warm { background: var(--wash-warm); border-color: var(--wash-warm); color: var(--body); }
 
-/* Components */
-.btn {
+/* ========== COMPONENTS: BUTTONS ========== */
+.btn-fill {
   display: inline-flex; align-items: center; justify-content: center;
-  font-family: var(--sans); font-weight: 600; padding: 12px 24px;
-  border-radius: 6px; cursor: pointer; text-decoration: none;
-  transition: transform 0.2s, background 0.2s;
+  padding: 12px 28px; border-radius: 9999px; border: none;
+  font-family: var(--ff-body); font-size: 16px; font-weight: 500;
+  color: var(--on-dark); background: var(--terracotta); cursor: pointer;
+  text-decoration: none;
+  box-shadow: var(--shadow-btn);
+  transition: background 0.2s, transform 0.15s;
 }
-.btn-primary { background: var(--reuse); color: #FFF; border: none; }
-.btn-primary:hover { background: #9C4020; color: #FFF; }
-.btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--line-2); }
-.btn-ghost:hover { background: var(--paper-2); border-color: var(--text); }
-section.dark .btn-ghost { color: var(--on-ink); border-color: var(--on-ink-2); }
-section.dark .btn-ghost:hover { background: var(--ink-2); border-color: var(--on-ink); }
+.btn-fill:hover { background: var(--terracotta-d); text-decoration: none; transform: translateY(-1px); }
+.btn-fill:active { transform: translateY(0); }
 
-.eyebrow {
-  display: inline-block; font-family: var(--mono); font-size: 0.8125rem;
-  letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-2);
-  margin-bottom: 16px; font-weight: 600;
+.btn-text {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-family: var(--ff-body); font-size: 16px; font-weight: 500;
+  color: var(--terracotta-d); text-decoration: none; background: none; border: none; cursor: pointer;
+  padding: 8px 0;
 }
-section.dark .eyebrow { color: var(--on-ink-2); }
+.btn-text:hover { text-decoration: underline; }
 
-/* Animation / reduced motion */
-.fade-up { opacity: 0; transform: translateY(12px); transition: opacity 320ms cubic-bezier(.2,.7,.3,1), transform 320ms cubic-bezier(.2,.7,.3,1); }
-.fade-up.visible { opacity: 1; transform: translateY(0); }
-@media (prefers-reduced-motion: reduce) {
-  .fade-up { opacity: 1; transform: none; transition: none; }
+/* ========== COMPONENTS: TERMINAL ========== */
+.term {
+  background: var(--espresso); border-radius: 20px; overflow: hidden;
+  font-family: var(--ff-mono); font-size: 14px; line-height: 1.7;
+  color: var(--on-dark-3);
+}
+.term-bar {
+  display: flex; gap: 7px; padding: 14px 20px; border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.term-dot { width: 11px; height: 11px; border-radius: 50%; background: rgba(255,255,255,0.12); }
+.term-body { padding: 20px 24px; min-height: 80px; }
+.term-body .prompt { color: var(--code-accent); }
+.term-body .ok { color: var(--wash-sage); }
+
+/* ========== COMPONENTS: CARDS ========== */
+.card {
+  background: var(--card); border-radius: 32px; padding: 40px;
+}
+.card-inset {
+  background: var(--inset); border-radius: 20px; padding: 20px 24px;
 }
 
-/* Nav */
-header {
+/* ========== ANIMATIONS: SCROLL REVEAL ========== */
+.reveal {
+  opacity: 0; transform: translateY(12px);
+  transition: opacity 320ms cubic-bezier(0.16, 1, 0.3, 1), transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal[data-delay="1"] { transition-delay: 100ms; }
+.reveal[data-delay="2"] { transition-delay: 200ms; }
+.reveal[data-delay="3"] { transition-delay: 300ms; }
+
+/* ========== S1: NAV ========== */
+.nav {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(246, 242, 234, 0.92);
-  backdrop-filter: blur(12px);
+  height: 72px; display: flex; align-items: center;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid transparent;
   transition: border-color 0.3s;
-  height: 56px; display: flex; align-items: center;
 }
-header.scrolled { border-bottom-color: var(--line); }
-.nav-inner { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-.nav-links { display: flex; gap: 24px; align-items: center; }
-.nav-links a { color: var(--text-2); font-weight: 500; text-decoration: none; font-size: 0.95rem; }
-.nav-links a:hover { color: var(--text); }
-.nav-brand { font-family: var(--display); font-weight: 700; font-size: 1.1rem; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px; }
-.nav-brand img { width: 24px; height: 24px; }
+.nav.scrolled { border-bottom-color: var(--hairline); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+.nav-brand { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+.nav-brand span { font-family: var(--ff-head); font-weight: 600; font-size: 20px; color: var(--ink); }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a { font-size: 15px; font-weight: 500; color: var(--body); text-decoration: none; }
+.nav-links a:hover { color: var(--ink); }
+.nav-cta .btn-fill { padding: 9px 22px; font-size: 15px; }
 @media (max-width: 768px) {
-  .nav-links.desktop-only { display: none; }
+  .nav-center { display: none; }
 }
 
-/* Hero */
-.hero { padding-top: 64px; padding-bottom: 96px; }
-.hero-content {
-  max-width: 900px; margin: 0 auto; text-align: center;
+/* ========== S2: HERO ========== */
+.hero-text {
+  text-align: center; padding: 80px 0 48px;
   display: flex; flex-direction: column; align-items: center;
 }
-.hero-content p { margin-left: auto; margin-right: auto; }
-.hero-cta { display: flex; gap: 20px; align-items: center; justify-content: center; margin-top: 32px; flex-wrap: wrap; }
-.hero-link { font-weight: 600; text-decoration: none; color: var(--text); }
-.hero-link:hover { color: var(--reuse); }
-.hero-facts { display: flex; gap: 20px; justify-content: center; margin-top: 28px; font-family: var(--mono); font-size: 0.8125rem; color: var(--text-3); flex-wrap: wrap; }
-.hero-facts span::before { content: "•"; color: var(--reuse); margin-right: 8px; }
-.hero-skip { margin-top: 20px; font-size: 0.875rem; color: var(--text-2); text-decoration: underline; text-underline-offset: 3px; }
-.hero-skip:hover { color: var(--reuse); }
-@media (max-width: 768px) { .hero-skip { display: none; } }
-
-/* Cycling headline */
-.hero-cycle {
-  position: relative;
-  display: inline-block;
-  min-width: 3ch;
-.bricks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: stretch; }
+.hero-text h1 { margin-top: 20px; max-width: 14ch; }
+.hero-sub {
+  margin-top: 24px; font-size: 20px; line-height: 1.5; letter-spacing: -0.01em;
+  color: var(--body); max-width: 60ch; text-align: center;
 }
-.hero-cycle-word {
-  display: inline-block;
-.brick-col { --bf: #ECE6DA; --be: #D2CAB9; --bs: #F4EFE6; --bsr: #D8D0BF; }
-.brick-col.is-bwx { --bf: #F9E8E0; --be: #DFAE98; --bs: #FDF2EC; --bsr: #E7C3B1; }
-  white-space: nowrap;
-  opacity: 0;
-  transform: translateY(100%) scale(0.96);
-  transition: opacity 0.45s cubic-bezier(.22,.68,0,1.1), transform 0.45s cubic-bezier(.22,.68,0,1.1);
-}
-.hero-cycle-word.active {
-  position: relative;
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-.hero-cycle-word.exit {
-  opacity: 0;
-  transform: translateY(-70%) scale(0.96);
-.brick-stack { display: flex; flex-direction: column; gap: 16px; flex: 1; }
-@media (prefers-reduced-motion: reduce) {
-  .hero-cycle-word { transition: none; }
-}
-.hero-terminal { max-width: 760px; margin: 56px auto 0; }
+.hero-actions { display: flex; gap: 20px; align-items: center; margin-top: 32px; flex-wrap: wrap; justify-content: center; }
+.hero-chips { display: flex; gap: 10px; margin-top: 28px; flex-wrap: wrap; justify-content: center; }
 
-/* Brick comparison */
-.bricks { margin-top: clamp(72px, 9vw, 112px); }
-.bricks-head { text-align: center; margin-bottom: 48px; }
-.bricks-head h2 { font-size: clamp(1.6rem, 2.8vw, 2.2rem); max-width: 22ch; margin: 0 auto; }
-.bricks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
-@media (max-width: 860px) { .bricks-grid { grid-template-columns: 1fr; gap: 56px; } }
-
-/* Per-column brick palette: face, edge, stud */
-.brick-col { --bf: #ECE6DA; --be: #D2CAB9; --bs: #F4EFE6; }
-.brick-col.is-bwx { --bf: #F9E8E0; --be: #DFAE98; --bs: #FDF2EC; }
-
-.brick-cap {
-  display: flex; align-items: center; gap: 10px; margin-bottom: 26px;
-  font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.07em;
-  content: ""; position: absolute; left: 22px; right: 22px; top: -9px; height: 9px;
-  background-image: radial-gradient(circle at 13px 100%, var(--bs) 0 10.5px, var(--bsr) 10.5px 11.5px, rgba(0,0,0,0) 11.9px);
-  background-size: 44px 100%; background-repeat: repeat-x;
-.brick-cap .dot {
-  flex: none; width: 12px; height: 9px; border-radius: 2px; background: var(--line-2);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.5), inset 0 -2px 0 rgba(0,0,0,.14);
+/* Assembly stage */
+.assembly-scroll { height: 180vh; position: relative; }
+.assembly-pin {
+  position: sticky; top: calc(50vh - 260px);
+  height: 520px; display: flex; align-items: center; justify-content: center;
 }
-.brick-col.is-bwx .brick-cap .dot { background: var(--reuse); }
-
-.brick-stack { display: flex; flex-direction: column; gap: 14px; }
-
-.brick {
-  position: relative;
-  background: var(--bf);
-  border-radius: 7px;
-  padding: 16px 20px;
-  margin-top: auto; background: #262B2D; color: #B9B2A4;
-  box-shadow:
-  --bs: #3A4143; --be: #13171A; --bsr: #4E5658;
-    inset 0 -3px 0 rgba(0,0,0,.05),
-    0 3px 0 var(--be),
-    0 14px 20px -14px rgba(21,24,26,.5);
-  opacity: 0;
-  --bs: #D2683F; --be: #8B3819; --bsr: #A84A25;
-  transition: opacity 420ms cubic-bezier(.2,.8,.3,1), transform 420ms cubic-bezier(.2,.8,.3,1), box-shadow 200ms ease;
-  transition-delay: calc(var(--i, 0) * 85ms);
+.assembly {
+  position: relative; width: 100%; max-width: 1200px;
+  height: 520px; margin: 0 auto; padding: 0 24px;
 }
-/* studs on top of each brick */
-.brick::before {
-  content: ""; position: absolute; left: 18px; right: 18px; top: -8px; height: 8px;
-  background-image: radial-gradient(circle at 10px 100%, var(--bs) 0 8px, var(--be) 8px 9px, rgba(0,0,0,0) 9.2px);
-  background-size: 28px 100%; background-repeat: repeat-x;
+
+/* Library card */
+.library {
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 360px; background: var(--espresso); border-radius: 24px;
+  padding: 32px; color: var(--on-dark);
+  box-shadow: var(--shadow-hero);
+  z-index: 2;
+}
+.library-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px; }
+.library-head span { font-family: var(--ff-head); font-weight: 500; font-size: 18px; }
+.library-head code { font-family: var(--ff-mono); font-size: 13px; color: var(--on-dark-3); }
+.library-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 20px;
+}
+.slot {
+  aspect-ratio: 1; border-radius: 8px;
+  background: rgba(255,255,255,0.07);
+  transition: background 0.5s;
+}
+.slot.lit { background: var(--terracotta); }
+.library p { font-size: 14px; line-height: 1.5; color: var(--on-dark-3); max-width: 30ch; }
+
+/* Fragments */
+.fragment {
+  position: absolute;
+  background: var(--page); border-radius: 16px;
+  padding: 16px 20px; z-index: 1;
+  box-shadow: 0 4px 16px rgba(36,28,23,0.08);
+  font-size: 14px; color: var(--body);
+  transform:
+    translate(
+      calc(var(--dx, 0) * 1px * (1 - var(--p, 0))),
+      calc(var(--dy, 0) * 1px * (1 - var(--p, 0)))
+    )
+    rotate(calc(var(--rot, 0) * 1deg * (1 - var(--p, 0))));
+  opacity: calc(0.5 + 0.5 * var(--p, 0));
+  will-change: transform, opacity;
   pointer-events: none;
 }
-.brick strong { font-weight: 600; color: var(--text); }
-.brick code { font-family: var(--mono); font-size: 0.875em; color: var(--reuse); }
-
-/* the mismatched stack leans; the reused stack sits square */
-.brick-col:not(.is-bwx) .brick:nth-child(2) { --rot: -0.45deg; }
-.brick-col:not(.is-bwx) .brick:nth-child(3) { --rot: 0.4deg; }
-.brick-col:not(.is-bwx) .brick:nth-child(4) { --rot: -0.3deg; }
-.brick-col:not(.is-bwx) .brick:nth-child(5) { --rot: 0.5deg; }
-
-/* cost baseplate */
-.brick.is-cost {
-  margin-top: 6px; background: #262B2D; color: #B9B2A4;
-  font-family: var(--mono); font-size: 0.78rem; line-height: 1.5;
-  --bs: #3A4143; --be: #13171A;
+.fragment code { display: block; font-family: var(--ff-mono); font-size: 13px; color: var(--ink); }
+.frag-tokens .swatches { display: flex; gap: 6px; margin-top: 8px; }
+.frag-tokens .sw { width: 20px; height: 20px; border-radius: 6px; }
+.frag-component .mini-btn {
+  display: inline-block; margin-top: 8px; padding: 5px 14px;
+  border-radius: 9999px; background: var(--terracotta); color: #fff;
+  font-size: 12px; font-weight: 500;
 }
-.brick.is-cost strong { color: #FFF; }
-.is-bwx .brick.is-cost {
-  background: var(--reuse); color: #F7DCD1;
-  --bs: #D2683F; --be: #8B3819;
+.frag-input .fake-input {
+  margin-top: 8px; height: 32px; border: 1px solid var(--hairline);
+  border-radius: 8px; background: var(--page);
 }
-.is-bwx .brick.is-cost strong { color: #FFF; }
+.frag-file { background: var(--wash-sage); }
+.frag-file .frag-meta { font-size: 12px; color: var(--sage); margin-top: 4px; }
+.frag-list .avatar {
+  width: 24px; height: 24px; border-radius: 50%; background: var(--inset);
+  display: inline-block; vertical-align: middle; margin-right: 8px;
+}
+.frag-list .frag-meta { font-size: 12px; color: var(--body); margin-top: 4px; }
 
-.bricks.visible .brick { opacity: 1; transform: translateY(0) rotate(var(--rot, 0deg)); }
-.bricks.visible .brick:hover {
-  transform: translateY(-3px) rotate(var(--rot, 0deg));
-  transition-delay: 0s;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.7),
-    inset 0 -3px 0 rgba(0,0,0,.05),
-    0 6px 0 var(--be),
-    0 20px 28px -16px rgba(21,24,26,.55);
+/* Hero after assembly */
+.hero-after { text-align: center; padding: 48px 24px 80px; }
+.hero-after .assembly-close {
+  font-family: var(--ff-head); font-weight: 500; font-size: clamp(1.25rem, 2vw, 1.5rem);
+  color: var(--ink); margin-bottom: 48px;
 }
 
+/* Step cards */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1200px; margin: 0 auto; }
+@media (max-width: 768px) { .steps { grid-template-columns: 1fr; } }
+.step-card {
+  background: var(--card); border-radius: 32px; padding: 32px;
+  opacity: 0; transform: translateY(12px);
+  transition: opacity 320ms cubic-bezier(0.16,1,0.3,1), transform 320ms cubic-bezier(0.16,1,0.3,1);
+}
+.step-card.visible { opacity: 1; transform: translateY(0); }
+.step-card:nth-child(2) { transition-delay: 100ms; }
+.step-card:nth-child(3) { transition-delay: 200ms; }
+.step-badge { margin-bottom: 16px; }
+.step-card .term { margin-top: 16px; }
+.step-card .step-desc { margin-top: 16px; font-size: 15px; color: var(--body); }
+.hero-skip { margin-top: 40px; }
+
+/* ========== S3: PROOF STRIP ========== */
+.proof { padding: 80px 0; }
+.proof-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+@media (max-width: 768px) { .proof-cards { grid-template-columns: 1fr; } }
+.proof-card { background: var(--card); border-radius: 32px; padding: 40px; text-align: center; }
+.proof-num {
+  font-family: var(--ff-head); font-weight: 500; font-size: clamp(3rem, 5vw, 4.5rem);
+  line-height: 1.05; letter-spacing: -0.03em; color: var(--ink);
+}
+.proof-desc { margin-top: 8px; font-size: 17px; color: var(--body); max-width: 28ch; margin-left: auto; margin-right: auto; }
+
+.warm-bar {
+  display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;
+  margin-top: 32px; padding: 16px 28px; border-radius: 9999px;
+  background: var(--wash-warm); font-size: 16px; font-weight: 500; color: var(--ink);
+}
+.warm-bar a { font-weight: 500; }
+
+/* ========== DARK BAND (S7, S12) ========== */
+.band-dark {
+  background: var(--espresso); color: var(--on-dark); border-radius: 32px;
+  padding: clamp(64px, 8vw, 96px) clamp(24px, 4vw, 64px);
+}
+.band-dark h2 { color: var(--on-dark); }
+.band-dark p { color: var(--on-dark-2); }
+.band-dark .chip { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.12); color: var(--on-dark-2); }
+
+/* ========== FAQ (S11) ========== */
+.faq-list { max-width: 920px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+.faq-item { background: var(--card); border-radius: 24px; overflow: hidden; }
+.faq-item summary {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 24px 32px; font-family: var(--ff-head); font-weight: 500;
+  font-size: clamp(1rem, 1.5vw, 1.25rem); color: var(--ink);
+  cursor: pointer; list-style: none;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: "+"; font-size: 24px; color: var(--terracotta-d);
+  transition: transform 0.3s;
+}
+.faq-item[open] summary::after { transform: rotate(45deg); }
+.faq-answer-wrap {
+  display: grid; grid-template-rows: 0fr;
+  transition: grid-template-rows 0.65s ease;
+}
+.faq-item[open] .faq-answer-wrap { grid-template-rows: 1fr; }
+.faq-answer {
+  overflow: hidden; min-height: 0;
+  padding: 0 32px;
+}
+.faq-answer p { padding-bottom: 24px; font-size: 17px; line-height: 1.6; color: var(--body); }
+
+/* ========== WAITLIST FORM (S12) ========== */
+.wl-form { display: flex; flex-direction: column; gap: 16px; }
+.wl-field { display: flex; flex-direction: column; gap: 6px; }
+.wl-field label { font-size: 14px; font-weight: 500; color: var(--ink); }
+.wl-field input {
+  padding: 14px 20px; border-radius: 16px; border: 1px solid var(--hairline);
+  font-family: var(--ff-body); font-size: 16px; background: var(--page); color: var(--ink);
+}
+.wl-field input:focus { border-color: var(--terracotta); }
+.wl-field .wl-error { font-size: 13px; color: #b33; display: none; }
+.wl-field.has-error input { border-color: #b33; }
+.wl-field.has-error .wl-error { display: block; }
+.wl-micro { font-size: 14px; color: var(--body); margin-top: 4px; }
+
+/* ========== FOOTER ========== */
+.site-footer { padding: 80px 0 48px; }
+.footer-grid { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 48px; }
+@media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; } }
+.footer-brand span { font-family: var(--ff-head); font-weight: 600; font-size: 18px; color: var(--ink); }
+.footer-brand p { margin-top: 8px; font-size: 14px; color: var(--body); }
+.footer-col h4 { font-family: var(--ff-body); font-weight: 600; font-size: 14px; color: var(--ink); margin-bottom: 12px; }
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 8px; }
+.footer-col a { font-size: 14px; color: var(--body); }
+.footer-bottom {
+  margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--hairline);
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+  font-size: 14px; color: var(--body);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .assembly-scroll { height: auto; }
+  .assembly-pin { position: relative; top: auto; height: auto; padding: 40px 0; }
+  .assembly { height: auto; min-height: 320px; display: flex; align-items: center; justify-content: center; }
+  .fragment { display: none; }
+  .fragment:nth-child(-n+3) { display: block; opacity: 0.3; transform: none !important; }
+  .library { position: relative; left: auto; top: auto; transform: none; width: 100%; max-width: 340px; }
+}
+
+/* ========== REDUCED MOTION ========== */
 @media (prefers-reduced-motion: reduce) {
-  .brick { opacity: 1; transform: rotate(var(--rot, 0deg)); transition: none; }
-  .bricks.visible .brick { transform: rotate(var(--rot, 0deg)); }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .step-card { opacity: 1; transform: none; transition: none; }
+  .fragment { transform: none !important; opacity: 1 !important; }
+  .assembly-scroll { height: auto; }
+  .assembly-pin { position: relative; top: auto; }
+  .faq-answer-wrap { transition: none; }
+  html { scroll-behavior: auto; }
 }
-
-/* Terminal */
-.terminal {
-  background: var(--ink); border-radius: 8px; width: 100%; overflow: hidden;
-  box-shadow: 0 20px 40px -10px rgba(0,0,0,0.15); border: 1px solid var(--ink-2);
-}
-.terminal-header {
-  display: flex; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--ink-2); background: #1A1D1F;
-}
-.terminal-header i { width: 10px; height: 10px; border-radius: 50%; background: #333; }
-.terminal-header i.r { background: #FF5F56; }
-.terminal-header i.y { background: #FFBD2E; }
-.terminal-header i.g { background: #27C93F; }
-.terminal-body { padding: 24px; font-family: var(--mono); font-size: 0.875rem; line-height: 1.6; color: var(--on-ink); min-height: 240px; }
-.terminal-body .cmd { color: var(--reuse); }
-.terminal-body .dim { color: var(--on-ink-2); }
-.terminal-body .ok { color: var(--verified); }
-
-/* Proof Strip */
-.proof-strip { padding: 48px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--paper-2); }
-.proof-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-@media (max-width: 768px) { .proof-tiles { grid-template-columns: 1fr; } }
-.proof-tile { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 24px; }
-.proof-tile .big { font-family: var(--display); font-size: 2.5rem; font-weight: 700; color: var(--text); line-height: 1.1; margin-bottom: 8px; }
-.proof-tile .desc { color: var(--text-2); font-size: 0.95rem; }
-
 </style>
 </head>
 <body>
 
-<header id="nav">
+<!-- ==================== S1: NAV ==================== -->
+<header class="nav" id="nav">
   <div class="container nav-inner">
-    <a href="#" class="nav-brand">
-      <svg viewBox='0 0 100 100' width="24" height="24">
-        <defs>
-          <linearGradient id='gT' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#C2542B'/><stop offset='1' stop-color='#9C4020'/></linearGradient>
-        </defs>
-        <rect x='14' y='40' width='38' height='38' rx='8' transform='rotate(45 33 59)' fill='url(#gT)'/>
+    <a href="#" class="nav-brand" aria-label="BricoWerx home">
+      <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+        <rect x="2" y="2" width="8" height="8" rx="2" transform="rotate(45 6 6)" fill="#B8883A"/>
+        <rect x="2" y="13" width="8" height="8" rx="2" transform="rotate(45 6 17)" fill="#C2542B"/>
+        <rect x="13" y="13" width="8" height="8" rx="2" transform="rotate(45 17 17)" fill="#5F7B5B"/>
       </svg>
-      BricoWerx
+      <span>BricoWerx</span>
     </a>
-    <nav class="nav-links desktop-only">
-      <a href="#why">Why</a>
-      <a href="#how">How it works</a>
-      <a href="#ai">For AI</a>
-      <a href="/docs">Docs</a>
+    <nav class="nav-center" aria-label="Main navigation">
+      <ul class="nav-links">
+        <li><a href="#why">Why</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#ai">For AI</a></li>
+        <li><a href="/docs">Docs</a></li>
+      </ul>
     </nav>
     <div class="nav-cta">
-      <a href="#launch" class="btn btn-primary">Join the waitlist</a>
+      <a href="#launch" class="btn-fill">Join the waitlist</a>
     </div>
   </div>
 </header>
 
 <main>
-  <!-- Hero -->
-  <section id="hero" class="hero fade-up">
-    <div class="container">
-      <div class="hero-content">
-        <span class="eyebrow">LAUNCHING SOON &middot; OPEN SOURCE</span>
-        <h1>Your team already built it.<br>Stop <span class="hero-cycle" id="hero-cycle"><span class="hero-cycle-word active">rebuilding.</span><span class="hero-cycle-word">searching.</span><span class="hero-cycle-word">reviewing.</span><span class="hero-cycle-word">forgetting.</span></span></h1>
-        <p class="body-l" style="margin-top: 24px; color: var(--text-2);">
-          BricoWerx is a command-line tool that keeps your team's proven code as versioned, searchable pieces &mdash; so engineers and AI assistants reuse them instead of rebuilding them.
-        </p>
-        <div class="hero-cta">
-          <a href="#launch" class="btn btn-primary">Join the waitlist</a>
-          <a href="#how" class="hero-link">See how it works &darr;</a>
-        </div>
-        <div class="hero-facts">
-          <span>one static binary</span>
-          <span>your git repo is the database</span>
-          <span>works offline</span>
-        </div>
-        <a href="#how" class="hero-skip">Skip to the technical part &rarr;</a>
+<!-- ==================== S2: HERO ==================== -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-text">
+      <span class="chip chip-launch">Launching soon · Open source</span>
+      <h1>Developers don't have to start from scratch.</h1>
+      <p class="hero-sub">BricoWerx keeps the proven parts of your projects — modules, prompts, agent skills, evals — as versioned pieces in a git folder. Engineers find them from the terminal. AI assistants find them over MCP.</p>
+      <div class="hero-actions">
+        <a href="#launch" class="btn-fill">Join the waitlist</a>
+        <a href="#how" class="btn-text">See how it works ↓</a>
       </div>
-
-      <div class="hero-terminal">
-        <div class="terminal">
-          <div class="terminal-header"><i class="r"></i><i class="y"></i><i class="g"></i></div>
-          <div class="terminal-body" id="hero-typing" aria-hidden="true">
-            <!-- Typographic animation via JS -->
-          </div>
-          <!-- Fallback/Accessible static text -->
-          <div class="terminal-body sr-only" style="display:none;" id="hero-static">
-$ brico capture auth
-  saved auth@0.1.0 to the Vault
-
-$ brico search "token auth for nest"
-  auth@0.2.0   jwt, passport   proven in 3 projects
-
-$ brico add auth
-  copied 6 files, wired .env.example
-  next: add AuthModule to AppModule imports
-          </div>
-        </div>
+      <div class="hero-chips">
+        <span class="chip">one static binary</span>
+        <span class="chip">git repo is the database</span>
+        <span class="chip">works offline</span>
       </div>
+    </div>
+  </div>
 
-      <!-- Brick comparison -->
-      <div class="bricks fade-up">
-        <div class="bricks-head">
-          <span class="eyebrow">THE SAME REQUEST, TWICE</span>
-          <h2>One team regenerates it. The other snaps it into place.</h2>
+  <!-- Assembly stage: scroll-driven -->
+  <div class="assembly-scroll" id="assembly-scroll">
+    <div class="assembly-pin">
+      <div class="assembly" id="assembly">
+        <!-- Library card -->
+        <div class="library">
+          <div class="library-head">
+            <span>Your library</span>
+            <code>vault/pieces</code>
+          </div>
+          <div class="library-grid">
+            <div class="slot"></div><div class="slot"></div><div class="slot"></div>
+            <div class="slot"></div><div class="slot lit" id="slot-lit"></div><div class="slot"></div>
+            <div class="slot"></div><div class="slot"></div><div class="slot"></div>
+          </div>
+          <p>Every piece keeps its version, its summaries and the projects it is proven in.</p>
         </div>
 
-        <div class="bricks-grid">
-          <div class="brick-col">
-            <div class="brick-cap"><span class="dot"></span>Today, without BWX &mdash; regenerated &times;4</div>
-            <div class="brick-stack">
-              <div class="brick" style="--i:0"><strong>&ldquo;We need JWT auth in the new service.&rdquo;</strong></div>
-              <div class="brick" style="--i:1">Someone remembers &ldquo;we did this before&rdquo; but not where.</div>
-              <div class="brick" style="--i:2">The assistant scans the whole codebase for context.</div>
-              <div class="brick" style="--i:3">It writes a fresh implementation that must be reviewed line by line.</div>
-              <div class="brick" style="--i:4">You now maintain a fourth, slightly different auth module.</div>
-              <div class="brick is-cost" style="--i:5"><strong>cost:</strong> tens of thousands of tokens, a review cycle, new bugs</div>
-            </div>
+        <!-- 6 fragments -->
+        <div class="fragment frag-code" style="top:40px;left:8%;--dx:-120;--dy:-70;--rot:-7">
+          <code>export class</code>
+          <code>AuthModule {}</code>
+        </div>
+        <div class="fragment frag-component" style="top:60px;right:8%;--dx:130;--dy:-60;--rot:6">
+          <span style="font-size:13px;color:var(--body)">Button / primary</span>
+          <div class="mini-btn">Continue</div>
+        </div>
+        <div class="fragment frag-list" style="top:220px;left:4%;--dx:-160;--dy:30;--rot:-5">
+          <div><span class="avatar"></span><span style="font-size:13px">Avatar + name row</span></div>
+          <div class="frag-meta">used in 4 projects</div>
+        </div>
+        <div class="fragment frag-tokens" style="top:200px;right:4%;--dx:150;--dy:40;--rot:8">
+          <span style="font-size:13px;color:var(--body)">Tokens</span>
+          <div class="swatches">
+            <div class="sw" style="background:var(--terracotta)"></div>
+            <div class="sw" style="background:var(--sage)"></div>
+            <div class="sw" style="background:var(--ochre)"></div>
+            <div class="sw" style="background:var(--page);border:1px solid var(--hairline)"></div>
           </div>
-
-          <div class="brick-col is-bwx">
-            <div class="brick-cap"><span class="dot"></span>With BWX &mdash; reused</div>
-            <div class="brick-stack">
-              <div class="brick" style="--i:0"><strong>&ldquo;Do we have JWT auth?&rdquo;</strong></div>
-              <div class="brick" style="--i:1">The assistant asks the Vault, not the codebase.</div>
-              <div class="brick" style="--i:2">The Vault answers with a card: <code>auth@0.2.0</code>, nest, jwt, proven in 3 projects.</div>
-              <div class="brick" style="--i:3"><code>brico add auth</code> copies the piece and prints the two wiring steps.</div>
-              <div class="brick" style="--i:4">Nothing new was written. Nothing new needs review.</div>
-              <div class="brick is-cost" style="--i:5"><strong>cost:</strong> about 300 tokens and one command</div>
-            </div>
-          </div>
+        </div>
+        <div class="fragment frag-input" style="bottom:40px;left:10%;--dx:-100;--dy:90;--rot:-6">
+          <span style="font-size:13px;color:var(--body)">Input / email</span>
+          <div class="fake-input"></div>
+        </div>
+        <div class="fragment frag-file" style="bottom:30px;right:10%;--dx:110;--dy:80;--rot:5">
+          <code>jwt.strategy.ts</code>
+          <div class="frag-meta">proven · 3 projects</div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- Proof Strip -->
-  <section class="proof-strip fade-up" id="proof">
-    <div class="container">
-      <div class="proof-tiles">
-        <div class="proof-tile">
-          <div class="big">~300</div>
-          <div class="desc">tokens to answer "do we have JWT auth?"</div>
+  <!-- Below assembly -->
+  <div class="hero-after">
+    <p class="assembly-close">Reuse the components from your own library.</p>
+
+    <div class="steps" id="steps">
+      <div class="step-card">
+        <span class="chip chip-sage step-badge">01 · Capture</span>
+        <div class="term">
+          <div class="term-bar"><div class="term-dot"></div><div class="term-dot"></div><div class="term-dot"></div></div>
+          <div class="term-body">
+            <div class="prompt">$ brico capture auth</div>
+            <div class="ok">saved auth@0.1.0</div>
+          </div>
         </div>
-        <div class="proof-tile">
-          <div class="big">0</div>
-          <div class="desc">lines generated when a piece already exists</div>
+        <p class="step-desc">A folder that works becomes a versioned piece.</p>
+      </div>
+      <div class="step-card">
+        <span class="chip chip-sage step-badge">02 · Find</span>
+        <div class="term">
+          <div class="term-bar"><div class="term-dot"></div><div class="term-dot"></div><div class="term-dot"></div></div>
+          <div class="term-body">
+            <div class="prompt">$ brico search "jwt auth"</div>
+            <div class="ok">auth@0.2.0 · proven ×3</div>
+          </div>
         </div>
-        <div class="proof-tile">
-          <div class="big">1</div>
-          <div class="desc">command to reuse it</div>
+        <p class="step-desc">Search by meaning — from the terminal or over MCP.</p>
+      </div>
+      <div class="step-card">
+        <span class="chip chip-sage step-badge">03 · Build</span>
+        <div class="term">
+          <div class="term-bar"><div class="term-dot"></div><div class="term-dot"></div><div class="term-dot"></div></div>
+          <div class="term-body">
+            <div class="prompt">$ brico add auth</div>
+            <div class="ok">copied 6 files, wired env</div>
+          </div>
         </div>
+        <p class="step-desc">The piece lands in the project, wired and ready.</p>
       </div>
     </div>
-  </section>
 
+    <a href="#how" class="btn-text hero-skip">Skip to the technical part →</a>
+  </div>
+</section>
 
-  <!-- Band A: The Problem -->
-  <section id="why" class="fade-up">
-    <div class="container">
-      <div class="sec-head" style="margin-bottom: 48px; max-width: 800px;">
-        <span class="eyebrow">THE PROBLEM</span>
-        <h2>Every team rebuilds the same things. Then their AI rebuilds them again.</h2>
-        <p class="body-l" style="margin-top: 16px;">
-          The auth module your team perfected two projects ago still exists — buried in that repo, tangled with its dependencies, invisible to search. So the next project writes a new one, and an assistant asked the same question writes a third.
-        </p>
+<!-- ==================== S3: PROOF STRIP ==================== -->
+<section class="proof reveal" id="proof">
+  <div class="container">
+    <div class="proof-cards">
+      <div class="proof-card reveal">
+        <div class="proof-num">~300</div>
+        <p class="proof-desc">tokens to answer "do we have JWT auth?"</p>
       </div>
-
-      <!-- 3 Compact Cards -->
-      <div class="grid-12" style="margin-bottom: 64px;">
-        <div style="grid-column: span 4; background: var(--paper-2); border: 1px solid var(--line); border-radius: 8px; padding: 24px;">
-          <h3 style="margin-bottom: 8px;">Knowledge nobody can find</h3>
-          <p style="font-size: 0.95rem; color: var(--text-2);">Engineering teams lose their best work because it gets buried in old repos, stripped of the context explaining why it was built.</p>
-        </div>
-        <div style="grid-column: span 4; background: var(--paper-2); border: 1px solid var(--line); border-radius: 8px; padding: 24px;">
-          <h3 style="margin-bottom: 8px;">AI that regenerates</h3>
-          <p style="font-size: 0.95rem; color: var(--text-2);">AI assistants default to generating new code from scratch, which increases your maintenance burden and introduces subtle bugs.</p>
-        </div>
-        <div style="grid-column: span 4; background: var(--paper-2); border: 1px solid var(--line); border-radius: 8px; padding: 24px;">
-          <h3 style="margin-bottom: 8px;">Why this matters now</h3>
-          <p style="font-size: 0.95rem; color: var(--text-2);">With AI making code generation free, the new bottleneck is review and maintenance; reusing proven pieces is the only way to scale.</p>
-        </div>
+      <div class="proof-card reveal" data-delay="1">
+        <div class="proof-num">0</div>
+        <p class="proof-desc">lines generated when a piece already exists</p>
       </div>
-      
-      <div style="text-align: center;">
-        <h2 style="font-size: clamp(1.8rem, 3vw, 2.4rem);">The knowledge was never lost. <br/><span style="color: var(--reuse);">It was never findable.</span></h2>
+      <div class="proof-card reveal" data-delay="2">
+        <div class="proof-num">1</div>
+        <p class="proof-desc">command to reuse it</p>
       </div>
     </div>
-  </section>
-  <!-- Band B: How it works & Pieces -->
-  <section id="how" class="alt fade-up">
-    <div class="container">
-      <div class="sec-head" style="margin-bottom: 56px;">
-        <span class="eyebrow">HOW IT WORKS</span>
-        <h2>Capture once. Find it anywhere. Add it in one command.</h2>
-        <p class="body-l" style="margin-top: 16px;">
-          Three verbs, one binary. Everything lives in a git folder on your machine called the Vault &mdash; no server, no account.
-        </p>
-      </div>
-
-      <div class="grid-12" style="margin-bottom: 80px; align-items: stretch;">
-        <!-- Step 1 -->
-        <div style="grid-column: span 4; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 24px; display: flex; flex-direction: column;">
-          <div style="font-family: var(--display); font-size: 2rem; color: var(--reuse); font-weight: 700; line-height: 1; margin-bottom: 12px;">1</div>
-          <h3 style="margin-bottom: 8px;">Capture</h3>
-          <p style="color: var(--text-2); font-size: 0.95rem; margin-bottom: 16px;">Save the piece to your Vault. The CLI extracts the files, asks you for context, and generates the summaries.</p>
-          <div class="terminal" style="margin-top: auto;">
-            <div class="terminal-header"><span style="color: var(--on-ink-2); font-size: 0.75rem; font-family: var(--mono); margin-left: 4px;">HUMAN</span></div>
-            <div class="terminal-body" style="padding: 16px; min-height: 120px;">
-              <div class="cmd">$ brico capture</div>
-              <div class="dim">Select files: [src/auth/*]</div>
-              <div class="ok">Captured auth@0.1.0</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 2 -->
-        <div style="grid-column: span 4; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 24px; display: flex; flex-direction: column;">
-          <div style="font-family: var(--display); font-size: 2rem; color: var(--reuse); font-weight: 700; line-height: 1; margin-bottom: 12px;">2</div>
-          <h3 style="margin-bottom: 8px;">Find</h3>
-          <p style="color: var(--text-2); font-size: 0.95rem; margin-bottom: 16px;">Search by name, capability, or meaning. The local SQLite index finds it instantly.</p>
-          <div class="terminal" style="margin-top: auto;">
-            <div class="terminal-header"><span style="color: var(--on-ink-2); font-size: 0.75rem; font-family: var(--mono); margin-left: 4px;">HUMAN / AI ASSISTANT</span></div>
-            <div class="terminal-body" style="padding: 16px; min-height: 120px;">
-              <div class="cmd">$ brico search "auth"</div>
-              <div class="ok">auth@0.2.0 (proven)</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 3 -->
-        <div style="grid-column: span 4; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 24px; display: flex; flex-direction: column;">
-          <div style="font-family: var(--display); font-size: 2rem; color: var(--reuse); font-weight: 700; line-height: 1; margin-bottom: 12px;">3</div>
-          <h3 style="margin-bottom: 8px;">Add</h3>
-          <p style="color: var(--text-2); font-size: 0.95rem; margin-bottom: 16px;">Copy the files into your working directory and get the exact wiring steps.</p>
-          <div class="terminal" style="margin-top: auto;">
-            <div class="terminal-header"><span style="color: var(--on-ink-2); font-size: 0.75rem; font-family: var(--mono); margin-left: 4px;">HUMAN</span></div>
-            <div class="terminal-body" style="padding: 16px; min-height: 120px;">
-              <div class="cmd">$ brico add auth</div>
-              <div class="dim">Copied to src/auth/</div>
-              <div class="ok">Done.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- What is a piece -->
-      <div id="piece" style="padding-top: 40px; border-top: 1px solid var(--line);">
-        <div class="sec-head" style="margin-bottom: 40px;">
-          <span class="eyebrow">WHAT IS A PIECE</span>
-          <h2>Code, plus everything you'd otherwise have to ask a colleague about.</h2>
-        </div>
-
-        <div class="grid-12">
-          <!-- Left: File tree -->
-          <div style="grid-column: span 5; background: var(--ink); border: 1px solid var(--ink-2); border-radius: 8px; padding: 24px; font-family: var(--mono); font-size: 0.875rem; color: var(--on-ink); line-height: 1.8;">
-            <div style="color: var(--on-ink-2); margin-bottom: 16px;">vault/pieces/auth/0.2.0/</div>
-            <div style="display: flex; justify-content: space-between;"><span style="color: var(--reuse);">manifest.yaml</span><span style="color: var(--on-ink-2); font-size: 0.75rem;">Card ~50</span></div>
-            <div style="display: flex; justify-content: space-between;"><span style="color: var(--ai);">interface.ts</span><span style="color: var(--on-ink-2); font-size: 0.75rem;">Surface ~200</span></div>
-            <div style="display: flex; justify-content: space-between;"><span style="color: var(--on-ink);">README.md</span><span style="color: var(--on-ink-2); font-size: 0.75rem;">Summary ~500</span></div>
-            <div style="display: flex; justify-content: space-between;"><span style="color: var(--verified);">src/</span><span style="color: var(--on-ink-2); font-size: 0.75rem;">Full source</span></div>
-            <div style="padding-left: 16px;">
-              <div>jwt.strategy.ts</div>
-              <div>auth.module.ts</div>
-              <div>auth.service.ts</div>
-            </div>
-          </div>
-          
-          <!-- Right: Selector -->
-          <div style="grid-column: span 7; display: flex; flex-direction: column; gap: 12px;">
-            <div style="background: var(--card); border: 1px solid var(--reuse); border-radius: 8px; padding: 20px; box-shadow: 0 4px 12px rgba(194,84,43,0.1);">
-              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
-                <h4 style="font-size: 1.1rem; color: var(--reuse);">Card ~50</h4>
-                <span style="font-family: var(--mono); font-size: 0.75rem; color: var(--text-3);">"Do we have something for X?"</span>
-              </div>
-              <p style="font-size: 0.9rem; color: var(--text-2);">Name, tags, capabilities, and dependencies. Enough to match a search query.</p>
-            </div>
-            
-            <div style="background: var(--paper-2); border: 1px solid var(--line); border-radius: 8px; padding: 20px;">
-              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
-                <h4 style="font-size: 1.1rem;">Surface ~200&ndash;400</h4>
-                <span style="font-family: var(--mono); font-size: 0.75rem; color: var(--text-3);">"How do I call it?"</span>
-              </div>
-              <p style="font-size: 0.9rem; color: var(--text-2);">The API signature, exported types, and wiring instructions.</p>
-            </div>
-
-            <div style="background: var(--paper-2); border: 1px solid var(--line); border-radius: 8px; padding: 20px;">
-              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
-                <h4 style="font-size: 1.1rem;">Summary ~500</h4>
-                <span style="font-family: var(--mono); font-size: 0.75rem; color: var(--text-3);">"Why was it built this way?"</span>
-              </div>
-              <p style="font-size: 0.9rem; color: var(--text-2);">The human-written or AI-generated explanation of architectural choices.</p>
-            </div>
-
-            <div style="background: var(--paper-2); border: 1px solid var(--line); border-radius: 8px; padding: 20px;">
-              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
-                <h4 style="font-size: 1.1rem;">Full source</h4>
-                <span style="font-family: var(--mono); font-size: 0.75rem; color: var(--text-3);">"I need to change it."</span>
-              </div>
-              <p style="font-size: 0.9rem; color: var(--text-2);">The actual code files. Read only when a modification is necessary.</p>
-            </div>
-          </div>
-        </div>
-        
-        <p style="margin-top: 32px; text-align: center; font-size: 1.1rem; color: var(--text);">
-          Whoever is asking &mdash; human or AI &mdash; climbs only as high as the task needs.
-        </p>
-      </div>
-
+    <div class="warm-bar reveal">
+      Launching soon — the binary ships with Phase A.
+      <a href="#launch" class="btn-text">Join the waitlist →</a>
     </div>
-  </section>
-  <!-- Band C: For AI Assistants -->
-  <section id="ai" class="dark fade-up">
-    <div class="container">
-      <div class="sec-head" style="margin-bottom: 56px;">
-        <span class="eyebrow" style="color: var(--on-ink-2);">FOR AI ASSISTANTS</span>
-        <h2 style="color: var(--on-ink);">Your assistant gets a librarian instead of the whole library.</h2>
-        <p class="body-l" style="margin-top: 16px; color: var(--on-ink-2);">
-          <code style="color: var(--ai); font-family: var(--mono);">brico mcp</code> exposes the Vault over the Model Context Protocol. Claude, Cursor, IDE agents, internal copilots &mdash; any MCP-capable assistant can search your pieces and recommend reuse before writing anything new.
-        </p>
-      </div>
+  </div>
+</section>
 
-      <div class="grid-12" style="margin-bottom: 64px;">
-        <!-- MCP Tools -->
-        <div style="grid-column: span 5; display: flex; flex-direction: column; gap: 16px;">
-          <div style="background: var(--ink-2); border: 1px solid var(--text-2); border-radius: 8px; padding: 20px;">
-            <code style="color: var(--ai); font-family: var(--mono); display: block; margin-bottom: 8px;">search_pieces(query, kind?)</code>
-            <p style="font-size: 0.9rem; color: var(--on-ink-2);">Finds pieces by meaning or capability.</p>
-          </div>
-          <div style="background: var(--ink-2); border: 1px solid var(--text-2); border-radius: 8px; padding: 20px;">
-            <code style="color: var(--ai); font-family: var(--mono); display: block; margin-bottom: 8px;">get_piece(name, level)</code>
-            <p style="font-size: 0.9rem; color: var(--on-ink-2);">Fetches the exact detail level needed (card, surface, summary, source).</p>
-          </div>
-          <div style="background: var(--ink-2); border: 1px solid var(--text-2); border-radius: 8px; padding: 20px;">
-            <code style="color: var(--ai); font-family: var(--mono); display: block; margin-bottom: 8px;">plan_reuse(task)</code>
-            <p style="font-size: 0.9rem; color: var(--on-ink-2);">Returns a recommended assembly of existing pieces.</p>
-          </div>
-          <div style="background: var(--ink-2); border: 1px solid var(--text-2); border-radius: 8px; padding: 20px;">
-            <code style="color: var(--ai); font-family: var(--mono); display: block; margin-bottom: 8px;">get_relations(name, kind?)</code>
-            <p style="font-size: 0.9rem; color: var(--on-ink-2);">Navigates the dependency graph.</p>
-          </div>
-        </div>
-
-        <!-- Conversation Trace -->
-        <div style="grid-column: span 7; background: var(--ink-2); border: 1px solid var(--text-2); border-radius: 8px; padding: 32px; font-family: var(--mono); font-size: 0.85rem; line-height: 1.6;">
-          <div style="margin-bottom: 24px;">
-            <span style="color: var(--on-ink-2); font-size: 0.75rem; display: block; margin-bottom: 8px;">DEV &rarr; ASSISTANT</span>
-            <div style="background: var(--ink); border: 1px solid var(--text-2); padding: 12px; border-radius: 6px; color: var(--on-ink);">
-              We need a rate limiter for the new API.
-            </div>
-          </div>
-          <div style="margin-bottom: 24px;">
-            <span style="color: var(--ai); font-size: 0.75rem; display: block; margin-bottom: 8px;">ASSISTANT &rarr; TOOL</span>
-            <div style="background: rgba(70,97,122,0.1); border: 1px solid rgba(70,97,122,0.3); padding: 12px; border-radius: 6px; color: var(--ai);">
-              search_pieces({ query: "rate limiter API redis" })
-            </div>
-          </div>
-          <div style="margin-bottom: 24px;">
-            <span style="color: var(--reuse); font-size: 0.75rem; display: block; margin-bottom: 8px;">VAULT &rarr; ASSISTANT</span>
-            <div style="background: rgba(194,84,43,0.1); border: 1px solid rgba(194,84,43,0.3); padding: 12px; border-radius: 6px; color: var(--reuse);">
-              Found: rate-limiter@1.1.0<br/>
-              Tags: redis, sliding-window<br/>
-              Proven in: 4 projects
-            </div>
-          </div>
-          
-          <div style="padding-top: 16px; border-top: 1px solid var(--text-2); display: flex; justify-content: space-between; color: var(--on-ink-2); font-size: 0.8rem;">
-            <span>Vault Answer: ~40 MB for 10,000 pieces</span>
-            <span>Repo Scan: GBs of raw text</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Piece Kinds -->
-  <section class="fade-up">
-    <div class="container" style="text-align: center;">
-      <p style="font-size: 1.1rem; color: var(--text-2); margin-bottom: 32px;">
-        Modules today; prompts, agent skills, evals, datasets and pipelines are the same structure with a different kind.
-      </p>
-      <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;">
-        <div style="padding: 12px 24px; border-radius: 99px; border: 1px solid var(--line); background: var(--card); font-family: var(--mono); font-size: 0.875rem;">
-          code <span style="font-size: 0.7rem; color: var(--verified); background: rgba(85,112,79,0.1); padding: 4px 8px; border-radius: 4px; margin-left: 8px;">SHIPPING</span>
-        </div>
-        <div style="padding: 12px 24px; border-radius: 99px; border: 1px solid var(--line); background: var(--card); font-family: var(--mono); font-size: 0.875rem;">
-          prompt <span style="font-size: 0.7rem; color: var(--ai); background: rgba(70,97,122,0.1); padding: 4px 8px; border-radius: 4px; margin-left: 8px;">NEXT</span>
-        </div>
-        <div style="padding: 12px 24px; border-radius: 99px; border: 1px solid var(--line); background: var(--card); font-family: var(--mono); font-size: 0.875rem;">
-          skill <span style="font-size: 0.7rem; color: var(--ai); background: rgba(70,97,122,0.1); padding: 4px 8px; border-radius: 4px; margin-left: 8px;">NEXT</span>
-        </div>
-        <div style="padding: 12px 24px; border-radius: 99px; border: 1px solid var(--line); background: var(--card); font-family: var(--mono); font-size: 0.875rem;">
-          eval <span style="font-size: 0.7rem; color: var(--text-3); background: var(--paper-2); padding: 4px 8px; border-radius: 4px; margin-left: 8px;">LATER</span>
-        </div>
-        <div style="padding: 12px 24px; border-radius: 99px; border: 1px solid var(--line); background: var(--card); font-family: var(--mono); font-size: 0.875rem;">
-          dataset <span style="font-size: 0.7rem; color: var(--text-3); background: var(--paper-2); padding: 4px 8px; border-radius: 4px; margin-left: 8px;">LATER</span>
-        </div>
-        <div style="padding: 12px 24px; border-radius: 99px; border: 1px solid var(--line); background: var(--card); font-family: var(--mono); font-size: 0.875rem;">
-          pipeline <span style="font-size: 0.7rem; color: var(--text-3); background: var(--paper-2); padding: 4px 8px; border-radius: 4px; margin-left: 8px;">LATER</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Inside -->
-  <section id="inside" class="alt fade-up">
-    <div class="container">
-      <div class="sec-head" style="margin-bottom: 56px;">
-        <h2>Boring on purpose: files in git, one SQLite index, one binary.</h2>
-      </div>
-
-      <div class="grid-12">
-        <div style="grid-column: span 4; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 32px;">
-          <h3 style="margin-bottom: 12px;">Truth</h3>
-          <p style="color: var(--text-2); font-size: 0.95rem;">The Vault is a git directory. Your pieces, their histories, and their relationships are stored as plain files.</p>
-        </div>
-        <div style="grid-column: span 4; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 32px;">
-          <h3 style="margin-bottom: 12px;">Index</h3>
-          <p style="color: var(--text-2); font-size: 0.95rem;">One <code style="font-family: var(--mono); color: var(--reuse);">index.db</code>. We use sqlite-vec + FTS5 for hybrid search, with zero runtime dependencies.</p>
-        </div>
-        <div style="grid-column: span 4; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 32px;">
-          <h3 style="margin-bottom: 12px;">Scale</h3>
-          <p style="color: var(--text-2); font-size: 0.95rem;">Everything works locally forever. An optional hosted Postgres tier will handle extreme team scale, later.</p>
-        </div>
-      </div>
-      
-      <p style="text-align: center; margin-top: 40px; color: var(--text); font-size: 1.05rem;">
-        Embedding generation is the only step that touches a network, and it is always skippable.
-      </p>
-    </div>
-  </section>
-
-  <!-- Roadmap -->
-  <section class="fade-up">
-    <div class="container">
-      <div class="sec-head" style="margin-bottom: 40px;">
-        <h2>Roadmap</h2>
-      </div>
-      <div style="display: flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--card);">
-        <div style="flex: 1; padding: 24px; border-right: 1px solid var(--line);">
-          <div style="font-family: var(--mono); font-size: 0.75rem; color: var(--reuse); font-weight: 600; margin-bottom: 16px;">A &middot; NOW</div>
-          <h3 style="margin-bottom: 16px; font-size: 1.1rem;">Knowledge layer</h3>
-          <ul style="color: var(--text-2); font-size: 0.9rem; margin-left: 20px;">
-            <li style="margin-bottom: 8px;">Summaries at capture</li>
-            <li style="margin-bottom: 8px;">Meaning-based search</li>
-            <li>MCP server</li>
-          </ul>
-        </div>
-        <div style="flex: 1; padding: 24px; border-right: 1px solid var(--line);">
-          <div style="font-family: var(--mono); font-size: 0.75rem; color: var(--ai); font-weight: 600; margin-bottom: 16px;">B</div>
-          <h3 style="margin-bottom: 16px; font-size: 1.1rem;">AI piece kinds</h3>
-          <ul style="color: var(--text-2); font-size: 0.9rem; margin-left: 20px;">
-            <li style="margin-bottom: 8px;">Prompts as pieces</li>
-            <li>Agent skills</li>
-          </ul>
-        </div>
-        <div style="flex: 1; padding: 24px; border-right: 1px solid var(--line);">
-          <div style="font-family: var(--mono); font-size: 0.75rem; color: var(--text-3); font-weight: 600; margin-bottom: 16px;">C</div>
-          <h3 style="margin-bottom: 16px; font-size: 1.1rem;">Accounting &amp; graph</h3>
-          <ul style="color: var(--text-2); font-size: 0.9rem; margin-left: 20px;">
-            <li style="margin-bottom: 8px;">Token usage tracking</li>
-            <li>Dependency graph</li>
-          </ul>
-        </div>
-        <div style="flex: 1; padding: 24px;">
-          <div style="font-family: var(--mono); font-size: 0.75rem; color: var(--text-3); font-weight: 600; margin-bottom: 16px;">D</div>
-          <h3 style="margin-bottom: 16px; font-size: 1.1rem;">Team scale</h3>
-          <ul style="color: var(--text-2); font-size: 0.9rem; margin-left: 20px;">
-            <li style="margin-bottom: 8px;">Hosted index tier</li>
-            <li>SSO &amp; RBAC</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section class="alt fade-up">
-    <div class="container" style="max-width: 800px;">
-      <h2 style="margin-bottom: 40px;">FAQ</h2>
-      <div style="display: flex; flex-direction: column; gap: 12px;">
-        <details style="background: var(--card); border: 1px solid var(--line); border-radius: 8px;" open>
-          <summary style="padding: 24px; font-family: var(--display); font-weight: 600; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: space-between;">
-            So what is BricoWerx, in one breath?
-            <span style="color: var(--reuse);">+</span>
-          </summary>
-          <div style="padding: 0 24px 24px; color: var(--text-2); font-size: 0.95rem; line-height: 1.6;">
-            A version-controlled library of your organisation's proven building blocks, with the wiring and the reasoning attached, readable by humans and by AI.
-          </div>
-        </details>
-        
-        <details style="background: var(--card); border: 1px solid var(--line); border-radius: 8px;">
-          <summary style="padding: 24px; font-family: var(--display); font-weight: 600; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: space-between;">
-            Is it a code generator?
-            <span style="color: var(--reuse);">+</span>
-          </summary>
-          <div style="padding: 0 24px 24px; color: var(--text-2); font-size: 0.95rem; line-height: 1.6;">
-            No. It does not generate new code. It finds and retrieves code your team has already written, reviewed, and proven in production.
-          </div>
-        </details>
-
-        <details style="background: var(--card); border: 1px solid var(--line); border-radius: 8px;">
-          <summary style="padding: 24px; font-family: var(--display); font-weight: 600; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: space-between;">
-            Is it a package registry like npm?
-            <span style="color: var(--reuse);">+</span>
-          </summary>
-          <div style="padding: 0 24px 24px; color: var(--text-2); font-size: 0.95rem; line-height: 1.6;">
-            No. It's designed for the "glue code" and internal modules that are too specific or too numerous to publish as formal packages. You copy the pieces into your project and modify them as needed.
-          </div>
-        </details>
-
-        <details style="background: var(--card); border: 1px solid var(--line); border-radius: 8px;">
-          <summary style="padding: 24px; font-family: var(--display); font-weight: 600; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: space-between;">
-            Do I need a server, an account, or a database?
-            <span style="color: var(--reuse);">+</span>
-          </summary>
-          <div style="padding: 0 24px 24px; color: var(--text-2); font-size: 0.95rem; line-height: 1.6;">
-            No. The Vault is just a git repository on your machine. BricoWerx uses a local SQLite index for search. You don't need a central server unless your team grows extremely large.
-          </div>
-        </details>
-
-        <details style="background: var(--card); border: 1px solid var(--line); border-radius: 8px;">
-          <summary style="padding: 24px; font-family: var(--display); font-weight: 600; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: space-between;">
-            Which stacks does it support today?
-            <span style="color: var(--reuse);">+</span>
-          </summary>
-          <div style="padding: 0 24px 24px; color: var(--text-2); font-size: 0.95rem; line-height: 1.6;">
-            It works with any text-based files. The CLI has language-specific understanding for TypeScript, Go, Python, and Rust, allowing it to extract dependencies automatically.
-          </div>
-        </details>
-
-        <details style="background: var(--card); border: 1px solid var(--line); border-radius: 8px;">
-          <summary style="padding: 24px; font-family: var(--display); font-weight: 600; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: space-between;">
-            Where does the name come from?
-            <span style="color: var(--reuse);">+</span>
-          </summary>
-          <div style="padding: 0 24px 24px; color: var(--text-2); font-size: 0.95rem; line-height: 1.6;">
-            From the French word <em>bricolage</em> (/bri.ko.laj/): making something new from whatever is already at hand, and letting the joins show. We apply it to engineering knowledge in the AI era.
-          </div>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- Waitlist -->
-  <section id="launch" class="dark fade-up" style="padding: 100px 0;">
-    <div class="container" style="max-width: 720px; text-align: center;">
-      <h2 style="margin-bottom: 16px;">The Vault opens soon. Be in the first cohort.</h2>
-      <p style="color: var(--on-ink-2); font-size: 1.1rem; margin-bottom: 40px; margin-left: auto; margin-right: auto;">
-        We're finishing Phase A: summaries at capture, meaning-based search, and the MCP server.
-      </p>
-      
-      <form style="display: flex; gap: 12px; max-width: 500px; margin: 0 auto;">
-        <label for="wl-email" class="sr-only" style="display: none;">Work email</label>
-        <input type="email" id="wl-email" placeholder="you@company.com" required style="flex: 1; padding: 14px 20px; border-radius: 6px; border: 1px solid var(--on-ink-2); background: var(--ink-2); color: var(--on-ink); font-family: var(--sans); font-size: 1rem;" />
-        <label for="wl-company" class="sr-only" style="display: none;">Company (optional)</label>
-        <input type="text" id="wl-company" placeholder="Company (optional)" style="display: none;" />
-        <button type="submit" class="btn btn-primary" style="padding: 14px 32px; font-size: 1rem;">Join the waitlist</button>
-      </form>
-      
-      <p style="color: var(--text-3); font-size: 0.85rem; margin-top: 16px; margin-bottom: 32px;">
-        No spam. One email when we open, one when the binary is yours.
-      </p>
-      
-      <div style="display: flex; justify-content: center; gap: 24px; font-size: 0.9rem; color: var(--on-ink-2);">
-        <span><strong style="color: var(--on-ink);">First binary</strong></span>
-        <span><strong style="color: var(--on-ink);">Founding badge</strong></span>
-        <span><strong style="color: var(--on-ink);">A vote on what ships next</strong></span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Blog & Footer -->
-  <footer style="background: var(--paper); border-top: 1px solid var(--line); padding: 80px 0 40px;">
-    <div class="container grid-12">
-      <!-- Blog posts (simplified cards) -->
-      <div style="grid-column: span 12; margin-bottom: 64px;">
-        <h3 style="margin-bottom: 32px; font-size: 1.5rem;">Recent from the blog</h3>
-        <div class="grid-12">
-          <div style="grid-column: span 4; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 24px; transition: transform 0.2s; cursor: pointer;">
-            <div style="font-family: var(--mono); font-size: 0.75rem; color: var(--reuse); margin-bottom: 12px; text-transform: uppercase;">Engineering</div>
-            <h4 style="font-size: 1.1rem; margin-bottom: 8px;">Stop regenerating your auth module</h4>
-            <p style="font-size: 0.9rem; color: var(--text-2); margin-bottom: 16px;">Why LLMs should compose existing pieces instead of writing from scratch.</p>
-            <div style="font-size: 0.8rem; color: var(--text-3);">Oct 12 &middot; 4 min read</div>
-          </div>
-          <div style="grid-column: span 4; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 24px; transition: transform 0.2s; cursor: pointer;">
-            <div style="font-family: var(--mono); font-size: 0.75rem; color: var(--reuse); margin-bottom: 12px; text-transform: uppercase;">Product</div>
-            <h4 style="font-size: 1.1rem; margin-bottom: 8px;">The Model Context Protocol</h4>
-            <p style="font-size: 0.9rem; color: var(--text-2); margin-bottom: 16px;">How we exposed the Vault to Cursor and Claude.</p>
-            <div style="font-size: 0.8rem; color: var(--text-3);">Oct 05 &middot; 6 min read</div>
-          </div>
-          <div style="grid-column: span 4; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 24px; transition: transform 0.2s; cursor: pointer;">
-            <div style="font-family: var(--mono); font-size: 0.75rem; color: var(--reuse); margin-bottom: 12px; text-transform: uppercase;">Design</div>
-            <h4 style="font-size: 1.1rem; margin-bottom: 8px;">Building the new BricoWerx</h4>
-            <p style="font-size: 0.9rem; color: var(--text-2); margin-bottom: 16px;">Our transition to a simpler, more focused landing page.</p>
-            <div style="font-size: 0.8rem; color: var(--text-3);">Sep 28 &middot; 5 min read</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Links & Copyright -->
-      <div style="grid-column: span 12; display: flex; justify-content: space-between; align-items: flex-end; padding-top: 40px; border-top: 1px solid var(--line);">
-        <div style="display: flex; gap: 32px;">
-          <a href="#" style="color: var(--text-2); text-decoration: none; font-size: 0.9rem;">Docs</a>
-          <a href="#" style="color: var(--text-2); text-decoration: none; font-size: 0.9rem;">GitHub</a>
-          <a href="#" style="color: var(--text-2); text-decoration: none; font-size: 0.9rem;">Contact</a>
-          <a href="#" style="color: var(--text-2); text-decoration: none; font-size: 0.9rem;">License</a>
-        </div>
-        <div style="font-family: var(--mono); font-size: 0.8rem; color: var(--text-3);">
-          &copy; BricoWerx. All rights reserved.
-        </div>
-      </div>
-    </div>
-  </footer>
+<!-- Sections S4–S13 will be added in subsequent commits -->
 </main>
 
 <script>
-// Intersection Observer for fade-ups
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
+/* ========== Scroll Reveal ========== */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
-document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-// Nav scroll effect
+/* ========== Step Cards Stagger ========== */
+const stepObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+document.querySelectorAll('.step-card').forEach(el => stepObserver.observe(el));
+
+/* ========== Nav Scroll ========== */
 window.addEventListener('scroll', () => {
-  if (window.scrollY > 10) {
-    document.getElementById('nav').classList.add('scrolled');
-  } else {
-    document.getElementById('nav').classList.remove('scrolled');
-  }
-});
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
 
-// Cycling headline
+/* ========== Hero Assembly: Scroll-Driven ========== */
 (function() {
-  const wrapper = document.getElementById('hero-cycle');
-  if (!wrapper) return;
-  const words = wrapper.querySelectorAll('.hero-cycle-word');
-  if (!words.length) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  let cur = 0;
-  setInterval(() => {
-    const prev = cur;
-    cur = (cur + 1) % words.length;
-    words[prev].classList.remove('active');
-    words[prev].classList.add('exit');
-    setTimeout(() => words[prev].classList.remove('exit'), 450);
-    words[cur].classList.add('active');
-  }, 2400);
+  const area = document.getElementById('assembly-scroll');
+  const assembly = document.getElementById('assembly');
+  const slot = document.getElementById('slot-lit');
+  if (!area || !assembly) return;
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) {
+    assembly.style.setProperty('--p', 1);
+    if (slot) slot.classList.add('lit');
+    return;
+  }
+
+  // Initially hide the lit state
+  if (slot) slot.classList.remove('lit');
+
+  function onScroll() {
+    const rect = area.getBoundingClientRect();
+    const vh = window.innerHeight;
+    const scrollable = rect.height - vh;
+    if (scrollable <= 0) return;
+    const p = Math.max(0, Math.min(1, -rect.top / scrollable));
+    assembly.style.setProperty('--p', p);
+    if (slot) slot.classList.toggle('lit', p > 0.92);
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 })();
 
-// Terminal Typing Animation
-const term = document.getElementById('hero-typing');
-const staticTerm = document.getElementById('hero-static');
-const commands = [
-  { text: "$ brico capture auth", type: "cmd", delay: 400 },
-  { text: "  saved auth@0.1.0 to the Vault", type: "dim", delay: 200 },
-  { text: "", type: "dim", delay: 300 },
-  { text: "$ brico search \"token auth for nest\"", type: "cmd", delay: 500 },
-  { text: "  auth@0.2.0   jwt, passport   proven in 3 projects", type: "ok", delay: 300 },
-  { text: "", type: "dim", delay: 300 },
-  { text: "$ brico add auth", type: "cmd", delay: 500 },
-  { text: "  copied 6 files, wired .env.example", type: "dim", delay: 300 },
-  { text: "  next: add AuthModule to AppModule imports", type: "ok", delay: 100 }
-];
-
-if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  term.style.display = 'none';
-  staticTerm.style.display = 'block';
-} else {
-  let html = "";
-  let i = 0;
-  
-  function nextStep() {
-    if (i >= commands.length) return;
-    const cmd = commands[i];
-    
-    setTimeout(() => {
-      if (cmd.type === "cmd") {
-        html += `<div class="cmd">${cmd.text}</div>`;
-      } else if (cmd.type === "ok") {
-        html += `<div class="ok">${cmd.text}</div>`;
-      } else {
-        html += `<div class="dim">${cmd.text}</div>`;
-      }
-      term.innerHTML = html;
-      i++;
-      nextStep();
-    }, cmd.delay);
-  }
-  
-  // Start after a short delay
-  setTimeout(nextStep, 500);
-}
+/* ========== Hero Terminal Typing ========== */
+(function() {
+  const body = document.querySelector('#hero .term-body');
+  if (!body) return;
+  // The hero step terminals are static; this is reserved for future typing animation
+})();
 </script>
 </body>
 </html>
