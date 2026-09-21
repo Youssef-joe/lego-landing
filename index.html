@@ -125,16 +125,136 @@ header.scrolled { border-bottom-color: var(--line); }
 }
 
 /* Hero */
-.hero { min-height: 85vh; display: flex; align-items: center; padding-top: 40px; padding-bottom: 40px; }
-.hero-content { grid-column: span 6; display: flex; flex-direction: column; justify-content: center; }
-.hero-terminal { grid-column: span 6; display: flex; align-items: center; }
-@media (max-width: 1024px) {
-  .hero-content { grid-column: span 12; }
-  .hero-terminal { grid-column: span 12; margin-top: 40px; }
+.hero { padding-top: 64px; padding-bottom: 96px; }
+.hero-content {
+  max-width: 900px; margin: 0 auto; text-align: center;
+  display: flex; flex-direction: column; align-items: center;
 }
-.hero-cta { display: flex; gap: 16px; align-items: center; margin-top: 32px; flex-wrap: wrap; }
-.hero-facts { display: flex; gap: 16px; margin-top: 24px; font-family: var(--mono); font-size: 0.8125rem; color: var(--text-3); flex-wrap: wrap; }
+.hero-content p { margin-left: auto; margin-right: auto; }
+.hero-cta { display: flex; gap: 20px; align-items: center; justify-content: center; margin-top: 32px; flex-wrap: wrap; }
+.hero-link { font-weight: 600; text-decoration: none; color: var(--text); }
+.hero-link:hover { color: var(--reuse); }
+.hero-facts { display: flex; gap: 20px; justify-content: center; margin-top: 28px; font-family: var(--mono); font-size: 0.8125rem; color: var(--text-3); flex-wrap: wrap; }
 .hero-facts span::before { content: "•"; color: var(--reuse); margin-right: 8px; }
+.hero-skip { margin-top: 20px; font-size: 0.875rem; color: var(--text-2); text-decoration: underline; text-underline-offset: 3px; }
+.hero-skip:hover { color: var(--reuse); }
+@media (max-width: 768px) { .hero-skip { display: none; } }
+
+/* Cycling headline */
+.hero-cycle {
+  position: relative;
+  display: inline-block;
+  min-width: 3ch;
+.bricks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: stretch; }
+}
+.hero-cycle-word {
+  display: inline-block;
+.brick-col { --bf: #ECE6DA; --be: #D2CAB9; --bs: #F4EFE6; --bsr: #D8D0BF; }
+.brick-col.is-bwx { --bf: #F9E8E0; --be: #DFAE98; --bs: #FDF2EC; --bsr: #E7C3B1; }
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(100%) scale(0.96);
+  transition: opacity 0.45s cubic-bezier(.22,.68,0,1.1), transform 0.45s cubic-bezier(.22,.68,0,1.1);
+}
+.hero-cycle-word.active {
+  position: relative;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.hero-cycle-word.exit {
+  opacity: 0;
+  transform: translateY(-70%) scale(0.96);
+.brick-stack { display: flex; flex-direction: column; gap: 16px; flex: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-cycle-word { transition: none; }
+}
+.hero-terminal { max-width: 760px; margin: 56px auto 0; }
+
+/* Brick comparison */
+.bricks { margin-top: clamp(72px, 9vw, 112px); }
+.bricks-head { text-align: center; margin-bottom: 48px; }
+.bricks-head h2 { font-size: clamp(1.6rem, 2.8vw, 2.2rem); max-width: 22ch; margin: 0 auto; }
+.bricks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+@media (max-width: 860px) { .bricks-grid { grid-template-columns: 1fr; gap: 56px; } }
+
+/* Per-column brick palette: face, edge, stud */
+.brick-col { --bf: #ECE6DA; --be: #D2CAB9; --bs: #F4EFE6; }
+.brick-col.is-bwx { --bf: #F9E8E0; --be: #DFAE98; --bs: #FDF2EC; }
+
+.brick-cap {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 26px;
+  font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.07em;
+  content: ""; position: absolute; left: 22px; right: 22px; top: -9px; height: 9px;
+  background-image: radial-gradient(circle at 13px 100%, var(--bs) 0 10.5px, var(--bsr) 10.5px 11.5px, rgba(0,0,0,0) 11.9px);
+  background-size: 44px 100%; background-repeat: repeat-x;
+.brick-cap .dot {
+  flex: none; width: 12px; height: 9px; border-radius: 2px; background: var(--line-2);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.5), inset 0 -2px 0 rgba(0,0,0,.14);
+}
+.brick-col.is-bwx .brick-cap .dot { background: var(--reuse); }
+
+.brick-stack { display: flex; flex-direction: column; gap: 14px; }
+
+.brick {
+  position: relative;
+  background: var(--bf);
+  border-radius: 7px;
+  padding: 16px 20px;
+  margin-top: auto; background: #262B2D; color: #B9B2A4;
+  box-shadow:
+  --bs: #3A4143; --be: #13171A; --bsr: #4E5658;
+    inset 0 -3px 0 rgba(0,0,0,.05),
+    0 3px 0 var(--be),
+    0 14px 20px -14px rgba(21,24,26,.5);
+  opacity: 0;
+  --bs: #D2683F; --be: #8B3819; --bsr: #A84A25;
+  transition: opacity 420ms cubic-bezier(.2,.8,.3,1), transform 420ms cubic-bezier(.2,.8,.3,1), box-shadow 200ms ease;
+  transition-delay: calc(var(--i, 0) * 85ms);
+}
+/* studs on top of each brick */
+.brick::before {
+  content: ""; position: absolute; left: 18px; right: 18px; top: -8px; height: 8px;
+  background-image: radial-gradient(circle at 10px 100%, var(--bs) 0 8px, var(--be) 8px 9px, rgba(0,0,0,0) 9.2px);
+  background-size: 28px 100%; background-repeat: repeat-x;
+  pointer-events: none;
+}
+.brick strong { font-weight: 600; color: var(--text); }
+.brick code { font-family: var(--mono); font-size: 0.875em; color: var(--reuse); }
+
+/* the mismatched stack leans; the reused stack sits square */
+.brick-col:not(.is-bwx) .brick:nth-child(2) { --rot: -0.45deg; }
+.brick-col:not(.is-bwx) .brick:nth-child(3) { --rot: 0.4deg; }
+.brick-col:not(.is-bwx) .brick:nth-child(4) { --rot: -0.3deg; }
+.brick-col:not(.is-bwx) .brick:nth-child(5) { --rot: 0.5deg; }
+
+/* cost baseplate */
+.brick.is-cost {
+  margin-top: 6px; background: #262B2D; color: #B9B2A4;
+  font-family: var(--mono); font-size: 0.78rem; line-height: 1.5;
+  --bs: #3A4143; --be: #13171A;
+}
+.brick.is-cost strong { color: #FFF; }
+.is-bwx .brick.is-cost {
+  background: var(--reuse); color: #F7DCD1;
+  --bs: #D2683F; --be: #8B3819;
+}
+.is-bwx .brick.is-cost strong { color: #FFF; }
+
+.bricks.visible .brick { opacity: 1; transform: translateY(0) rotate(var(--rot, 0deg)); }
+.bricks.visible .brick:hover {
+  transform: translateY(-3px) rotate(var(--rot, 0deg));
+  transition-delay: 0s;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.7),
+    inset 0 -3px 0 rgba(0,0,0,.05),
+    0 6px 0 var(--be),
+    0 20px 28px -16px rgba(21,24,26,.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brick { opacity: 1; transform: rotate(var(--rot, 0deg)); transition: none; }
+  .bricks.visible .brick { transform: rotate(var(--rot, 0deg)); }
+}
 
 /* Terminal */
 .terminal {
@@ -191,24 +311,25 @@ header.scrolled { border-bottom-color: var(--line); }
 <main>
   <!-- Hero -->
   <section id="hero" class="hero fade-up">
-    <div class="container grid-12">
+    <div class="container">
       <div class="hero-content">
         <span class="eyebrow">LAUNCHING SOON &middot; OPEN SOURCE</span>
-        <h1>Your team already built it. Stop rebuilding it.</h1>
+        <h1>Your team already built it.<br>Stop <span class="hero-cycle" id="hero-cycle"><span class="hero-cycle-word active">rebuilding.</span><span class="hero-cycle-word">searching.</span><span class="hero-cycle-word">reviewing.</span><span class="hero-cycle-word">forgetting.</span></span></h1>
         <p class="body-l" style="margin-top: 24px; color: var(--text-2);">
           BricoWerx is a command-line tool that keeps your team's proven code as versioned, searchable pieces &mdash; so engineers and AI assistants reuse them instead of rebuilding them.
         </p>
         <div class="hero-cta">
           <a href="#launch" class="btn btn-primary">Join the waitlist</a>
-          <a href="#how" style="font-weight: 600; text-decoration: none; color: var(--text); margin-left: 8px;">See how it works &darr;</a>
-          <a href="#how" style="font-size: 0.875rem; color: var(--text-2); text-decoration: underline; margin-left: auto;" class="desktop-only">Skip to the technical part &rarr;</a>
+          <a href="#how" class="hero-link">See how it works &darr;</a>
         </div>
         <div class="hero-facts">
           <span>one static binary</span>
           <span>your git repo is the database</span>
           <span>works offline</span>
         </div>
+        <a href="#how" class="hero-skip">Skip to the technical part &rarr;</a>
       </div>
+
       <div class="hero-terminal">
         <div class="terminal">
           <div class="terminal-header"><i class="r"></i><i class="y"></i><i class="g"></i></div>
@@ -226,6 +347,40 @@ $ brico search "token auth for nest"
 $ brico add auth
   copied 6 files, wired .env.example
   next: add AuthModule to AppModule imports
+          </div>
+        </div>
+      </div>
+
+      <!-- Brick comparison -->
+      <div class="bricks fade-up">
+        <div class="bricks-head">
+          <span class="eyebrow">THE SAME REQUEST, TWICE</span>
+          <h2>One team regenerates it. The other snaps it into place.</h2>
+        </div>
+
+        <div class="bricks-grid">
+          <div class="brick-col">
+            <div class="brick-cap"><span class="dot"></span>Today, without BWX &mdash; regenerated &times;4</div>
+            <div class="brick-stack">
+              <div class="brick" style="--i:0"><strong>&ldquo;We need JWT auth in the new service.&rdquo;</strong></div>
+              <div class="brick" style="--i:1">Someone remembers &ldquo;we did this before&rdquo; but not where.</div>
+              <div class="brick" style="--i:2">The assistant scans the whole codebase for context.</div>
+              <div class="brick" style="--i:3">It writes a fresh implementation that must be reviewed line by line.</div>
+              <div class="brick" style="--i:4">You now maintain a fourth, slightly different auth module.</div>
+              <div class="brick is-cost" style="--i:5"><strong>cost:</strong> tens of thousands of tokens, a review cycle, new bugs</div>
+            </div>
+          </div>
+
+          <div class="brick-col is-bwx">
+            <div class="brick-cap"><span class="dot"></span>With BWX &mdash; reused</div>
+            <div class="brick-stack">
+              <div class="brick" style="--i:0"><strong>&ldquo;Do we have JWT auth?&rdquo;</strong></div>
+              <div class="brick" style="--i:1">The assistant asks the Vault, not the codebase.</div>
+              <div class="brick" style="--i:2">The Vault answers with a card: <code>auth@0.2.0</code>, nest, jwt, proven in 3 projects.</div>
+              <div class="brick" style="--i:3"><code>brico add auth</code> copies the piece and prints the two wiring steps.</div>
+              <div class="brick" style="--i:4">Nothing new was written. Nothing new needs review.</div>
+              <div class="brick is-cost" style="--i:5"><strong>cost:</strong> about 300 tokens and one command</div>
+            </div>
           </div>
         </div>
       </div>
@@ -264,37 +419,6 @@ $ brico add auth
         </p>
       </div>
 
-      <!-- Before / After -->
-      <div class="grid-12" style="margin-bottom: 64px;">
-        <div style="grid-column: span 6; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 32px;">
-          <span class="meta" style="color: var(--text-3); display: block; margin-bottom: 16px;">TODAY, WITHOUT BWX &mdash; regenerated &times;4</span>
-          <div style="display: flex; flex-direction: column; gap: 16px;">
-            <p><strong>"We need JWT auth in the new service."</strong></p>
-            <p>Someone remembers "we did this before" but not where.</p>
-            <p>The assistant scans the whole codebase for context.</p>
-            <p>It writes a fresh implementation that must be reviewed line by line.</p>
-            <p>You now maintain a fourth, slightly different auth module.</p>
-            <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 0.8125rem;">
-              <strong>cost:</strong> tens of thousands of tokens, a review cycle, new bugs
-            </div>
-          </div>
-        </div>
-        
-        <div style="grid-column: span 6; background: rgba(194,84,43,0.05); border: 1px solid var(--reuse); border-radius: 8px; padding: 32px; box-shadow: 0 0 0 1px rgba(194,84,43,0.1), 0 20px 40px -20px rgba(194,84,43,0.15);">
-          <span class="meta" style="color: var(--reuse); display: block; margin-bottom: 16px;">WITH BWX &mdash; reused</span>
-          <div style="display: flex; flex-direction: column; gap: 16px;">
-            <p><strong>"Do we have JWT auth?"</strong></p>
-            <p>The assistant asks the Vault, not the codebase.</p>
-            <p>The Vault answers with a card: <code style="color: var(--reuse); font-family: var(--mono);">auth@0.2.0</code>, nest, jwt, proven in 3 projects.</p>
-            <p><code style="color: var(--reuse); font-family: var(--mono);">brico add auth</code> copies the piece and prints the two wiring steps.</p>
-            <p>Nothing new was written. Nothing new needs review.</p>
-            <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(194,84,43,0.2); font-family: var(--mono); font-size: 0.8125rem; color: var(--verified); font-weight: 600;">
-              cost: about 300 tokens and one command
-            </div>
-          </div>
-        </div>
-      </div>
-
       <!-- 3 Compact Cards -->
       <div class="grid-12" style="margin-bottom: 64px;">
         <div style="grid-column: span 4; background: var(--paper-2); border: 1px solid var(--line); border-radius: 8px; padding: 24px;">
@@ -316,7 +440,6 @@ $ brico add auth
       </div>
     </div>
   </section>
-\n
   <!-- Band B: How it works & Pieces -->
   <section id="how" class="alt fade-up">
     <div class="container">
@@ -439,7 +562,6 @@ $ brico add auth
 
     </div>
   </section>
-\n
   <!-- Band C: For AI Assistants -->
   <section id="ai" class="dark fade-up">
     <div class="container">
@@ -743,7 +865,7 @@ $ brico add auth
       </div>
     </div>
   </footer>
-\n</main>
+</main>
 
 <script>
 // Intersection Observer for fade-ups
@@ -764,6 +886,24 @@ window.addEventListener('scroll', () => {
     document.getElementById('nav').classList.remove('scrolled');
   }
 });
+
+// Cycling headline
+(function() {
+  const wrapper = document.getElementById('hero-cycle');
+  if (!wrapper) return;
+  const words = wrapper.querySelectorAll('.hero-cycle-word');
+  if (!words.length) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let cur = 0;
+  setInterval(() => {
+    const prev = cur;
+    cur = (cur + 1) % words.length;
+    words[prev].classList.remove('active');
+    words[prev].classList.add('exit');
+    setTimeout(() => words[prev].classList.remove('exit'), 450);
+    words[cur].classList.add('active');
+  }, 2400);
+})();
 
 // Terminal Typing Animation
 const term = document.getElementById('hero-typing');
