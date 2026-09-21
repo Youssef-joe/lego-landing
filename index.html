@@ -1,1874 +1,412 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BricoWerx (BWX): reuse your team's proven engineering work, from the terminal and from your AI assistant</title>
-<meta name="description" content="BricoWerx (BWX) saves the best parts of your projects as versioned, reusable pieces: modules, prompts, agent skills and evals. Engineers find them with a CLI. AI assistants find them over MCP. Nobody rebuilds what already exists.">
-<meta property="og:title" content="BricoWerx (BWX): your team already built it. Stop rebuilding it.">
-<meta property="og:description" content="A version-controlled library of your organisation's proven building blocks, with the wiring and the reasoning attached, readable by humans and by AI.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%0A  %3ClinearGradient id='gT' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='#D3663B'/%3E%3Cstop offset='1' stop-color='#B04A24'/%3E%3C/linearGradient%3E%0A  %3ClinearGradient id='gO' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='#C99A4C'/%3E%3Cstop offset='1' stop-color='#A67830'/%3E%3C/linearGradient%3E%0A  %3ClinearGradient id='gS' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='#6C8A68'/%3E%3Cstop offset='1' stop-color='#4F6B4C'/%3E%3C/linearGradient%3E%0A%3C/defs%3E%0A%3Cg %3E%3Crect x='14' y='40' width='38' height='38' rx='8' transform='rotate(45 33 59)' fill='url(#gT)'/%3E%0A  %3Crect x='14' y='40' width='38' height='38' rx='8' transform='rotate(45 33 59)' fill='none' stroke='rgba(255,255,255,.22)' stroke-width='1'/%3E%0A  %3Cpath transform='translate(33 59) scale(2.3)' d='M-3.4,-5 V5 H1 A2.6,2.6 0 0 0 1,-0.2 H-3.4 M-3.4,-0.2 H0.6 A2.4,2.4 0 0 0 0.6,-5 H-3.4' fill='none' stroke='#FBF7F0' stroke-width='1.55' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/g%3E%0A%3Cg %3E%3Crect x='52' y='12' width='27' height='27' rx='6' transform='rotate(45 65.5 25.5)' fill='url(#gO)'/%3E%0A  %3Crect x='52' y='12' width='27' height='27' rx='6' transform='rotate(45 65.5 25.5)' fill='none' stroke='rgba(255,255,255,.22)' stroke-width='1'/%3E%0A  %3Cpath transform='translate(65.5 25.5) scale(1.7)' d='M-4.4,-5 L-2.2,5 L0,-1.6 L2.2,5 L4.4,-5' fill='none' stroke='#FBF7F0' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/g%3E%0A%3Cg %3E%3Crect x='60' y='56' width='22' height='22' rx='5' transform='rotate(45 71 67)' fill='url(#gS)'/%3E%0A  %3Crect x='60' y='56' width='22' height='22' rx='5' transform='rotate(45 71 67)' fill='none' stroke='rgba(255,255,255,.22)' stroke-width='1'/%3E%0A  %3Cpath transform='translate(71 67) scale(1.45)' d='M-4,-5 L4,5 M4,-5 L-4,5' fill='none' stroke='#FBF7F0' stroke-width='1.7' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
-/* =========================================================
-   BWX · dark workshop
-   charcoal bench · blueprint grid · one amber accent
-   The amber is always "the piece being reused".
-   The mint is always "verified".
-   The blue is always "the AI assistant".
-   ========================================================= */
-:root{
-  --bg:#F4EFE6;          /* paper */
-  --bg-2:#1B1F1C;        /* ink panel (terminals, code) */
-  --panel:#FBF8F2;
-  --panel-2:#F1EBE0;
-  --panel-3:#E6DFD2;
-  --line:#E2DACB;
-  --line-2:#CFC5B3;
-  --text:#1B1F1C;
-  --text-2:#4F5450;
-  --text-3:#7E837C;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BricoWerx (BWX)</title>
+  <meta name="description" content="BricoWerx is a command-line tool that keeps your team's proven code as versioned, searchable pieces — so engineers and AI assistants reuse them instead of rebuilding them.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* surfaces */
+      --paper: #F6F2EA;
+      --paper-2: #EFE9DE;
+      --card: #FFFDF9;
+      --ink: #15181A;
+      --ink-2: #1E2326;
+    
+      /* text */
+      --text: #15181A;
+      --text-2: #575D59;
+      --text-3: #8A8F89;
+      --on-ink: #EDE7DB;
+      --on-ink-2: #9AA29B;
+    
+      /* lines */
+      --line: #E3DCCD;
+      --line-2: #CCC3B1;
+    
+      /* meaning */
+      --reuse: #C2542B;
+      --reuse-hover: #9C4020;
+      --verified: #55704F;
+      --ai: #46617A;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--paper);
+      color: var(--text);
+      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+    
+    h1, h2, h3, h4, .display {
+      font-family: 'Space Grotesk', sans-serif;
+      margin: 0 0 1rem 0;
+    }
+    
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    
+    .display-xl {
+      font-size: clamp(2.75rem, 6vw, 4.5rem);
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+    }
+    
+    .display-l {
+      font-size: clamp(2rem, 3.6vw, 2.9rem);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+    }
+    
+    .title {
+      font-size: 1.25rem;
+      line-height: 1.3;
+    }
+    
+    .body-l {
+      font-size: 1.125rem;
+      line-height: 1.65;
+      max-width: 60ch;
+    }
+    
+    .body {
+      font-size: 1rem;
+      line-height: 1.7;
+      max-width: 68ch;
+    }
+    
+    .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8125rem;
+      line-height: 1.4;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    
+    .mono-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875rem;
+      line-height: 1.55;
+    }
+    
+    .btn {
+      background-color: var(--reuse);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s cubic-bezier(.2,.7,.3,1), background-color 0.2s;
+      border: 2px solid transparent;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: var(--reuse-hover);
+      transform: translateY(-2px);
+    }
+    .btn.btn-sm {
+      padding: 8px 16px;
+      font-size: 0.875rem;
+    }
+    .btn.ghost {
+      background-color: transparent;
+      color: var(--text);
+      border: 2px solid var(--line-2);
+    }
+    .btn.ghost:hover {
+      background-color: var(--paper-2);
+      border-color: var(--text-2);
+    }
+    
+    a:focus-visible, button:focus-visible, input:focus-visible, details:focus-visible {
+      outline: 2px solid var(--reuse);
+      outline-offset: 2px;
+    }
+    
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    @media (max-width: 768px) {
+      .container { padding: 0 16px; }
+    }
+    
+    section {
+      padding: clamp(72px, 9vw, 128px) 0;
+    }
+    
+    .bg-paper { background-color: var(--paper); }
+    .bg-paper-2 { background-color: var(--paper-2); }
+    .bg-ink { background-color: var(--ink); color: var(--on-ink); }
+    .bg-ink .text-2 { color: var(--on-ink-2); }
+    
+    .eyebrow {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8125rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-2);
+      margin-bottom: 1rem;
+    }
+    .bg-ink .eyebrow { color: var(--on-ink-2); }
+    
+    .terminal {
+      background-color: var(--ink-2);
+      color: var(--on-ink);
+      border-radius: 8px;
+      padding: 24px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875rem;
+      line-height: 1.55;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      white-space: pre-wrap;
+    }
+    .terminal .cmd { color: var(--reuse); }
+    .terminal .comment { color: var(--on-ink-2); }
+    .terminal .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 1.2em;
+      background-color: var(--reuse);
+      vertical-align: middle;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) {
+      .terminal .cursor { animation: none; }
+      * { transition: none !important; animation: none !important; }
+    }
+    
+    /* Nav */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: rgba(246, 242, 234, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      height: 56px;
+      display: flex;
+      align-items: center;
+    }
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-2);
+      font-weight: 500;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-logo {
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+    }
+    @media (max-width: 768px) {
+      .nav-links .desktop-only { display: none; }
+    }
+    
+    /* Hero */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; gap: 40px; }
+    }
+    .hero-content {
+      max-width: 600px;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      margin-top: 32px;
+    }
+    .hero-cta a.text-2 {
+      color: var(--text-2);
+      font-weight: 500;
+    }
+    .hero-facts {
+      display: flex;
+      gap: 24px;
+      margin-top: 24px;
+      color: var(--text-3);
+      flex-wrap: wrap;
+    }
+    .hero-facts span {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hero-facts span::before {
+      content: "";
+      display: block;
+      width: 4px;
+      height: 4px;
+      background-color: var(--text-3);
+      border-radius: 50%;
+    }
+    
+    /* Proof Strip */
+    .proof-strip-wrapper {
+      padding-bottom: clamp(72px, 9vw, 128px);
+    }
+    .proof-strip {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      padding: 32px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .stat-tile {
+      flex: 1;
+      min-width: 200px;
+    }
+    .stat-tile .big {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-tile p {
+      color: var(--text-2);
+      margin: 0;
+      font-size: 0.875rem;
+      max-width: 20ch;
+    }
 
-  --amber:#C2542B;  --amber-d:#9C4020;  --amber-soft:rgba(194,84,43,.12);   /* terracotta: the reused piece */
-  --mint:#5E7A5A;   --mint-soft:rgba(94,122,90,.14);                        /* sage: verified */
-  --blue:#4A6072;   --blue-soft:rgba(74,96,114,.12);                        /* slate: the AI assistant */
-  --rose:#7D5670;   --rose-soft:rgba(125,86,112,.12);                       /* plum */
-  --violet:#B8873A; --violet-soft:rgba(184,135,58,.14);                     /* ochre */
-  --lime:#6B7A3F;   --lime-soft:rgba(107,122,63,.14);                       /* olive */
-
-  --display:'Space Grotesk',system-ui,sans-serif;
-  --sans:'Inter',system-ui,-apple-system,sans-serif;
-  --serif:'Instrument Serif',Georgia,serif;
-  --mono:'JetBrains Mono',ui-monospace,monospace;
-  --r:6px;
-  --r-sm:4px;
-  --sh:0 1px 2px rgba(27,31,28,.04), 0 12px 32px -20px rgba(27,31,28,.18);
-  --sh-h:0 2px 4px rgba(27,31,28,.05), 0 26px 50px -22px rgba(27,31,28,.28);
-  --ease:cubic-bezier(.16,1,.3,1);
-  --spring:cubic-bezier(.34,1.32,.5,1);
-}
-*{margin:0;padding:0;box-sizing:border-box}
-/* components that stay ink-dark on the paper page */
-.ink,.termbox,.tree,.rdetail,.flow,.code,.cta-card,.nform,.reader .body pre,.rd pre{
-  --text:#F1ECE2;--text-2:#BDB6A9;--text-3:#8A847A;--panel:#252A26;--panel-2:#2E342F;--panel-3:#383F39;--line:#333935;--line-2:#474E48;
-  color:var(--text)}
-html{scroll-behavior:smooth;scroll-padding-top:84px}
-body{
-  background:var(--bg);color:var(--text);font-family:var(--sans);
-  line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;
-  background-image:
-    linear-gradient(rgba(27,31,28,.045) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(27,31,28,.045) 1px,transparent 1px);
-  background-size:48px 48px;
-}
-body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
-  background:radial-gradient(900px 520px at 15% 0%,rgba(194,84,43,.10),transparent 60%),
-             radial-gradient(800px 600px at 90% 20%,rgba(157,183,201,.22),transparent 60%),
-             radial-gradient(700px 500px at 60% 100%,rgba(94,122,90,.10),transparent 60%)}
-::selection{background:var(--amber);color:#FBF7F0}
-a{color:inherit;text-decoration:none}
-code,pre,kbd{font-family:var(--mono)}
-h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.05;letter-spacing:-.03em}
-h4{font-family:var(--display);font-weight:600;letter-spacing:-.01em}
-.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
-section{position:relative}
-.hi{color:var(--amber)}
-.it{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.01em}
-/* film grain over everything */
-body::after{content:"";position:fixed;inset:-50%;pointer-events:none;z-index:200;opacity:.10;mix-blend-mode:multiply;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
-  animation:grain 1.2s steps(6) infinite}
-@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-2%,1%)}40%{transform:translate(1%,-2%)}60%{transform:translate(2%,2%)}80%{transform:translate(-1%,-1%)}100%{transform:translate(0,0)}}
-/* drafting crosshairs at the corners of the page grid */
-.cross{position:absolute;width:18px;height:18px;pointer-events:none;opacity:.5}
-.cross::before,.cross::after{content:"";position:absolute;background:var(--line-2)}
-.cross::before{left:50%;top:0;bottom:0;width:1px}
-.cross::after{top:50%;left:0;right:0;height:1px}
-/* giant outlined section numerals */
-.sec-head{position:relative}
-.sec-head::before{content:attr(data-n);position:absolute;left:-.06em;top:-.62em;z-index:-1;pointer-events:none;
-  font-family:var(--serif);font-style:italic;font-size:clamp(7rem,15vw,12rem);line-height:1;color:transparent;
-  -webkit-text-stroke:1px rgba(27,31,28,.14);letter-spacing:-.04em}
-.sec-head.mid::before{left:50%;transform:translateX(-50%)}
-/* hairline amber rule that draws itself under h2s */
-.sec-head h2::after{content:"";display:block;width:0;height:2px;background:linear-gradient(90deg,var(--amber),transparent);margin-top:18px;transition:width 1.2s var(--ease) .2s}
-.sec-head.on h2::after,.rv.on .sec-head h2::after{width:120px}
-.mono{font-family:var(--mono)}
-.muted{color:var(--text-2)}
-.dim{color:var(--text-3)}
-
-/* ---------- bricolage primitives: shards, seams, tape, stamps ---------- */
-/* a shard is a panel with torn corners and a visible gold seam around it */
-.shard{position:relative;--cp:polygon(0 2%,3% 0,97% 1%,100% 3%,99% 97%,97% 100%,3% 99%,0 97%);
-  clip-path:var(--cp);background:linear-gradient(135deg,rgba(194,84,43,.9),rgba(184,135,58,.7) 45%,rgba(94,122,90,.6) 75%,rgba(194,84,43,.85));
-  padding:2px}
-.shard>.shard-in{clip-path:var(--cp);background:var(--panel);height:100%;position:relative}
-.shard.quiet{background:linear-gradient(135deg,rgba(27,31,28,.22),rgba(27,31,28,.06) 50%,rgba(27,31,28,.18))}
-.tape{position:absolute;width:74px;height:20px;background:rgba(27,31,28,.10);z-index:3;pointer-events:none;
-  background-image:repeating-linear-gradient(90deg,rgba(27,31,28,.06) 0 2px,transparent 2px 7px);
-  box-shadow:0 1px 0 rgba(0,0,0,.25)}
-.tape.tl{left:-18px;top:-8px;transform:rotate(-38deg)}.tape.tr{right:-18px;top:-8px;transform:rotate(38deg)}
-.tape.bl{left:-18px;bottom:-8px;transform:rotate(38deg)}.tape.br{right:-18px;bottom:-8px;transform:rotate(-38deg)}
-.stamp{position:absolute;z-index:3;font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
-  color:#FBF7F0;background:var(--amber);padding:5px 9px;transform:rotate(-4deg);box-shadow:0 6px 16px -8px rgba(194,84,43,.9)}
-.stamp.ghost{color:var(--amber);background:transparent;border:1.5px solid var(--amber);opacity:.85}
-/* kintsugi seam divider, a wobbling gold line */
-.seam{height:8px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 8' preserveAspectRatio='none'%3E%3Cpath d='M0 4 C 30 1, 60 7, 90 4 S 150 1, 180 4 S 240 7, 270 4 S 330 1, 360 4 S 390 6, 400 4' fill='none' stroke='%23C2542B' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") repeat-x;
-  background-size:400px 8px;filter:drop-shadow(0 0 6px rgba(194,84,43,.6))}
-.sec-head h2::after{background:none;height:8px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 8' preserveAspectRatio='none'%3E%3Cpath d='M0 4 C 30 1, 60 7, 90 4 S 150 1, 180 4 S 240 7, 270 4 S 330 1, 360 4 S 390 6, 400 4' fill='none' stroke='%23C2542B' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat;background-size:160px 8px;filter:drop-shadow(0 0 6px rgba(194,84,43,.6))}
-.sec-head.on h2::after,.rv.on .sec-head h2::after{width:160px}
-
-/* ---------- brick primitives ---------- */
-.brick{display:inline-block;width:14px;height:8px;border-radius:2px;background:var(--c,var(--amber));flex:none}
-.brick-row{display:flex;gap:6px;align-items:center}
-
-/* ---------- reveal ---------- */
-.rv{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
-.rv.on{opacity:1;transform:none}
-.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
-
-/* ---------- nav ---------- */
-nav{position:sticky;top:0;z-index:60;background:rgba(244,239,230,.72);
-  backdrop-filter:blur(16px) saturate(1.2);border-bottom:1px solid transparent;transition:border-color .4s,background .4s}
-nav.on{border-color:var(--line);background:rgba(244,239,230,.92)}
-.nav-in{display:flex;align-items:center;gap:28px;height:72px}
-.brand{display:flex;align-items:center;gap:12px}
-.mark{width:38px;height:38px;flex:none;overflow:visible}
-.mark .t1,.mark .t2,.mark .t3{transition:transform .7s var(--spring)}
-.brand:hover .mark .t2{transform:translate(3px,-4px)}
-.brand:hover .mark .t3{transform:translate(3px,3px)}
-.wordmark{font-family:var(--display);font-weight:700;font-size:1.15rem;letter-spacing:-.02em;color:var(--text)}
-.wordmark small{font-family:var(--mono);font-weight:500;font-size:.62rem;letter-spacing:.2em;color:var(--text-3);margin-left:10px;vertical-align:middle}
-.nav-links{display:flex;gap:26px;margin-left:auto;font-size:.88rem;font-weight:500}
-.nav-links a{color:var(--text-2);transition:color .25s}
-.nav-links a:hover{color:var(--text)}
-.nav-cta{margin-left:auto}
-.nav-links+.nav-cta{margin-left:0}
-.burger{display:none;margin-left:auto;background:none;border:1px solid var(--line-2);border-radius:10px;
-  width:42px;height:38px;color:var(--text);cursor:pointer;font-size:1.1rem}
-.mnav{display:none;border-top:1px solid var(--line);background:var(--bg-2);padding:14px 32px 22px}
-.mnav.open{display:grid;gap:4px}
-.mnav a{padding:11px 4px;color:var(--text-2);font-weight:500;border-bottom:1px solid var(--line)}
-.mnav a:last-child{border-bottom:none}
-
-/* ---------- buttons ---------- */
-.btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--sans);
-  font-weight:600;font-size:.95rem;padding:13px 24px;border-radius:8px;border:1px solid transparent;
-  background:var(--text);color:var(--bg);cursor:pointer;letter-spacing:-.01em;
-  transition:transform .35s var(--spring),background .3s,box-shadow .35s,border-color .3s}
-.btn:hover{transform:translateY(-2px)}
-.btn.amber{background:var(--amber);color:#FBF7F0;box-shadow:0 10px 30px -14px rgba(194,84,43,.7)}
-.btn.amber:hover{background:#D3663B}
-.btn.ghost{background:rgba(251,248,242,.6);color:var(--text);border-color:var(--text)}
-.btn.ghost:hover{border-color:var(--text-3);background:var(--panel)}
-.btn.sm{padding:9px 16px;font-size:.85rem;border-radius:10px}
-
-/* ---------- labels ---------- */
-.eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);
-  font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-2);
-  background:var(--panel);border:1px solid var(--line);border-radius:999px;
-  padding:8px 14px 8px 10px;margin-bottom:28px}
-.eyebrow .live{width:7px;height:7px;border-radius:50%;background:var(--mint);animation:live 2.2s infinite}
-@keyframes live{0%,100%{box-shadow:0 0 0 0 rgba(94,122,90,.5)}55%{box-shadow:0 0 0 7px rgba(94,122,90,0)}}
-.tl{font-family:var(--mono);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--text-3);display:block;margin-bottom:12px}
-.kick{display:inline-flex;align-items:center;gap:11px;font-family:var(--mono);font-size:.68rem;
-  letter-spacing:.16em;text-transform:uppercase;color:var(--amber);margin-bottom:18px}
-.kick .num{background:var(--amber-soft);border:1px solid rgba(194,84,43,.25);border-radius:6px;padding:3px 8px}
-
-/* ---------- hero: full-bleed film, editorial paper panel, glass cards ---------- */
-.hero{position:relative;min-height:92vh;display:flex;align-items:center;padding:56px 0 72px;overflow:hidden;
-  border-bottom:1px solid var(--text)}
-.hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;background:var(--bg)}
-.hero-veil{position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:linear-gradient(90deg,rgba(244,239,230,.55),rgba(244,239,230,.15) 45%,rgba(244,239,230,0) 70%),
-             linear-gradient(180deg,rgba(244,239,230,.6),transparent 20%,transparent 80%,rgba(244,239,230,.7))}
-.hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;width:100%}
-.paper{background:#FBF8F2;border:1px solid var(--text);padding:38px 40px 36px;position:relative;
-  box-shadow:14px 14px 0 rgba(27,31,28,.08)}
-.paper-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:34px;padding-bottom:14px;border-bottom:1px solid var(--line-2);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase}
-.paper-top .live{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--mint);margin-right:8px;vertical-align:middle;animation:live 2.2s infinite}
-.dots{display:inline-flex;gap:6px}.dots i{width:7px;height:7px;border-radius:50%;background:var(--text)}
-.dots i:nth-child(2){background:var(--amber)}.dots i:nth-child(3){background:var(--violet)}
-h1.hh{display:grid;gap:2px;letter-spacing:0;line-height:1.02}
-h1.hh .caps{font-family:var(--mono);font-weight:500;text-transform:uppercase;letter-spacing:.02em;font-size:clamp(1.7rem,3.3vw,2.7rem);color:var(--text)}
-h1.hh .it{font-size:clamp(3.2rem,6.4vw,5.4rem);color:var(--amber);line-height:.95;margin:2px 0 6px;text-shadow:none}
-.hero-sub{font-size:1.04rem;color:var(--text-2);max-width:34rem;margin:26px 0 26px}
-.hero-sub b{color:var(--text);font-weight:600}
-.cta-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-.hero-facts{display:flex;gap:20px;flex-wrap:wrap;margin-top:28px;font-family:var(--mono);font-size:.72rem;color:var(--text-3)}
-.hero-facts span{display:inline-flex;align-items:center;gap:8px}
-.hero-facts i{width:8px;height:8px;border-radius:2px;background:var(--amber);transform:rotate(45deg)}
-
-.hero-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-content:center}
-.glass{background:rgba(251,248,242,.62);border:1px solid rgba(27,31,28,.35);backdrop-filter:blur(14px) saturate(1.1);
-  padding:18px 20px;position:relative;box-shadow:0 20px 50px -30px rgba(27,31,28,.35)}
-.glass.wallcard{grid-column:span 2;padding:0}
-.glass.wallcard .wallbox{height:230px;position:relative;border:none;background:transparent;box-shadow:none;border-radius:0}
-.glass-foot{padding:10px 16px;border-top:1px solid rgba(27,31,28,.25);font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;color:var(--text-2)}
-.glass-foot b{color:var(--amber);font-weight:600}
-.glass.onesent{grid-column:span 2;border-left:3px solid var(--amber)}
-.glass.onesent::before{display:none}
-.glass.onesent p{font-family:var(--display);font-size:1.12rem;line-height:1.35;letter-spacing:-.01em;font-weight:500;color:var(--text)}
-.glass.onesent p b{color:var(--amber);font-weight:600}
-.glass.chip{display:grid;gap:4px}
-.glass.chip b{font-family:var(--display);font-size:2rem;line-height:1;color:var(--text);letter-spacing:-.03em}
-.glass.chip span{font-size:.8rem;color:var(--text-2)}
-.film-ctl{position:absolute;right:26px;bottom:22px;z-index:2;background:rgba(251,248,242,.7);border:1px solid var(--text);color:var(--text);
-  font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;padding:7px 11px;cursor:pointer;backdrop-filter:blur(8px)}
-.film-ctl:hover{background:var(--text);color:var(--bg)}
-.hero-legend{position:absolute;left:26px;bottom:24px;z-index:2;display:flex;align-items:center;gap:12px;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text-2)}
-.hero-legend .sep{width:70px;height:1px;background:var(--text-2);position:relative}
-.hero-legend .sep::after{content:"";position:absolute;right:-1px;top:-3px;width:7px;height:7px;background:var(--amber);transform:rotate(45deg)}
-
-/* strip under the hero */
-.strip{padding:34px 0 0}
-.isnot{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.isnot div{background:var(--panel);border:1px solid var(--line-2);padding:18px 20px;font-size:.9rem;color:var(--text-2)}
-.isnot b{display:block;font-family:var(--mono);font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;margin-bottom:8px}
-.isnot .yes b{color:var(--mint)}.isnot .no b{color:var(--amber)}
-.brico-def{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:baseline;margin-top:14px;padding:22px 26px;
-  background:var(--panel);border:1px solid var(--line-2);position:relative}
-.brico-def .w{font-family:var(--serif);font-style:italic;font-size:2rem;line-height:1;color:var(--amber)}
-.brico-def .w small{display:block;font-family:var(--mono);font-style:normal;font-size:.62rem;letter-spacing:.14em;color:var(--text-3);margin-top:8px}
-.brico-def p{color:var(--text-2);font-size:.98rem}
-.brico-def p b{color:var(--text);font-weight:600}
-.strip .ticker{margin-top:40px}
-
-/* ---------- launch ---------- */
-.launch{padding-bottom:40px}
-.launch-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:40px;align-items:center}
-.launch .kick .num{background:var(--mint-soft);border-color:rgba(94,122,90,.35);color:var(--mint);font-size:.5rem;padding:5px 7px;animation:live 2.2s infinite;border-radius:50%}
-.launch h2{font-size:clamp(2rem,3.9vw,2.9rem);margin-bottom:16px}
-.launch .muted{max-width:34rem}
-.wl{margin-top:26px;background:var(--panel);border:1px solid var(--text);padding:20px 22px;position:relative;box-shadow:10px 10px 0 rgba(27,31,28,.08)}
-.wl .row{display:flex;gap:10px}
-.wl input[type=email]{flex:1;min-width:0;background:#fff;border:1px solid var(--line-2);color:var(--text);font-family:var(--sans);font-size:.98rem;padding:13px 16px;border-radius:6px;outline:none;transition:border-color .3s,box-shadow .3s}
-.wl input[type=email]:focus{border-color:var(--amber);box-shadow:0 0 0 3px var(--amber-soft)}
-.wl input[type=email]::placeholder{color:var(--text-3)}
-.wl-meta{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:.78rem}
-.wl-count{font-family:var(--mono);color:var(--mint);font-size:.74rem}
-.wl-count b{font-weight:700}
-.wl .msg{display:none;margin-top:12px;font-size:.9rem;padding:12px 14px;border:1px solid}
-.wl .msg.ok{display:block;color:#2F4A2C;background:var(--mint-soft);border-color:rgba(94,122,90,.35)}
-.wl .msg.err{display:block;color:var(--amber-d);background:var(--amber-soft);border-color:rgba(194,84,43,.35)}
-.wl.done .row,.wl.done .wl-meta{display:none}
-.perks{list-style:none;display:grid;gap:10px;margin-top:24px}
-.perks li{font-size:.92rem;color:var(--text-2);padding-left:24px;position:relative}
-.perks li b{color:var(--text);font-weight:600}
-.perks li::before{content:"";position:absolute;left:2px;top:.5em;width:9px;height:9px;background:var(--amber);transform:rotate(45deg);border-radius:2px}
-.perks li:nth-child(2)::before{background:var(--violet)}.perks li:nth-child(3)::before{background:var(--mint)}
-
-.teaser{margin:0}
-.teaser-frame{position:relative;aspect-ratio:16/9;background:#1B1F1C;border:1px solid var(--text);box-shadow:14px 14px 0 rgba(27,31,28,.08);overflow:hidden}
-.teaser-frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;background:#1B1F1C}
-.teaser-frame::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(27,31,28,0) 55%,rgba(27,31,28,.45));opacity:1;transition:opacity .4s}
-.teaser-frame.playing::after{opacity:0}
-.play{position:absolute;inset:0;width:100%;height:100%;display:grid;place-items:center;align-content:center;gap:14px;background:rgba(244,239,230,.18);
-  border:none;cursor:pointer;color:#FBF7F0;font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;transition:background .3s,opacity .3s;backdrop-filter:blur(2px)}
-.play svg{filter:drop-shadow(0 12px 30px rgba(27,31,28,.5));transition:transform .5s var(--spring)}
-.play:hover{background:rgba(244,239,230,.28)}
-.play:hover svg{transform:scale(1.08) rotate(-6deg)}
-.play span{background:rgba(27,31,28,.75);padding:7px 12px;border:1px solid rgba(251,247,240,.35)}
-.teaser-frame.playing .play{opacity:0;pointer-events:none}
-.teaser-missing{position:absolute;left:16px;right:16px;bottom:16px;background:rgba(251,248,242,.94);border:1px dashed var(--amber);padding:12px 14px;font-size:.85rem;color:var(--text-2)}
-.teaser-missing b{color:var(--text)}.teaser-missing code{color:var(--amber);font-size:.85em}
-.teaser figcaption{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:.85rem;color:var(--text-2)}
-.teaser figcaption .mono{font-size:.68rem;letter-spacing:.12em;color:var(--text-3)}
-
-/* manifesto */
-.mani{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.mani .m{position:relative;padding:28px 26px 26px;background:var(--panel);border:1px solid var(--line-2)}
-.mani .m .k{font-family:var(--serif);font-style:italic;font-size:2.6rem;line-height:1;color:var(--amber);margin-bottom:12px}
-.mani .m h3{font-size:1.2rem;margin-bottom:8px}
-.mani .m p{color:var(--text-2);font-size:.93rem}
-
-/* hero terminal */
-.termbox{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);margin-top:40px}
-.termbar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line)}
-.termbar i{width:9px;height:9px;border-radius:50%;background:var(--panel-3)}
-.termbar i:first-child{background:var(--amber)}
-.termbar span{font-family:var(--mono);font-size:.68rem;color:var(--text-3);margin-left:8px}
-.term{font-family:var(--mono);font-size:.78rem;line-height:1.85;color:var(--text-2);padding:18px 20px;min-height:210px}
-.term .ln{white-space:pre-wrap;word-break:break-word}
-.t-cmd{color:var(--amber)}.t-ok{color:var(--mint)}.t-dim{color:var(--text-3)}.t-acc{color:var(--blue)}
-.caret{display:inline-block;width:7px;height:1.05em;vertical-align:text-bottom;background:var(--amber);animation:blink 1s steps(1) infinite}
-@keyframes blink{50%{opacity:0}}
-
-/* wall canvas */
-.wallbox{position:relative;overflow:hidden}
-#wall{width:100%;height:100%;display:block;position:absolute;inset:0}
-.wallbox .cap{position:absolute;left:18px;bottom:16px;font-family:var(--mono);font-size:.68rem;color:var(--text-3);
-  background:rgba(11,14,18,.7);border:1px solid var(--line);border-radius:8px;padding:6px 10px}
-.wallbox .cap b{color:var(--amber);font-weight:500}
-
-/* ---------- ticker ---------- */
-.ticker{overflow:hidden;padding:18px 0;margin-top:56px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);position:relative}
-.ticker::before,.ticker::after{content:"";position:absolute;top:0;bottom:0;width:120px;z-index:2}
-.ticker::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
-.ticker::after{right:0;background:linear-gradient(270deg,var(--bg),transparent)}
-.tick-track{display:flex;gap:56px;width:max-content;animation:scrollx 46s linear infinite;
-  font-family:var(--serif);font-style:italic;font-size:1.35rem;color:var(--text-3);white-space:nowrap;align-items:center}
-.tick-track b{color:var(--text);font-weight:400;font-family:var(--mono);font-style:normal;font-size:.8rem;letter-spacing:.02em;margin-right:6px}
-.tick-track i{display:inline-block;width:10px;height:6px;border-radius:1.5px;background:var(--amber);margin-right:10px;vertical-align:middle}
-.ticker:hover .tick-track{animation-play-state:paused}
-@keyframes scrollx{to{transform:translateX(-50%)}}
-
-/* ---------- sections ---------- */
-.sec{padding:104px 0}
-.sec-head{max-width:52rem;margin-bottom:52px}
-.sec-head.mid{margin-left:auto;margin-right:auto;text-align:center}
-.sec-head h2{font-size:clamp(2rem,3.9vw,2.9rem)}
-.sec-head p{color:var(--text-2);font-size:1.05rem;margin-top:18px;max-width:44rem}
-.sec-head p b{color:var(--text);font-weight:600}
-.sec-head.mid p{margin-left:auto;margin-right:auto}
-.sec.alt{background:linear-gradient(180deg,transparent,rgba(251,248,242,.85) 20%,rgba(251,248,242,.85) 80%,transparent)}
-
-/* ---------- cards / grids ---------- */
-.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-.g21{display:grid;grid-template-columns:1.4fr 1fr;gap:18px}
-.g2>*,.g3>*,.g21>*,.ladder>*,.anat>*,.hero-grid>*,.news>*,.steps>*,.ba>*,.posts>*,.mani>*,.hero-cards>*,.launch-grid>*{min-width:0}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:28px;box-shadow:var(--sh);
-  position:relative;overflow:hidden;transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .4s}
-.card:hover{transform:translateY(-4px) rotate(-.35deg);box-shadow:var(--sh-h);border-color:var(--line-2)}
-.card::after{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,var(--amber),transparent);
-  opacity:0;transition:opacity .5s}
-.card:hover::after{opacity:1}
-.card .icn{font-family:var(--serif);font-style:italic;font-size:1.35rem}
-.card h3{font-size:1.28rem;margin-bottom:10px}
-.card h4{font-size:1.02rem;margin-bottom:8px}
-.card p{color:var(--text-2);font-size:.94rem}
-.card .big{font-family:var(--display);font-size:3rem;font-weight:700;letter-spacing:-.04em;line-height:1;color:var(--amber)}
-.card .icn{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--panel-2);border:1px solid var(--line);margin-bottom:18px;font-size:1.05rem;color:var(--amber);font-family:var(--mono);font-weight:700}
-
-/* before / after */
-.ba{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
-.ba-card{border-radius:var(--r);padding:30px;position:relative;overflow:visible;border:1px solid var(--line)}
-.ba-card.before{background:var(--panel)}
-.ba-card.after{background:linear-gradient(160deg,rgba(194,84,43,.14),var(--panel) 55%);border-color:rgba(194,84,43,.3);box-shadow:0 0 0 1px rgba(194,84,43,.25),0 0 40px -18px rgba(194,84,43,.7)}
-.ba-card .lab{font-family:var(--mono);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;display:block}
-.ba-card.after .lab{color:var(--amber)}
-.ba-card h3{font-size:1.7rem;margin-bottom:18px}
-.ba-card.before h3{color:var(--text-3)}
-.ba-card ol{list-style:none;display:grid;gap:12px;counter-reset:s}
-.ba-card li{font-size:.93rem;padding-left:34px;position:relative;color:var(--text-2);counter-increment:s}
-.ba-card li::before{content:counter(s);position:absolute;left:0;top:.05em;width:22px;height:22px;border-radius:6px;
-  font-family:var(--mono);font-size:.68rem;display:grid;place-items:center;background:var(--panel-3);color:var(--text-3)}
-.ba-card.after li::before{background:var(--amber);color:#FBF7F0;font-weight:700}
-.ba-card .sum{margin-top:20px;padding-top:16px;border-top:1px solid var(--line);font-family:var(--mono);font-size:.78rem}
-.ba-card.before .sum{color:var(--rose)}.ba-card.after .sum{color:var(--mint)}
-
-/* ---------- pull quote ---------- */
-.pull{margin:56px auto 0;max-width:52rem;text-align:center;padding:36px 20px 0;border-top:1px solid var(--line);position:relative}
-.pull::before{content:"\201C";position:absolute;left:50%;top:-30px;transform:translateX(-50%);font-family:var(--serif);font-size:5rem;line-height:1;color:var(--amber);background:var(--bg);padding:0 14px}
-.pull p{font-family:var(--serif);font-style:italic;font-size:clamp(1.7rem,3.4vw,2.6rem);line-height:1.2;letter-spacing:-.02em}
-.pull cite{display:block;margin-top:14px;font-family:var(--mono);font-style:normal;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3)}
-
-/* ---------- steps ---------- */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.step{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:26px;box-shadow:var(--sh);display:flex;flex-direction:column}
-.step .n{font-family:var(--display);font-size:2.6rem;font-weight:700;color:var(--amber);letter-spacing:-.05em;line-height:1}
-.step h3{font-size:1.3rem;margin:12px 0 8px}
-.step p{color:var(--text-2);font-size:.93rem}
-.step pre{margin-top:auto;padding-top:18px;font-family:var(--mono);font-size:.76rem;line-height:1.75;color:var(--text-2);white-space:pre-wrap}
-.step pre b{color:var(--amber);font-weight:500}
-.step pre i{color:var(--mint);font-style:normal}
-.step pre u{color:var(--blue);text-decoration:none}
-.step .who{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
-.step .who span{font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;border-radius:6px;padding:4px 8px;border:1px solid var(--line)}
-.step .who .h{color:var(--mint);background:var(--mint-soft)}.step .who .ai{color:var(--blue);background:var(--blue-soft)}
-
-/* ---------- anatomy ---------- */
-.anat{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
-.tree{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:24px 26px;font-family:var(--mono);font-size:.8rem;line-height:1.9;color:var(--text-2)}
-.tree .f{color:var(--text)}.tree .d{color:var(--text-3)}.tree .a{color:var(--amber)}.tree .m{color:var(--mint)}
-.tree .cm{color:var(--text-3)}
-.tree div{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
-.tree .cm{font-size:.72rem}
-.parts{display:grid;gap:10px}
-.part{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);padding:14px 16px;transition:border-color .3s,transform .4s var(--ease)}
-.part:hover{border-color:var(--line-2);transform:translateX(5px)}
-.part code{font-size:.78rem;color:var(--amber);min-width:120px;padding-top:2px}
-.part span{font-size:.88rem;color:var(--text-2)}
-.part span b{color:var(--text);font-weight:600}
-
-/* ---------- ladder ---------- */
-.ladder{display:grid;grid-template-columns:.9fr 1.1fr;gap:18px;align-items:start;margin-top:18px}
-.rungs{display:grid;gap:10px}
-.rung{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);padding:18px 20px;cursor:pointer;position:relative;overflow:hidden;
-  transition:transform .45s var(--ease),border-color .4s,background .4s}
-.rung .bar{position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--amber);transform:scaleY(0);transform-origin:top;transition:transform .5s var(--ease)}
-.rung.on{transform:translateX(8px);border-color:rgba(194,84,43,.4);background:var(--panel-2)}
-.rung.on .bar{transform:scaleY(1)}
-.rung-top{display:flex;align-items:baseline;gap:12px}
-.rung-name{font-family:var(--display);font-size:1.1rem;font-weight:600}
-.rung.on .rung-name{color:var(--amber)}
-.rung-cost{font-family:var(--mono);font-size:.72rem;color:var(--text-3);margin-left:auto}
-.rung-for{font-size:.86rem;color:var(--text-3);margin-top:4px}
-.rdetail{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:26px;min-height:330px}
-.rd{display:none}
-.rd.on{display:block;animation:fu .5s var(--ease)}
-@keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-.rd pre{font-family:var(--mono);font-size:.76rem;line-height:1.8;color:var(--text-2);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto;margin-bottom:14px;white-space:pre}
-.rd .kk{color:var(--blue)}.rd .vv{color:var(--mint)}.rd .cc{color:var(--text-3)}.rd .oo{color:var(--amber)}
-.rd p{font-size:.9rem;color:var(--text-2)}
-.rd p b{color:var(--text)}
-.rmeter{display:flex;align-items:center;gap:12px;margin-top:16px;font-family:var(--mono);font-size:.7rem;color:var(--text-3)}
-.rmeter .tr{flex:1;height:6px;border-radius:99px;background:var(--panel-3);overflow:hidden}
-.rmeter .tr i{display:block;height:100%;background:var(--amber);border-radius:99px}
-
-/* ---------- MCP ---------- */
-.tools{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
-.tool{padding:18px 24px;border-bottom:1px solid var(--line);transition:background .3s}
-.tool:last-child{border-bottom:none}
-.tool:hover{background:var(--panel-2)}
-.tool code{font-size:.82rem;color:var(--blue);display:block;margin-bottom:4px}
-.tool code .arg{color:var(--text-3)}
-.tool span{font-size:.88rem;color:var(--text-2)}
-.flow{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
-.flow-bar{display:flex;align-items:center;gap:8px;padding:14px 20px;border-bottom:1px solid var(--line)}
-.flow-bar i{width:9px;height:9px;border-radius:50%;background:var(--panel-3)}
-.flow-bar i:first-child{background:var(--blue)}
-.flow-bar span{font-family:var(--mono);font-size:.68rem;color:var(--text-3);margin-left:8px}
-.flow-body{padding:22px;display:grid;gap:12px;min-height:340px;font-family:var(--mono);font-size:.77rem}
-.fmsg{display:grid;grid-template-columns:56px 1fr;gap:12px;opacity:0;transform:translateY(10px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
-.fmsg.on{opacity:1;transform:none}
-.fmsg .who{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);padding-top:4px}
-.fmsg .bub{border-radius:10px;padding:10px 14px;line-height:1.6;background:var(--panel);color:var(--text-2);border:1px solid var(--line)}
-.fmsg.user .bub{background:var(--panel-2);color:var(--text)}
-.fmsg.tool .bub{background:var(--blue-soft);color:var(--blue);border-color:rgba(74,96,114,.25)}
-.fmsg.win .bub{background:var(--amber-soft);color:var(--amber);border-color:rgba(194,84,43,.3)}
-.fmsg .bub b{color:var(--text)}
-
-/* ---------- kinds ---------- */
-.kind{border-radius:var(--r);padding:26px;background:var(--panel);border:1px solid var(--line);transition:transform .5s var(--ease),border-color .4s}
-.kind:hover{transform:translateY(-5px);border-color:var(--kc)}
-.kind .kh{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.kind .kn{font-family:var(--mono);font-size:.84rem;font-weight:700;color:var(--kc)}
-.kind .brick{--c:var(--kc)}
-.kind .badge{margin-left:auto;font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);background:var(--panel-2);border:1px solid var(--line);border-radius:6px;padding:4px 8px}
-.kind .badge.now{color:var(--mint);border-color:rgba(94,122,90,.3)}
-.kind h4{font-size:1.02rem;margin-bottom:8px}
-.kind p{font-size:.89rem;color:var(--text-2)}
-.kind .disc{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:.82rem;color:var(--text-3)}
-.kind .disc b{color:var(--text-2);font-weight:600}
-
-/* ---------- architecture ---------- */
-.rule{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:32px 36px;margin-bottom:18px;display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center}
-.rule p{font-family:var(--display);font-size:1.4rem;letter-spacing:-.02em;line-height:1.3;font-weight:600}
-.rule p .hi{display:block;font-weight:500;color:var(--text-2);font-size:1.05rem;margin-top:6px;font-family:var(--sans)}
-.layers{display:grid;gap:12px}
-.layer{display:grid;grid-template-columns:76px 1fr auto;gap:24px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:24px 28px;transition:transform .5s var(--ease),border-color .4s}
-.layer:hover{transform:translateX(6px);border-color:var(--line-2)}
-.layer .ln{font-family:var(--display);font-size:2.1rem;font-weight:700;color:var(--lc);letter-spacing:-.05em;line-height:1}
-.layer .ln small{display:block;font-family:var(--mono);font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-3);font-weight:400;margin-top:4px}
-.layer h4{font-size:1.04rem;margin-bottom:5px}
-.layer p{font-size:.9rem;color:var(--text-2)}
-.layer code{font-size:.85em;color:var(--amber)}
-.layer .pill{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--lc);border:1px solid var(--lc);border-radius:999px;padding:5px 12px;white-space:nowrap;opacity:.9}
-
-/* ---------- roadmap ---------- */
-.phases{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.phase{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:22px;transition:transform .5s var(--ease)}
-.phase:hover{transform:translateY(-5px)}
-.phase .pl{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--pc)}
-.phase h4{font-size:1.1rem;margin:6px 0 3px}
-.phase .hz{font-family:var(--mono);font-size:.68rem;color:var(--text-3);margin-bottom:14px}
-.phase ul{list-style:none;display:grid;gap:7px}
-.phase li{font-size:.84rem;color:var(--text-2);padding-left:16px;position:relative}
-.phase li::before{content:"";position:absolute;left:0;top:.6em;width:8px;height:5px;border-radius:1px;background:var(--pc)}
-
-/* ---------- faq ---------- */
-.faq{display:grid;gap:10px;max-width:56rem;margin:0 auto}
-.q{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden}
-.q summary{list-style:none;cursor:pointer;padding:20px 24px;font-family:var(--display);font-weight:600;font-size:1.05rem;display:flex;justify-content:space-between;gap:16px;align-items:center}
-.q summary::-webkit-details-marker{display:none}
-.q summary::after{content:"+";font-family:var(--mono);color:var(--amber);font-size:1.2rem;transition:transform .3s}
-.q[open] summary::after{transform:rotate(45deg)}
-.q .a{padding:0 24px 22px;color:var(--text-2);font-size:.94rem;max-width:48rem}
-.q .a b{color:var(--text);font-weight:600}
-.q .a code{color:var(--amber);font-size:.85em}
-
-/* ---------- blog ---------- */
-.blog-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:40px}
-.blog-head .sec-head{margin-bottom:0}
-.tags{display:flex;gap:8px;flex-wrap:wrap}
-.tag{font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;cursor:pointer;background:var(--panel);color:var(--text-2);border:1px solid var(--line);border-radius:999px;padding:8px 14px;transition:all .3s}
-.tag:hover{color:var(--text);border-color:var(--line-2)}
-.tag.on{background:var(--amber);color:#FBF7F0;border-color:var(--amber)}
-.posts{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.post{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:26px;display:flex;flex-direction:column;cursor:pointer;overflow:visible;
-  transition:transform .5s var(--ease),border-color .4s,box-shadow .5s}
-.post:hover{transform:translateY(-5px);border-color:var(--line-2);box-shadow:var(--sh-h)}
-.post.feat{grid-column:span 2;background:linear-gradient(160deg,rgba(194,84,43,.12),var(--panel) 60%);border-color:rgba(194,84,43,.25)}
-.post .meta{display:flex;gap:10px;align-items:center;font-family:var(--mono);font-size:.68rem;color:var(--text-3);margin-bottom:16px;flex-wrap:wrap}
-.post .no{position:absolute;right:22px;top:14px;font-family:var(--serif);font-style:italic;font-size:3.2rem;line-height:1;color:transparent;-webkit-text-stroke:1px rgba(27,31,28,.18);transition:color .4s,-webkit-text-stroke .4s}
-.post:hover .no{color:var(--amber);-webkit-text-stroke:0}
-.post{position:relative}
-.post.feat .no{font-size:5rem}
-.post .meta .cat{color:var(--amber);letter-spacing:.08em;text-transform:uppercase}
-.post h3{font-size:1.25rem;margin-bottom:10px}
-.post.feat h3{font-size:1.8rem;max-width:22ch}
-.post p{color:var(--text-2);font-size:.92rem}
-.post .more{margin-top:auto;padding-top:18px;font-size:.86rem;font-weight:600;color:var(--amber)}
-.post .more::after{content:" \2192"}
-.posts:empty::after{content:"No posts in this category yet.";color:var(--text-3);font-family:var(--mono);font-size:.8rem}
-
-/* reader */
-.reader{position:fixed;inset:0;z-index:100;display:none;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto;
-  background:rgba(27,31,28,.55);backdrop-filter:blur(10px)}
-.reader.open{display:flex}
-.reader article{background:var(--panel);border:1px solid var(--line-2);border-radius:var(--r);max-width:760px;width:100%;padding:44px 48px;position:relative;animation:fu .45s var(--ease)}
-.reader .close{position:absolute;top:18px;right:18px;background:var(--panel-2);border:1px solid var(--line);color:var(--text);border-radius:10px;width:38px;height:38px;cursor:pointer;font-size:1.1rem}
-.reader .close:hover{border-color:var(--amber);color:var(--amber)}
-.reader h2{font-size:clamp(1.7rem,3.4vw,2.4rem);margin:10px 0 18px}
-.reader .meta{font-family:var(--mono);font-size:.7rem;color:var(--text-3)}
-.reader .meta .cat{color:var(--amber);text-transform:uppercase;letter-spacing:.08em}
-.reader .body{color:var(--text-2);font-size:1.02rem;display:grid;gap:16px}
-.reader .body p b{color:var(--text)}
-.reader .body h3{font-size:1.2rem;color:var(--text);margin-top:8px}
-.reader .body pre{font-family:var(--mono);font-size:.78rem;line-height:1.8;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto;color:var(--text-2)}
-.reader .body pre b{color:var(--amber);font-weight:500}
-.reader .body code{color:var(--amber);font-size:.9em}
-.reader .foot{margin-top:30px;padding-top:22px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center;font-size:.88rem;color:var(--text-2)}
-
-/* ---------- newsletter ---------- */
-.news{background:linear-gradient(160deg,rgba(194,84,43,.16),var(--panel) 45%,var(--panel));border:1px solid rgba(194,84,43,.3);border-radius:var(--r);padding:44px 48px;
-  display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;position:relative;overflow:hidden}
-.news h2{font-size:clamp(1.8rem,3.4vw,2.5rem);margin-bottom:12px}
-.news p{color:var(--text-2);font-size:1rem;max-width:34rem}
-.news ul{list-style:none;display:grid;gap:8px;margin-top:18px}
-.news li{font-size:.9rem;color:var(--text-2);padding-left:22px;position:relative}
-.news li::before{content:"";position:absolute;left:0;top:.6em;width:12px;height:6px;border-radius:1.5px;background:var(--amber)}
-.nform{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:26px}
-.nform label{display:block;font-family:var(--mono);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--text-3);margin-bottom:8px}
-.nform .row{display:flex;gap:10px}
-.nform input[type=email]{flex:1;min-width:0;background:var(--panel);border:1px solid var(--line-2);color:var(--text);font-family:var(--sans);font-size:.95rem;padding:13px 16px;border-radius:12px;outline:none;transition:border-color .3s,box-shadow .3s}
-.nform input[type=email]:focus{border-color:var(--amber);box-shadow:0 0 0 3px var(--amber-soft)}
-.nform input[type=email]::placeholder{color:var(--text-3)}
-.nform .hint{font-size:.78rem;color:var(--text-3);margin-top:12px}
-.nform .msg{display:none;margin-top:14px;font-size:.88rem;padding:12px 14px;border-radius:10px;border:1px solid}
-.nform .msg.ok{display:block;color:var(--mint);background:var(--mint-soft);border-color:rgba(94,122,90,.3)}
-.nform .msg.err{display:block;color:var(--rose);background:var(--rose-soft);border-color:rgba(125,86,112,.3)}
-.hp{position:absolute;left:-9999px;opacity:0}
-
-/* ---------- docs ---------- */
-.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
-.tb{font-family:var(--mono);font-size:.76rem;cursor:pointer;background:var(--panel);color:var(--text-2);border:1px solid var(--line);border-radius:999px;padding:10px 20px;transition:all .3s}
-.tb:hover{color:var(--text)}
-.tb.on{background:var(--text);color:var(--bg);border-color:var(--text)}
-.pane{display:none}
-.pane.on{display:block;animation:fu .5s var(--ease)}
-.code{position:relative;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:26px 28px;font-family:var(--mono);font-size:.8rem;line-height:1.95;color:var(--text-2);overflow-x:auto;white-space:pre}
-.code .c{color:var(--text-3)}.code .y{color:var(--amber)}.code .g{color:var(--mint)}.code .b{color:var(--blue)}
-.code .copy{position:absolute;top:14px;right:14px;font-family:var(--sans);font-size:.68rem;font-weight:600;background:var(--panel-2);color:var(--text-2);border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer;transition:all .3s}
-.code .copy:hover{background:var(--amber);color:#FBF7F0;border-color:var(--amber)}
-.tblwrap{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
-table.t{width:100%;border-collapse:collapse;font-size:.9rem}
-table.t th{text-align:left;font-family:var(--mono);font-size:.62rem;letter-spacing:.13em;text-transform:uppercase;color:var(--text-3);padding:16px 20px;border-bottom:1px solid var(--line);font-weight:400}
-table.t td{padding:14px 20px;border-bottom:1px solid var(--line);color:var(--text-2);vertical-align:top}
-table.t tr:last-child td{border-bottom:none}
-table.t tbody tr:hover{background:var(--panel-2)}
-table.t code{font-size:.82rem;color:var(--text);white-space:nowrap}
-.st{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;border-radius:6px;padding:4px 9px;white-space:nowrap;border:1px solid}
-.st.ok{color:var(--mint);border-color:rgba(94,122,90,.35);background:var(--mint-soft)}
-.st.soon{color:var(--amber);border-color:rgba(194,84,43,.35);background:var(--amber-soft)}
-.st.next{color:var(--blue);border-color:rgba(74,96,114,.35);background:var(--blue-soft)}
-
-/* ---------- CTA + footer ---------- */
-.cta{padding:30px 0 100px}
-.cta-card{background:#1B1F1C;border:1px solid #333935;border-radius:28px;padding:80px 56px;text-align:center;position:relative;overflow:hidden}
-.cta-card::before{content:"";position:absolute;inset:-40%;background:radial-gradient(closest-side,rgba(194,84,43,.22),transparent);pointer-events:none}
-.cta-wm{position:absolute;right:-6%;top:50%;width:46%;transform:translateY(-50%) rotate(8deg);opacity:.12;pointer-events:none}
-.cta-card h2{font-size:clamp(2.2rem,4.6vw,3.4rem);max-width:24ch;margin:0 auto 18px;position:relative}
-.cta-card p{color:var(--text-2);font-size:1.06rem;max-width:36rem;margin:0 auto 34px;position:relative}
-.cta-card .cta-row{position:relative}
-.cta-card .btn.ghost,.reader .btn.ghost{background:transparent;color:#F1ECE2;border-color:#8A847A}
-.cta-card .btn.ghost:hover{border-color:#F1ECE2}
-footer{padding:0 0 48px}
-.f-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:44px 44px}
-.f-in{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap}
-.f-in h5{font-family:var(--mono);font-size:.62rem;letter-spacing:.13em;text-transform:uppercase;color:var(--text-3);margin-bottom:14px;font-weight:400}
-.f-in a{display:block;font-size:.9rem;color:var(--text-2);padding:5px 0;transition:color .3s,transform .3s}
-.f-in a:hover{color:var(--amber);transform:translateX(4px)}
-.f-bot{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:.82rem;color:var(--text-3)}
-
-@media(max-width:1080px){
-  .hero-grid,.g3,.steps,.anat,.ladder,.g21,.ba,.posts,.news,.mani,.launch-grid{grid-template-columns:1fr}
-  .hero{min-height:0;padding:40px 0 80px}
-  .hero-legend{display:none}
-  .g3,.phases{grid-template-columns:repeat(2,1fr)}
-  .post.feat{grid-column:span 1}
-  .nav-links,.nav-cta{display:none}
-  .burger{display:block}
-  .rule{grid-template-columns:1fr}
-}
-@media(max-width:720px){
-  .g3,.g2,.phases,.isnot{grid-template-columns:1fr}
-  .layer{grid-template-columns:1fr;gap:12px}
-  .wrap,.mnav{padding-left:20px;padding-right:20px}
-  .cta-card{padding:56px 24px;border-radius:22px}
-  .sec{padding:76px 0}
-  .news,.reader article{padding:28px 22px}
-  .nform .row,.wl .row{flex-direction:column}
-  .wl{box-shadow:6px 6px 0 rgba(27,31,28,.08)}
-  .brico-def{grid-template-columns:1fr}
-  .paper{padding:26px 22px;box-shadow:8px 8px 0 rgba(27,31,28,.08)}
-  .hero-cards{grid-template-columns:1fr}
-  .glass.wallcard,.glass.onesent{grid-column:span 1}
-  .f-card{padding:30px 24px}
-}
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.001s!important;transition-duration:.001s!important}
-  html{scroll-behavior:auto}
-}
-</style>
+    /* Scroll animation */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 320ms cubic-bezier(.2,.7,.3,1), transform 320ms cubic-bezier(.2,.7,.3,1);
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .fade-up { opacity: 1; transform: none; transition: none; }
+    }
+  </style>
 </head>
 <body>
-
-<!-- BWX mark: the three tesserae from the original identity (terracotta, ochre, sage), each carrying one letter. -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-  <symbol id="bwx" viewBox="0 0 100 100"><defs>
-  <linearGradient id="gT" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D3663B"/><stop offset="1" stop-color="#B04A24"/></linearGradient>
-  <linearGradient id="gO" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C99A4C"/><stop offset="1" stop-color="#A67830"/></linearGradient>
-  <linearGradient id="gS" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6C8A68"/><stop offset="1" stop-color="#4F6B4C"/></linearGradient>
-</defs>
-<g class="t1"><rect x="14" y="40" width="38" height="38" rx="8" transform="rotate(45 33 59)" fill="url(#gT)"/>
-  <rect x="14" y="40" width="38" height="38" rx="8" transform="rotate(45 33 59)" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="1"/>
-  <path transform="translate(33 59) scale(2.3)" d="M-3.4,-5 V5 H1 A2.6,2.6 0 0 0 1,-0.2 H-3.4 M-3.4,-0.2 H0.6 A2.4,2.4 0 0 0 0.6,-5 H-3.4" fill="none" stroke="#FBF7F0" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"/></g>
-<g class="t2"><rect x="52" y="12" width="27" height="27" rx="6" transform="rotate(45 65.5 25.5)" fill="url(#gO)"/>
-  <rect x="52" y="12" width="27" height="27" rx="6" transform="rotate(45 65.5 25.5)" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="1"/>
-  <path transform="translate(65.5 25.5) scale(1.7)" d="M-4.4,-5 L-2.2,5 L0,-1.6 L2.2,5 L4.4,-5" fill="none" stroke="#FBF7F0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g>
-<g class="t3"><rect x="60" y="56" width="22" height="22" rx="5" transform="rotate(45 71 67)" fill="url(#gS)"/>
-  <rect x="60" y="56" width="22" height="22" rx="5" transform="rotate(45 71 67)" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="1"/>
-  <path transform="translate(71 67) scale(1.45)" d="M-4,-5 L4,5 M4,-5 L-4,5" fill="none" stroke="#FBF7F0" stroke-width="1.7" stroke-linecap="round"/></g></symbol>
-</svg>
-
-<!-- ================= NAV ================= -->
-<nav id="nav">
-  <div class="wrap nav-in">
-    <a class="brand" href="#top" aria-label="BricoWerx home">
-      <svg class="mark" viewBox="0 0 100 100" aria-hidden="true"><use href="#bwx"/></svg>
-      <span class="wordmark">BricoWerx<small>BWX</small></span>
-    </a>
-    <div class="nav-links">
-      <a href="#launch">Launch</a>
-      <a href="#why">Why</a>
-      <a href="#how">How it works</a>
-      <a href="#piece">Pieces</a>
-      <a href="#ai">For AI</a>
-      <a href="#inside">Inside</a>
-      <a href="#blog">Blog</a>
-      <a href="#docs">Docs</a>
-    </div>
-    <a class="btn sm nav-cta" href="#launch">Join the waitlist</a>
-    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
-  </div>
-  <div class="mnav" id="mnav">
-    <a href="#launch">Launch</a><a href="#why">Why</a><a href="#how">How it works</a><a href="#piece">Pieces</a><a href="#ai">For AI assistants</a>
-    <a href="#inside">Inside</a><a href="#blog">Blog</a><a href="#newsletter">Newsletter</a><a href="#docs">Docs</a>
-  </div>
-</nav>
-
-<!-- ================= HERO ================= -->
-<!--
-  Hero film: media/hero-bg.webm / hero-bg.mp4 / hero-bg-poster.jpg (12s loop, 1600x900).
-  Original generative art: found material in the brand's earth colours drifts across paper and
-  dissolves into mosaic pixels as it crosses into the digital side. Nature becoming digital.
--->
-<header class="hero" id="top">
-  <video class="hero-bg" id="heroFilm" autoplay muted loop playsinline preload="metadata" poster="media/hero-bg-poster.jpg" aria-hidden="true">
-    <source src="media/hero-bg.webm" type="video/webm">
-    <source src="media/hero-bg.mp4" type="video/mp4">
-  </video>
-  <div class="hero-veil"></div>
-  <div class="wrap hero-grid">
-    <div class="paper rv">
-      <div class="paper-top"><span class="dots"><i></i><i></i><i></i></span><span class="mono dim"><i class="live"></i> launching soon &middot; open source</span></div>
-      <h1 class="hh">
-        <span class="caps">Your team already</span>
-        <span class="it">built it.</span>
-        <span class="caps">Stop rebuilding it.</span>
-      </h1>
-      <p class="hero-sub">BricoWerx keeps the best parts of your projects as <b>reusable pieces</b>: modules, prompts, agent skills, evals. Engineers find them from the terminal. AI assistants find them over MCP. Nobody regenerates what already exists.</p>
-      <div class="cta-row">
-        <a class="btn" href="#launch">Join the waitlist</a>
-        <a class="btn ghost" href="#how">How it works</a>
-      </div>
-      <div class="hero-facts">
-        <span><i></i> one static binary</span>
-        <span><i></i> your git repo is the database</span>
-        <span><i></i> works offline</span>
+  <nav>
+    <div class="container nav-container">
+      <a href="#" class="nav-logo">BricoWerx</a>
+      <div class="nav-links">
+        <a href="#why" class="desktop-only">Why</a>
+        <a href="#how" class="desktop-only">How it works</a>
+        <a href="#ai" class="desktop-only">For AI</a>
+        <a href="/docs" class="desktop-only">Docs</a>
+        <a href="#waitlist" class="btn btn-sm">Join the waitlist</a>
       </div>
     </div>
+  </nav>
 
-    <div class="hero-cards">
-      <div class="glass rv d1 wallcard">
-        <div class="wallbox"><canvas id="wall"></canvas></div>
-        <div class="glass-foot"><b>BWX</b> assembled from pieces, like everything in the Vault</div>
-      </div>
-      <div class="glass rv d2 onesent">
-        <span class="tl">In one sentence</span>
-        <p>A <b>version-controlled library</b> of your organisation's proven building blocks, with the wiring and the reasoning attached, readable by humans and by AI.</p>
-      </div>
-      <div class="glass rv d3 chip"><b>~300</b><span>tokens to answer "do we have JWT auth?"</span></div>
-      <div class="glass rv d3 chip"><b>0</b><span>lines generated when a piece already exists</span></div>
-    </div>
-  </div>
-  <button class="film-ctl" id="filmToggle" aria-label="Pause film">pause film</button>
-</header>
-
-<section class="strip">
-  <div class="wrap">
-    <div class="isnot rv">
-      <div class="yes"><b>It is</b>A CLI, a git folder we call the Vault, and an MCP server. That is the whole product.</div>
-      <div class="no"><b>It is not</b>A code generator, a wiki, a package registry, or another AI chat window.</div>
-    </div>
-    <div class="brico-def rv d1">
-      <div class="w">bricolage<small>/bri.ko.laj/ &middot; noun</small></div>
-      <p>Making something new from whatever is already at hand, and letting the joins show. <b>We apply it to engineering knowledge in the AI era:</b> the modules, prompts and evals your team already proved are the raw material. The visible join is where a piece was reused, and we think that join is the most valuable line in the codebase.</p>
-      <span class="tape bl"></span>
-    </div>
-  </div>
-  <div class="ticker">
-    <div class="tick-track" id="tick">
-      <span><i></i><b>brico extract</b> find what is worth keeping</span>
-      <span><i></i><b>brico capture</b> save it as a versioned piece</span>
-      <span><i></i><b>brico search</b> find it again in seconds</span>
-      <span><i></i><b>brico add</b> drop it into a new project, wiring included</span>
-      <span><i></i><b>brico mcp</b> let your AI assistant use the same library</span>
-      <span><i></i><b>brico eval</b> regression-test your prompts</span>
-      <span><i></i><b>brico graph</b> ask what depends on what</span>
-    </div>
-  </div>
-</section>
-
-<!-- ================= LAUNCH: waitlist + teaser ================= -->
-<!--
-  Waitlist: the form posts JSON to data-endpoint (default /api/waitlist, served by waitlist/main.go).
-  If the page is hosted on a different origin than the service, set data-endpoint to the full URL
-  and ALLOWED_ORIGIN on the service. The live counter appears once the count reaches data-min-count.
-
-  Teaser: drop your file at media/teaser.mp4 (H.264, 1920x1080 or 1600x900) and optionally
-  media/teaser.webm, plus a still at media/teaser-poster.jpg. Nothing else to change.
--->
-<section class="sec launch" id="launch">
-  <div class="wrap">
-    <div class="launch-grid">
-      <div class="launch-copy rv">
-        <div class="kick"><span class="num">&#9679;</span> Launching soon</div>
-        <h2>The Vault opens soon. <span class="it hi">Be in the first cohort.</span></h2>
-        <p class="muted">We are finishing Phase A: summaries at capture, meaning-based search and the MCP server. Leave your email and you get the first binary before anyone else, a founding badge in your Vault, and a say in what ships next.</p>
-
-        <form class="wl" id="wlForm" method="post" action="/api/waitlist" data-endpoint="/api/waitlist" data-min-count="10" novalidate>
-          <label for="wlEmail" class="tl">Work email</label>
-          <div class="row">
-            <input type="email" id="wlEmail" name="email" placeholder="you@company.com" autocomplete="email" required>
-            <button class="btn" type="submit" id="wlBtn">Join the waitlist</button>
+  <main>
+    <section class="bg-paper fade-up">
+      <div class="container hero">
+        <div class="hero-content">
+          <span class="eyebrow">LAUNCHING SOON · OPEN SOURCE</span>
+          <h1 class="display-xl">Your team already built it. Stop rebuilding it.</h1>
+          <p class="body-l">BricoWerx keeps the proven parts of your projects — modules, prompts, agent skills, evals — as versioned pieces in a git folder. Engineers find them from the terminal. AI assistants find them over MCP.</p>
+          
+          <div class="hero-cta">
+            <a href="#waitlist" class="btn">Join the waitlist</a>
+            <a href="#how" class="text-2" style="text-decoration: underline;">See how it works ↓</a>
           </div>
-          <input type="hidden" name="source" value="launch">
-          <div class="hp" aria-hidden="true"><label>Company<input type="text" name="company" tabindex="-1" autocomplete="off"></label></div>
-          <div class="wl-meta">
-            <span class="wl-count" id="wlCount" hidden><b>0</b> engineers already waiting</span>
-            <span class="dim">No spam. One email when we open, one when the binary is yours.</span>
-          </div>
-          <div class="msg" id="wlMsg" role="status" aria-live="polite"></div>
-        </form>
-
-        <ul class="perks">
-          <li><b>First binary.</b> Phase A build, before the public release.</li>
-          <li><b>Founding badge.</b> A marker in your Vault manifest that says you were here first.</li>
-          <li><b>A vote.</b> The first cohort picks which piece kind ships next: prompt or skill.</li>
-        </ul>
-      </div>
-
-      <figure class="teaser rv d1">
-        <div class="teaser-frame">
-          <video id="teaser" preload="none" poster="media/teaser-poster.jpg" playsinline aria-label="BricoWerx teaser">
-            <source src="media/teaser.mp4" type="video/mp4">
-          </video>
-          <button class="play" id="teaserPlay" aria-label="Play the teaser">
-            <svg viewBox="0 0 100 100" width="76" height="76" aria-hidden="true"><use href="#bwx"/></svg>
-            <span>Play the teaser</span>
-          </button>
-          <div class="teaser-missing" id="teaserMissing" hidden>
-            <b>Teaser goes here.</b> Drop <code>teaser.mp4</code> into the <code>media/</code> folder and reload.
+          
+          <div class="hero-facts mono-text">
+            <span>one static binary</span>
+            <span>your git repo is the database</span>
+            <span>works offline</span>
           </div>
         </div>
-        <figcaption><span class="mono">TEASER &middot; 00:45</span><span>What a Vault looks like when three teams share one.</span></figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
+        
+        <div class="hero-terminal">
+          <div class="terminal" aria-label="Terminal demonstrating BricoWerx commands">
+<span class="comment">$</span> <span class="cmd">brico capture auth</span>
+  saved auth@0.1.0 to the Vault
 
-<!-- ================= MANIFESTO ================= -->
-<section class="sec" id="principle" style="padding-bottom:0">
-  <div class="wrap">
-    <div class="sec-head rv" style="margin-bottom:36px">
-      <div class="kick"><span class="num">00</span> The principle</div>
-      <h2>Three rules of <span class="it hi">digital bricolage.</span></h2>
-    </div>
-    <div class="mani rv d1">
-      <div class="m"><div class="k">i.</div><h3>Use what is at hand</h3><p>Before anyone writes or generates, ask the Vault. The best material is the work your team has already shipped and debugged.</p><span class="tape tr"></span></div>
-      <div class="m"><div class="k">ii.</div><h3>Let the seams show</h3><p>A reused piece keeps its name, its version and its history. Reuse is not hidden behind a copy-paste. It is recorded, queryable, and worth celebrating.</p><span class="stamp ghost" style="right:18px;bottom:18px">seam</span></div>
-      <div class="m"><div class="k">iii.</div><h3>Every piece improves the whole</h3><p>Each capture adds a card, a surface, a summary and a set of relations. The library gets smarter for humans and for AI with every commit.</p><span class="tape bl"></span></div>
-    </div>
-  </div>
-</section>
+<span class="comment">$</span> <span class="cmd">brico search "token auth for nest"</span>
+  auth@0.2.0   jwt, passport   proven in 3 projects
 
-<!-- ================= WHY ================= -->
-<section class="sec" id="why">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <div class="kick"><span class="num">01</span> The problem</div>
-      <h2>Every team rebuilds the same things. <span class="it hi">Then their AI rebuilds them again.</span></h2>
-      <p>
-        The auth module your team perfected two projects ago still exists. It is just buried inside that project,
-        tangled with its dependencies, and invisible to search. So the next project writes a new one.
-        Then an AI assistant, asked the same question, writes a third one. <b>The knowledge was never lost. It was never findable.</b>
-      </p>
-    </div>
-
-    <div class="ba rv d1">
-      <div class="ba-card before"><span class="stamp ghost" style="right:22px;top:22px;opacity:.5">regenerated &times;4</span>
-        <span class="lab">Today, without BWX</span>
-        <h3>"We need JWT auth in the new service."</h3>
-        <ol>
-          <li>Someone remembers "we did this before" but not where.</li>
-          <li>The assistant scans the whole codebase for context.</li>
-          <li>It writes a fresh implementation that has to be reviewed line by line.</li>
-          <li>You now maintain a fourth, slightly different auth module.</li>
-        </ol>
-        <div class="sum">cost: tens of thousands of tokens, a review cycle, new bugs</div>
-      </div>
-      <div class="ba-card after"><span class="tape tl"></span><span class="stamp" style="right:22px;top:22px">reused</span>
-        <span class="lab">With BWX</span>
-        <h3>"Do we have JWT auth?"</h3>
-        <ol>
-          <li>The assistant asks the Vault, not the codebase.</li>
-          <li>The Vault answers with a short card: <span class="mono">auth@0.2.0, nest, jwt, proven in 3 projects</span>.</li>
-          <li><span class="mono">brico add auth</span> copies the piece and prints the two wiring steps.</li>
-          <li>Nothing new was written. Nothing new needs review.</li>
-        </ol>
-        <div class="sum">cost: about 300 tokens and one command</div>
-      </div>
-    </div>
-
-    <div class="g3 rv d2" style="margin-top:18px">
-      <div class="card">
-        <div class="icn">?</div>
-        <h3>Knowledge nobody can find</h3>
-        <p>Prompts live in a wiki page, eval scripts rot in scratch folders, agent configs get copy-pasted between repos and slowly drift apart. Each one was hard-won. None of them are searchable as a thing in their own right.</p>
-      </div>
-      <div class="card">
-        <div class="icn">&times;3</div>
-        <h3>AI that regenerates instead of reusing</h3>
-        <p>Assistants are great at writing new code and bad at knowing what you already have. Every regeneration costs tokens, review time, and another variant to maintain.</p>
-      </div>
-      <div class="card">
-        <div class="icn">&darr;</div>
-        <h3>Why this matters now</h3>
-        <p>Teams now track token spend like cloud spend, and MCP gave assistants a standard way to ask external systems for knowledge. A small, curated library of your best work is exactly what that standard was made to serve.</p>
-      </div>
-    </div>
-
-    <blockquote class="pull rv d3">
-      <p>The knowledge was never lost. <span class="hi">It was never findable.</span></p>
-      <cite>the one-line version of the problem</cite>
-    </blockquote>
-  </div>
-</section>
-
-<!-- ================= HOW ================= -->
-<section class="sec alt" id="how">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <div class="kick"><span class="num">02</span> How it works</div>
-      <h2>Capture once. Find it anywhere. <span class="it hi">Add it in one command.</span></h2>
-      <p>Three verbs, one binary. Everything lives in a git folder on your machine called the <b>Vault</b>. No server to run, no account to create.</p>
-    </div>
-
-    <div class="steps rv d1">
-      <div class="step">
-        <div class="n">1</div>
-        <h3>Capture</h3>
-        <p>Point <span class="mono">brico</span> at a project. It suggests which modules are worth keeping. Pick one, and it is saved to the Vault as an immutable, versioned piece with a manifest, its env vars, and its wiring steps.</p>
-        <div class="who"><span class="h">human</span></div>
-        <pre><b>$ brico extract</b>
-  auth      92%  jwt, passport, bcrypt
-  mailer    81%  smtp, templates
-<b>$ brico capture auth</b>
-  <i>saved auth@0.1.0 to the Vault</i></pre>
-      </div>
-      <div class="step">
-        <div class="n">2</div>
-        <h3>Find</h3>
-        <p>Search by name, tag, or plain-language meaning. Engineers use the CLI or the terminal UI. AI assistants use the exact same library over MCP, so they answer "do we have X?" from your Vault instead of guessing.</p>
-        <div class="who"><span class="h">human</span><span class="ai">ai assistant</span></div>
-        <pre><b>$ brico search</b> "token auth for nest"
-  auth@0.2.0   jwt, passport   3 projects
-<u>$ brico mcp</u>   <i>serving 4 tools to your assistant</i></pre>
-      </div>
-      <div class="step">
-        <div class="n">3</div>
-        <h3>Add</h3>
-        <p>One command copies the piece into a new project, merges env vars into your example file, and prints the manual steps that remain. You reuse verified code instead of reviewing generated code.</p>
-        <div class="who"><span class="h">human</span><span class="ai">ai assistant</span></div>
-        <pre><b>$ brico add auth</b>
-  <i>copied 6 files, wired .env.example</i>
-  next: add AuthModule to AppModule imports</pre>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= PIECE ================= -->
-<section class="sec" id="piece">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <div class="kick"><span class="num">03</span> What is a piece?</div>
-      <h2>A piece is a module plus <span class="it hi">everything you would normally have to ask a colleague about.</span></h2>
-      <p>
-        A package gives you code. A piece gives you code <b>and</b> the wiring, the env vars, the design decisions,
-        and a few cheap summaries that let people and AI understand it without reading every file.
-      </p>
-    </div>
-
-    <div class="anat rv d1">
-      <div class="tree">
-        <div><span class="d">vault/pieces/</span><span class="f">auth/0.2.0/</span></div>
-        <div><span class="f">&nbsp;&nbsp;src/</span><span class="cm">the files themselves</span></div>
-        <div><span class="f">&nbsp;&nbsp;&nbsp;&nbsp;auth.service.ts</span></div>
-        <div><span class="f">&nbsp;&nbsp;&nbsp;&nbsp;auth.module.ts</span></div>
-        <div><span class="f">&nbsp;&nbsp;&nbsp;&nbsp;jwt.strategy.ts</span></div>
-        <div><span class="a">&nbsp;&nbsp;manifest.json</span><span class="cm">name, kind, deps, env, wiring, relations</span></div>
-        <div><span class="m">&nbsp;&nbsp;card.json</span><span class="cm">~50 tokens: what it is</span></div>
-        <div><span class="m">&nbsp;&nbsp;surface.json</span><span class="cm">~300 tokens: how to call it</span></div>
-        <div><span class="m">&nbsp;&nbsp;summary.md</span><span class="cm">~500 tokens: why it works this way</span></div>
-        <div><span class="d">&nbsp;&nbsp;embeddings.f32</span><span class="cm">for meaning-based search</span></div>
-      </div>
-      <div class="parts">
-        <div class="part"><code>manifest.json</code><span><b>The contract.</b> Dependencies, env vars, framework wiring steps, and how this piece relates to others: depends on, replaces, similar to.</span></div>
-        <div class="part"><code>card.json</code><span><b>The one-liner.</b> Name, description, tags, kind, latest version. Enough to answer "do we have something for X?" for the price of a sentence.</span></div>
-        <div class="part"><code>surface.json</code><span><b>The signatures.</b> Exported types and functions with bodies removed, extracted from the AST. Enough to write code that calls the piece correctly.</span></div>
-        <div class="part"><code>summary.md</code><span><b>The reasoning.</b> Design decisions and trade-offs, generated at capture time. The part you would otherwise interrupt a senior engineer for.</span></div>
-        <div class="part"><code>src/</code><span><b>The source.</b> Rarely needed. Most questions are answered by the three files above, at a fraction of the cost of reading code.</span></div>
-      </div>
-    </div>
-
-    <div class="sec-head rv" style="margin-top:72px;margin-bottom:0">
-      <div class="kick"><span class="num">03b</span> Why the summaries matter</div>
-      <h2 style="font-size:clamp(1.6rem,3vw,2.2rem)">Cheap questions get cheap answers.</h2>
-      <p>Every piece can be read at four levels of detail. Whoever is asking, human or AI, climbs only as high as the task needs. Click a level to see exactly what gets returned.</p>
-    </div>
-
-    <div class="ladder rv d1">
-      <div class="rungs" id="rungs">
-        <div class="rung on" data-i="0"><span class="bar"></span>
-          <div class="rung-top"><span class="rung-name">Card</span><span class="rung-cost">~50 tokens</span></div>
-          <div class="rung-for">"Do we have something for X?"</div>
-        </div>
-        <div class="rung" data-i="1"><span class="bar"></span>
-          <div class="rung-top"><span class="rung-name">Surface</span><span class="rung-cost">~200 to 400</span></div>
-          <div class="rung-for">"How do I call it?"</div>
-        </div>
-        <div class="rung" data-i="2"><span class="bar"></span>
-          <div class="rung-top"><span class="rung-name">Summary</span><span class="rung-cost">~500</span></div>
-          <div class="rung-for">"Why was it built this way?"</div>
-        </div>
-        <div class="rung" data-i="3"><span class="bar"></span>
-          <div class="rung-top"><span class="rung-name">Full source</span><span class="rung-cost">code cost</span></div>
-          <div class="rung-for">"I need to change it."</div>
+<span class="comment">$</span> <span class="cmd">brico add auth</span>
+  copied 6 files, wired .env.example
+  next: add AuthModule to AppModule imports<span class="cursor" aria-hidden="true"></span>
+          </div>
         </div>
       </div>
+    </section>
 
-      <div class="rdetail">
-        <span class="tl">what gets returned</span>
-        <div class="rd on" data-i="0">
-          <pre><span class="cc">// card.json, the whole thing</span>
-{
-  <span class="kk">"name"</span>: <span class="vv">"auth"</span>,
-  <span class="kk">"kind"</span>: <span class="vv">"code"</span>,
-  <span class="kk">"description"</span>: <span class="vv">"JWT auth with Passport and bcrypt"</span>,
-  <span class="kk">"tags"</span>: [<span class="vv">"security"</span>, <span class="vv">"jwt"</span>],
-  <span class="kk">"framework"</span>: <span class="vv">"nest"</span>,
-  <span class="kk">"latest"</span>: <span class="vv">"0.2.0"</span>
-}</pre>
-          <p>Enough to answer existence questions across an entire Vault for the price of a sentence.</p>
-          <div class="rmeter"><span>cost</span><span class="tr"><i style="width:4%"></i></span><span>~50</span></div>
+    <div class="container proof-strip-wrapper fade-up" style="transition-delay: 100ms;">
+      <div class="proof-strip">
+        <div class="stat-tile">
+          <div class="big">~300</div>
+          <p>tokens to answer "do we have JWT auth?"</p>
         </div>
-        <div class="rd" data-i="1">
-          <pre><span class="cc">// surface.json, signatures only, no bodies</span>
-<span class="oo">export class</span> AuthService {
-  signIn(dto: SignInDto): <span class="vv">Promise&lt;Session&gt;</span>
-  verify(token: string): <span class="vv">Promise&lt;Claims&gt;</span>
-}
-<span class="cc">env</span>   JWT_SECRET, JWT_EXPIRES_IN
-<span class="cc">wire</span>  add AuthModule to AppModule imports</pre>
-          <p>Exported types, function signatures, env vars and wiring steps. Everything needed to call the piece correctly, and nothing else.</p>
-          <div class="rmeter"><span>cost</span><span class="tr"><i style="width:16%"></i></span><span>~300</span></div>
+        <div class="stat-tile">
+          <div class="big">0</div>
+          <p>lines generated when a piece already exists</p>
         </div>
-        <div class="rd" data-i="2">
-          <pre><span class="cc"># summary.md, generated at capture</span>
-<span class="oo">## Why it works this way</span>
-Refresh tokens are rotated on every use and stored
-hashed, so a leaked token is single-use.
-
-<span class="oo">## Trade-offs</span>
-A stateful refresh store (Redis) was accepted to gain
-revocation. A pure-JWT design cannot revoke.</pre>
-          <p>Design decisions and trade-offs. The reasoning that usually lives only in one person's head.</p>
-          <div class="rmeter"><span>cost</span><span class="tr"><i style="width:26%"></i></span><span>~500</span></div>
-        </div>
-        <div class="rd" data-i="3">
-          <pre><span class="cc">// the files themselves</span>
-auth.service.ts        auth.module.ts
-auth.controller.ts     jwt.strategy.ts
-refresh-token.store.ts manifest.json</pre>
-          <p>The top level is rarely needed. And the biggest saving is not on this ladder at all: <b>not generating the code in the first place.</b> <code style="color:var(--amber)">brico add</code> installs a verified piece for zero generation tokens and zero review of novel code.</p>
-          <div class="rmeter"><span>cost</span><span class="tr"><i style="width:100%"></i></span><span>full</span></div>
+        <div class="stat-tile">
+          <div class="big">1</div>
+          <p>command to reuse it</p>
         </div>
       </div>
     </div>
 
-    <div class="g3 rv d2" style="margin-top:18px">
-      <div class="card"><span class="tl">the same question, two ways</span><div class="big"><span data-count="300">0</span></div><p style="margin-top:8px">tokens for the Vault to answer "do we have JWT auth for NestJS?"</p></div>
-      <div class="card"><span class="tl">repo-indexing assistant</span><div class="big" style="color:var(--rose)"><span data-count="25000" data-suffix="+">0</span></div><p style="margin-top:8px">tokens to answer the same question by scanning source files</p></div>
-      <div class="card"><span class="tl">a mature 10,000-piece vault</span><div class="big" style="color:var(--mint)">~40<small style="font-size:.4em"> MB</small></div><p style="margin-top:8px">of search vectors. Smaller than one node_modules folder.</p></div>
-    </div>
-  </div>
-</section>
+    <!-- BAND A -->
+    
+    <!-- BAND B -->
 
-<!-- ================= AI ================= -->
-<section class="sec alt" id="ai">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <div class="kick"><span class="num">04</span> For AI assistants</div>
-      <h2>Your assistant gets <span class="it hi">a librarian</span> instead of the whole library.</h2>
-      <p>
-        <code style="color:var(--amber)">brico mcp</code> exposes the Vault over the Model Context Protocol. Claude, Cursor, IDE agents,
-        internal copilots: any MCP-capable assistant can search your pieces, read them at the right level of detail,
-        and recommend reuse before it writes anything new. Same engine, same index, no separate service.
-      </p>
-    </div>
+    <!-- BAND C -->
 
-    <div class="g21 rv d1">
-      <div class="flow">
-        <div class="flow-bar"><i></i><i></i><i></i><span>assistant &harr; brico mcp</span></div>
-        <div class="flow-body" id="flowBody">
-          <div class="fmsg user"><span class="who">dev</span><span class="bub">"Add payments to the new service."</span></div>
-          <div class="fmsg tool"><span class="who">tool</span><span class="bub">plan_reuse("add payments to a NestJS service")</span></div>
-          <div class="fmsg"><span class="who">vault</span><span class="bub">2 candidates &middot; <b>payments@0.1.2</b> (stripe, proven in 3 projects)<br>&middot; billing-webhooks@0.3.0 &nbsp;<span style="color:var(--text-3)">94 tokens</span></span></div>
-          <div class="fmsg tool"><span class="who">tool</span><span class="bub">get_piece("payments", level: "surface")</span></div>
-          <div class="fmsg"><span class="who">vault</span><span class="bub">signatures &middot; env: STRIPE_SECRET, STRIPE_WEBHOOK_SECRET &middot; wiring: 2 steps &nbsp;<span style="color:var(--text-3)">210 tokens</span></span></div>
-          <div class="fmsg win"><span class="who">agent</span><span class="bub">Recommends <b>brico add payments</b>, wiring steps included.<br>Zero generated code. Zero novel code to review.</span></div>
-        </div>
-      </div>
-      <div>
-        <div class="tools">
-          <div class="tool"><code>search_pieces(<span class="arg">query, kind?</span>)</code><span>Meaning and keyword search over the Vault. Returns cards.</span></div>
-          <div class="tool"><code>get_piece(<span class="arg">name, level</span>)</code><span>Returns one level: card, surface, summary, or source.</span></div>
-          <div class="tool"><code>plan_reuse(<span class="arg">task</span>)</code><span>Given a task, returns candidate pieces and why they fit.</span></div>
-          <div class="tool"><code>get_relations(<span class="arg">name, kind?</span>)</code><span>Dependencies, dependents, replacements, similar pieces.</span></div>
-        </div>
-        <p class="dim" style="font-size:.85rem;margin-top:16px">Four tools. All of them return summaries, never raw repository scans.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= KINDS ================= -->
-<section class="sec" id="kinds">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <div class="kick"><span class="num">05</span> Not only code</div>
-      <h2>Prompts, skills and evals <span class="it hi">deserve versions too.</span></h2>
-      <p>
-        The things worth keeping have grown beyond modules. A prompt with its test cases, an agent skill, a benchmark suite:
-        each is just a piece with a different <code style="color:var(--amber)">kind</code>. Same Vault, same commands, same MCP tools.
-      </p>
-    </div>
-
-    <div class="g3 rv d1">
-      <div class="kind" style="--kc:var(--amber)">
-        <div class="kh"><i class="brick"></i><span class="kn">code</span><span class="badge now">shipping</span></div>
-        <h4>Modules with their wiring</h4>
-        <p>Files, dependencies, env vars and framework wiring steps. Captured, versioned, ready to add.</p>
-        <div class="disc"><b>Rule:</b> versions are immutable. Publish refuses to overwrite.</div>
-      </div>
-      <div class="kind" style="--kc:var(--rose)">
-        <div class="kh"><i class="brick"></i><span class="kn">prompt</span><span class="badge">next</span></div>
-        <h4>Prompts with test cases</h4>
-        <p>Template, input variables, target models, and the evaluation cases that prove it still works.</p>
-        <div class="disc"><b>Rule:</b> a prompt with versioned evals is to prompts what a module with tests is to code.</div>
-      </div>
-      <div class="kind" style="--kc:var(--mint)">
-        <div class="kh"><i class="brick"></i><span class="kn">skill</span><span class="badge">next</span></div>
-        <h4>Agent skills</h4>
-        <p>Instructions plus scripts, in the emerging industry format. Served over MCP, the Vault becomes a skill registry for free.</p>
-        <div class="disc"><b>Rule:</b> structurally identical to a code piece. Nothing new to learn.</div>
-      </div>
-      <div class="kind" style="--kc:var(--violet)">
-        <div class="kh"><i class="brick"></i><span class="kn">eval</span><span class="badge">later</span></div>
-        <h4>Benchmark suites</h4>
-        <p>Cases, scoring criteria, harness configuration. Standalone and reusable across prompts.</p>
-        <div class="disc"><b>Rule:</b> a harness, deliberately not a platform.</div>
-      </div>
-      <div class="kind" style="--kc:var(--blue)">
-        <div class="kh"><i class="brick"></i><span class="kn">dataset</span><span class="badge">later</span></div>
-        <h4>Pointers, never blobs</h4>
-        <p>URI, content hash, schema, license. Identity and provenance without the payload.</p>
-        <div class="disc"><b>Rule:</b> the Vault stays small and clones stay fast.</div>
-      </div>
-      <div class="kind" style="--kc:var(--lime)">
-        <div class="kh"><i class="brick"></i><span class="kn">pipeline</span><span class="badge">later</span></div>
-        <h4>Compositions of other pieces</h4>
-        <p>RAG and agent setups that reference other pieces by name and version.</p>
-        <div class="disc"><b>Rule:</b> "which pipelines break if we change the chunking prompt?" becomes a query.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= INSIDE ================= -->
-<section class="sec alt" id="inside">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <div class="kick"><span class="num">06</span> Inside</div>
-      <h2><span class="it hi">Boring on purpose:</span> files in git, one SQLite index, one binary.</h2>
-    </div>
-
-    <div class="rule rv">
-      <svg width="72" height="72" viewBox="0 0 100 100" aria-hidden="true"><use href="#bwx"/></svg>
-      <p>Files in git are the source of truth.<span class="hi">Everything that looks like a database is a projection you can delete and rebuild with <code style="color:var(--amber)">brico reindex</code>.</span></p>
-    </div>
-
-    <div class="layers rv d1">
-      <div class="layer" style="--lc:var(--amber)">
-        <div class="ln">1<small>truth</small></div>
-        <div>
-          <h4>The Vault, a git directory</h4>
-          <p>Each version folder holds the piece's files, its manifest, and its derived summaries. Commit it, branch it, review it, share it like any other repo.</p>
-        </div>
-        <span class="pill">offline &middot; auditable</span>
-      </div>
-      <div class="layer" style="--lc:var(--mint)">
-        <div class="ln">2<small>index</small></div>
-        <div>
-          <h4>One embedded SQLite file</h4>
-          <p>A single database at <code>~/.brico/index.db</code>, compiled into the binary. Meaning search (sqlite-vec), keyword search (FTS5), and relationship queries (plain SQL) from one file.</p>
-        </div>
-        <span class="pill">zero runtime deps</span>
-      </div>
-      <div class="layer" style="--lc:var(--blue)">
-        <div class="ln">3<small>scale</small></div>
-        <div>
-          <h4>A hosted tier, only when teams need it</h4>
-          <p>Postgres with pgvector for shared team Vaults. Still a projection: if it dies, it is rebuilt from the repositories.</p>
-        </div>
-        <span class="pill">later</span>
-      </div>
-    </div>
-
-    <p class="rv d2 dim" style="font-size:.9rem;margin-top:24px;max-width:56rem">
-      Generating embeddings is the only step that touches a network, so it is fenced: always skippable, and
-      <code style="color:var(--amber)">brico reindex --embed</code> backfills later. Offline-first is a guarantee, not a footnote.
-    </p>
-
-    <div class="sec-head rv" style="margin-top:72px;margin-bottom:28px">
-      <div class="kick"><span class="num">07</span> Roadmap</div>
-      <h2 style="font-size:clamp(1.6rem,3vw,2.2rem)">Four phases. Each one waits for the last one to ship.</h2>
-    </div>
-    <div class="phases rv d1">
-      <div class="phase" style="--pc:var(--amber)">
-        <div class="pl">Phase A &middot; now</div><h4>Knowledge layer</h4><div class="hz">weeks</div>
-        <ul><li>Summaries generated at capture</li><li>Meaning-based search</li><li><code>brico mcp</code> with four tools</li><li>SQLite index</li></ul>
-      </div>
-      <div class="phase" style="--pc:var(--rose)">
-        <div class="pl">Phase B</div><h4>AI piece kinds</h4><div class="hz">1 to 2 months</div>
-        <ul><li>Prompt and skill kinds</li><li><code>brico eval</code> harness</li><li>Polished example pieces</li></ul>
-      </div>
-      <div class="phase" style="--pc:var(--mint)">
-        <div class="pl">Phase C</div><h4>Accounting and graph</h4><div class="hz">1 to 2 months</div>
-        <ul><li><code>brico stats</code> token accounting</li><li><code>brico graph</code> relationships</li><li>Eval, dataset, pipeline kinds</li></ul>
-      </div>
-      <div class="phase" style="--pc:var(--blue)">
-        <div class="pl">Phase D</div><h4>Team scale</h4><div class="hz">when real teams pull</div>
-        <ul><li>Shared team Vaults, git-based first</li><li>Hosted Postgres tier if needed</li><li>Registry groundwork</li></ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= FAQ ================= -->
-<section class="sec" id="faq">
-  <div class="wrap">
-    <div class="sec-head mid rv">
-      <div class="kick" style="justify-content:center"><span class="num">08</span> Plain answers</div>
-      <h2>The questions people ask after the first read.</h2>
-    </div>
-    <div class="faq rv d1">
-      <details class="q" open>
-        <summary>So what is BricoWerx, in one breath?</summary>
-        <div class="a">A command-line tool that saves the good parts of your projects as versioned pieces in a git folder, lets you and your AI assistants search that folder, and drops any piece into a new project with one command. <b>Reuse what you already built instead of rebuilding or regenerating it.</b></div>
-      </details>
-      <details class="q">
-        <summary>Is it a code generator?</summary>
-        <div class="a">No. BWX never writes code. It finds and copies code your team already wrote and verified, along with the wiring steps to make it work. If anything, it is the opposite of a generator: it removes the need to generate.</div>
-      </details>
-      <details class="q">
-        <summary>Is it a wiki or a docs tool?</summary>
-        <div class="a">No. Wikis die because writing them costs more than reading them. In BWX, <code>brico capture</code> is the only thing a contributor does. Summaries, signatures and search vectors are derived automatically. The knowledge is attached to the code, not written about it somewhere else.</div>
-      </details>
-      <details class="q">
-        <summary>Is it a package registry like npm?</summary>
-        <div class="a">Closer, but no. A registry distributes libraries. A piece carries what a package cannot: your framework wiring, env vars, design decisions, evals, and relationships to your other pieces. It is for the internal modules you would never publish, and for prompts and skills that npm has no concept of.</div>
-      </details>
-      <details class="q">
-        <summary>What does "AI assistants over MCP" actually mean for me?</summary>
-        <div class="a">You run <code>brico mcp</code> and point Claude, Cursor or your IDE agent at it. From then on, when you ask the assistant to build something, it first asks your Vault whether a piece already exists, reads a 50-token card instead of scanning your repos, and suggests <code>brico add</code> when there is a match.</div>
-      </details>
-      <details class="q">
-        <summary>Do I need a server, an account, or a database?</summary>
-        <div class="a">No. One static binary, a git folder, and an SQLite file that lives in your home directory and can be rebuilt any time. It works offline. A hosted tier for shared team Vaults comes later, and only if teams ask for it.</div>
-      </details>
-      <details class="q">
-        <summary>Which stacks does it support today?</summary>
-        <div class="a"><code>brico extract</code> currently understands NestJS and Next.js projects and ranks reusable modules by confidence. Capture, add, search, publish and the terminal UI are shipping. MCP, prompt pieces and evals are the next two phases.</div>
-      </details>
-      <details class="q">
-        <summary>Where does the name come from?</summary>
-        <div class="a"><b>Brico</b> is from the French <i>bricolage</i>: building with what you already have in your hands. <b>Werx</b> is the workshop where it happens. <b>BWX</b> is the short form you will see in the CLI, the docs and the logo.</div>
-      </details>
-    </div>
-  </div>
-</section>
-
-<!-- ================= BLOG ================= -->
-<!--
-  Blog system: posts live in the POSTS array in the script at the bottom of this file.
-  Add an object to the array and the card, the tag filter and the in-page reader update themselves.
-  Set `feat:true` on the post you want as the featured (double-width) card.
--->
-<section class="sec alt" id="blog">
-  <div class="wrap">
-    <div class="blog-head rv">
-      <div class="sec-head">
-        <div class="kick"><span class="num">09</span> Blog</div>
-        <h2>Field notes <span class="it hi">from the workshop.</span></h2>
-        <p>Short, practical writing about reuse, token economics, and building an engineering library your AI can actually use.</p>
-      </div>
-      <div class="tags" id="tags" role="tablist" aria-label="Filter posts by topic"></div>
-    </div>
-    <div class="posts rv d1" id="posts"></div>
-  </div>
-</section>
-
-<div class="reader" id="reader" role="dialog" aria-modal="true" aria-labelledby="readerTitle">
-  <article>
-    <button class="close" id="readerClose" aria-label="Close article">&times;</button>
-    <div class="meta" id="readerMeta"></div>
-    <h2 id="readerTitle"></h2>
-    <div class="body" id="readerBody"></div>
-    <div class="foot">
-      <span>Liked this? The newsletter carries one note like it each month.</span>
-      <a class="btn sm amber" href="#newsletter" id="readerSub">Subscribe</a>
-    </div>
-  </article>
-</div>
-
-<!-- ================= NEWSLETTER ================= -->
-<!--
-  Newsletter wiring. Pick ONE provider and set data-provider + data-action on the form.
-
-  Mailchimp:  data-provider="mailchimp"
-              data-action="https://YOUR_DC.list-manage.com/subscribe/post?u=YOUR_U&amp;id=YOUR_ID"
-              (copy the action URL from Audience > Signup forms > Embedded forms)
-
-  ConvertKit: data-provider="convertkit"
-              data-action="https://app.convertkit.com/forms/YOUR_FORM_ID/subscriptions"
-              (the form id is in the embed code Kit gives you)
-
-  Until the action contains a real URL the form runs in demo mode and just shows the success state.
--->
-<section class="sec" id="newsletter">
-  <div class="wrap">
-    <div class="news rv">
-      <div>
-        <div class="kick"><span class="num">10</span> Newsletter</div>
-        <h2>The <span class="it hi">Vault</span> Letter</h2>
-        <p>One email a month. What shipped in BWX, one field note on reuse or token economics, and one piece pattern worth stealing. No noise between issues.</p>
-        <ul>
-          <li>Release notes you can read in two minutes</li>
-          <li>Real token numbers from real Vaults</li>
-          <li>Unsubscribe in one click, always</li>
-        </ul>
-      </div>
-      <form class="nform" id="nform" novalidate style="position:relative"
-            data-provider="mailchimp"
-            data-action="https://YOUR_DC.list-manage.com/subscribe/post?u=YOUR_U&amp;id=YOUR_ID"
-            method="post" target="_blank">
-        <label for="nemail">Your work email</label>
-        <div class="row">
-          <input type="email" id="nemail" name="EMAIL" placeholder="you@company.com" autocomplete="email" required>
-          <button class="btn amber" type="submit" id="nbtn">Subscribe</button>
-        </div>
-        <!-- honeypot -->
-        <div class="hp" aria-hidden="true"><input type="text" name="b_field" tabindex="-1" autocomplete="off"></div>
-        <span class="tape tr"></span><p class="hint">Monthly. No tracking pixels. We store your email with the provider named in the privacy note and nowhere else.</p>
-        <div class="msg" id="nmsg" role="status" aria-live="polite"></div>
-      </form>
-    </div>
-  </div>
-</section>
-
-<!-- ================= DOCS ================= -->
-<section class="sec alt" id="docs">
-  <div class="wrap">
-    <div class="sec-head mid rv">
-      <div class="kick" style="justify-content:center"><span class="num">11</span> Get started</div>
-      <h2>From zero to your first piece <span class="it hi">in five minutes.</span></h2>
-    </div>
-
-    <div class="tabs rv d1" style="justify-content:center">
-      <button class="tb on" data-t="start">Quick start</button>
-      <button class="tb" data-t="cmds">Commands</button>
-      <button class="tb" data-t="publish">Publishing</button>
-      <button class="tb" data-t="mcp2">MCP</button>
-    </div>
-
-    <div class="rv d2">
-      <div class="pane on" id="p-start">
-        <div class="code"><button class="copy">Copy</button><span class="c"># build the engine, one static binary</span>
-<span class="y">cd</span> engine && go build -o ../brico ./cmd/brico && <span class="y">cd</span> ..
-
-<span class="c"># capture your first piece</span>
-./brico <span class="b">extract</span>
-./brico <span class="b">capture</span> auth -y -d <span class="g">"JWT auth with Passport and bcrypt"</span> -t security,jwt
-
-<span class="c"># browse, then add it to a new project</span>
-./brico <span class="b">list</span>
-./brico --cwd ../new-service <span class="b">add</span> auth -y
-./brico <span class="b">doctor</span></div>
-      </div>
-
-      <div class="pane" id="p-cmds">
-        <div class="tblwrap" style="overflow-x:auto"><table class="t">
-          <thead><tr><th>Command</th><th>Status</th><th>What it does</th></tr></thead>
-          <tbody>
-            <tr><td><code>brico extract</code></td><td><span class="st ok">working</span></td><td>Scans a NestJS or Next.js project and ranks reusable candidates by confidence</td></tr>
-            <tr><td><code>brico capture</code></td><td><span class="st ok">working</span></td><td>Snapshots a module into an immutable, semver'd piece with a manifest</td></tr>
-            <tr><td><code>brico add</code></td><td><span class="st ok">working</span></td><td>Resolves a version, copies files, merges env vars, prints wiring steps</td></tr>
-            <tr><td><code>brico list / search</code></td><td><span class="st ok">working</span></td><td>Finds any piece by name, tag, or description</td></tr>
-            <tr><td><code>brico doctor</code></td><td><span class="st ok">working</span></td><td>Validates engine, adapters, Vault, and project</td></tr>
-            <tr><td><code>brico ui</code></td><td><span class="st ok">working</span></td><td>Full-screen terminal cockpit over the Vault</td></tr>
-            <tr><td><code>brico publish</code></td><td><span class="st ok">working</span></td><td>Pushes the Vault or a single piece to a GitHub repo</td></tr>
-            <tr><td><code>brico mcp</code></td><td><span class="st soon">phase A</span></td><td>Exposes the Vault as a Model Context Protocol server</td></tr>
-            <tr><td><code>brico eval</code></td><td><span class="st soon">phase B</span></td><td>Runs versioned evaluation cases for prompt pieces</td></tr>
-            <tr><td><code>brico stats</code></td><td><span class="st next">phase C</span></td><td>Local, opt-in token-savings accounting</td></tr>
-            <tr><td><code>brico graph</code></td><td><span class="st next">phase C</span></td><td>Queries relationships: depends_on, replaces, similar_to</td></tr>
-          </tbody>
-        </table></div>
-      </div>
-
-      <div class="pane" id="p-publish">
-        <div class="code"><button class="copy">Copy</button><span class="c"># push the whole Vault to your main GitHub repo</span>
-./brico <span class="b">publish</span>
-
-<span class="c"># publish a single piece, merged with what the target already holds</span>
-./brico <span class="b">publish</span> auth
-
-<span class="c"># publish to a different repo entirely</span>
-./brico <span class="b">publish</span> -l
-./brico <span class="b">publish</span> --repo git@github.com:you/team-vault.git</div>
-        <p class="muted" style="font-size:.9rem;margin-top:14px;text-align:center">
-          The main repo is asked for once and saved to your global config. Override with
-          <code style="color:var(--amber)">--repo</code>, <code style="color:var(--amber)">-l</code>, or the
-          <code style="color:var(--amber)">BRICO_PUBLISH_REPO</code> environment variable. Pushes use your ambient git credentials.
-        </p>
-      </div>
-
-      <div class="pane" id="p-mcp2">
-        <div class="code"><button class="copy">Copy</button><span class="c"># expose the Vault to any MCP-capable assistant</span>
-./brico <span class="b">mcp</span>
-
-<span class="c"># tools served:</span>
-<span class="g">search_pieces</span>(query, kind?)   <span class="c">cards</span>
-<span class="g">get_piece</span>(name, level)      <span class="c">card | surface | summary | source</span>
-<span class="g">plan_reuse</span>(task)            <span class="c">candidates with fit rationale</span>
-<span class="g">get_relations</span>(name, kind?)  <span class="c">graph neighbourhood</span></div>
-        <p class="muted" style="font-size:.9rem;margin-top:14px;text-align:center">
-          A thin protocol layer over the same engine and index the CLI already uses.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= CTA ================= -->
-<section class="cta">
-  <div class="wrap">
-    <div class="cta-card rv">
-      <svg class="cta-wm" viewBox="0 0 100 100" aria-hidden="true"><use href="#bwx"/></svg>
-      <h2>Your next module is already sitting <span class="it hi">in your last project.</span></h2>
-      <p>Capture it once. Let your team and your AI assistants reuse it forever. One binary, your own git repo, nothing to sign up for.</p>
-      <div class="cta-row" style="justify-content:center">
-        <a class="btn amber" href="#launch">Join the waitlist &rarr;</a>
-        <a class="btn ghost" href="#docs">Try the CLI today</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= FOOTER ================= -->
-<footer>
-  <div class="wrap">
-    <div class="f-card">
-      <div class="f-in">
-        <div style="max-width:23rem">
-          <div class="brand" style="margin-bottom:14px"><svg class="mark" viewBox="0 0 100 100" aria-hidden="true"><use href="#bwx"/></svg><span class="wordmark">BricoWerx<small>BWX</small></span></div>
-          <p class="muted" style="font-size:.9rem">Reuse your team's proven engineering work, from the terminal and from your AI assistant. A CLI, a git folder, and an MCP server.</p>
-          <p class="dim" style="font-size:.85rem;margin-top:12px"><b style="color:var(--text-2)">Brico</b>, from the French <i>bricolage</i>: building with what you already have in your hands. <b style="color:var(--text-2)">Werx</b>, the workshop where it happens.</p>
-        </div>
-        <div><h5>Product</h5><a href="#why">Why</a><a href="#how">How it works</a><a href="#piece">Pieces</a><a href="#ai">For AI assistants</a><a href="#kinds">Piece kinds</a></div>
-        <div><h5>Inside</h5><a href="#inside">Architecture</a><a href="#inside">Roadmap</a><a href="#faq">Plain answers</a></div>
-        <div><h5>Follow</h5><a href="#launch">Waitlist</a><a href="#blog">Blog</a><a href="#newsletter">Newsletter</a><a href="#docs">Documentation</a></div>
-      </div>
-      <div class="f-bot">
-        <span>L'art de b&acirc;tir avec l'existant.</span>
-        <span>&copy; 2026 BricoWerx &middot; BWX</span>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<script>
-/* ===== nav ===== */
-const nav=document.getElementById('nav');
-addEventListener('scroll',()=>nav.classList.toggle('on',scrollY>8),{passive:true});
-const burger=document.getElementById('burger'),mnav=document.getElementById('mnav');
-burger.addEventListener('click',()=>{
-  const open=mnav.classList.toggle('open');
-  burger.setAttribute('aria-expanded',open);
-});
-mnav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{mnav.classList.remove('open');burger.setAttribute('aria-expanded','false')}));
-
-/* ===== hero film controls ===== */
-(function(){
-  const v=document.getElementById('heroFilm'),b=document.getElementById('filmToggle');
-  if(!v||!b)return;
-  b.addEventListener('click',()=>{if(v.paused){v.play();b.textContent='pause film';b.setAttribute('aria-label','Pause film')}else{v.pause();b.textContent='play film';b.setAttribute('aria-label','Play film')}});
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches){v.pause();b.textContent='play film'}
-  v.addEventListener('error',()=>{v.style.display='none'});
-})();
-
-/* ===== section watermark numerals ===== */
-document.querySelectorAll('.sec-head').forEach(h=>{const n=h.querySelector('.kick .num');if(n)h.dataset.n=n.textContent.trim()});
-
-/* ===== reveal ===== */
-const io=new IntersectionObserver(es=>es.forEach(e=>{
-  if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}
-}),{threshold:.1});
-document.querySelectorAll('.rv').forEach(el=>io.observe(el));
-
-/* ===== count-up ===== */
-const cio=new IntersectionObserver(es=>es.forEach(e=>{
-  if(!e.isIntersecting)return;
-  const el=e.target,end=+el.dataset.count,suf=el.dataset.suffix||'',t0=performance.now(),dur=1500;
-  (function tick(t){
-    const p=Math.min((t-t0)/dur,1);
-    el.textContent=Math.round(end*(1-Math.pow(1-p,3))).toLocaleString()+(p===1?suf:'');
-    if(p<1)requestAnimationFrame(tick);
-  })(t0);
-  cio.unobserve(el);
-}),{threshold:.5});
-document.querySelectorAll('[data-count]').forEach(el=>cio.observe(el));
-
-/* ===== ticker ===== */
-const tick=document.getElementById('tick');
-tick.innerHTML=tick.innerHTML+tick.innerHTML;
-
-/* ===== hero terminal ===== */
-(function(){
-  const SC=[
-    {t:'$ brico extract',c:'t-cmd',p:340},
-    {t:'  auth      92%   jwt, passport, bcrypt',c:'t-acc',p:110},
-    {t:'  mailer    81%   smtp, templates',c:'t-acc',p:300},
-    {t:'$ brico capture auth -y',c:'t-cmd',p:280},
-    {t:'  ok  scanned 6 files, 3 deps, 2 env vars',c:'t-ok',p:110},
-    {t:'  ok  saved auth@0.1.0 to the Vault',c:'t-ok',p:340},
-    {t:'$ brico search "token auth"',c:'t-cmd',p:280},
-    {t:'  auth@0.1.0   jwt, passport   ~50 tokens',c:'t-acc',p:300},
-    {t:'$ brico add auth -y',c:'t-cmd',p:280},
-    {t:'  ok  copied files, wired .env.example',c:'t-ok',p:110},
-    {t:'  next: add AuthModule to AppModule imports',c:'t-dim',p:1600}
-  ];
-  const term=document.getElementById('term');
-  if(!term)return;
-  const caret=document.createElement('span');caret.className='caret';
-  let li=0,ci=0,line=null;
-  function step(){
-    if(li>=SC.length){setTimeout(()=>{term.innerHTML='';li=ci=0;line=null;step()},2600);return}
-    const it=SC[li];
-    if(!line){
-      line=document.createElement('div');line.className='ln '+it.c;
-      term.appendChild(line);term.appendChild(caret);
-    }
-    if(ci<it.t.length){
-      line.textContent=it.t.slice(0,++ci);
-      term.insertBefore(line,caret);
-      setTimeout(step,it.c==='t-cmd'?32:6);
-    } else {li++;ci=0;line=null;setTimeout(step,it.p)}
-  }
-  step();
-})();
-
-/* ===== hero canvas: loose bricks assemble into the BWX monogram, hold, scatter, rebuild ===== */
-(function(){
-  const cv=document.getElementById('wall');
-  if(!cv)return;
-  const ctx=cv.getContext('2d');
-  const GLYPH=[
-    "###..#...#.#...#",
-    "#..#.#...#..#.#.",
-    "###..#.#.#...#..",
-    "#..#.#.#.#..#.#.",
-    "###...#.#..#...#"];
-  const COL=['#5E7A5A','#4A6072','#7D5670','#B8873A','#6B7A3F'];
-  let W,H,DPR,bricks=[],phase=0,pt=0,cell,ox,oy;
-  const ease=t=>1-Math.pow(1-t,3);
-  function size(){
-    DPR=Math.min(devicePixelRatio||1,2);
-    W=cv.clientWidth;H=cv.clientHeight;
-    cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);
-    build();
-  }
-  function build(){
-    bricks=[];
-    cell=Math.min(W/19,H/8.5);
-    ox=(W-16*cell)/2;oy=(H-5*cell)/2;
-    GLYPH.forEach((row,y)=>[...row].forEach((ch,x)=>{
-      if(ch!=='#')return;
-      const amber=(x===13&&y===2);
-      bricks.push({tx:ox+x*cell,ty:oy+y*cell,
-        sx:Math.random()*W,sy:Math.random()*H,
-        fx:Math.random()*W,fy:Math.random()*H,
-        rot:(Math.random()-.5)*1.6,delay:Math.random()*.45,
-        col:amber?'#C2542B':(Math.random()<.14?COL[Math.floor(Math.random()*COL.length)]:'#1B1F1C'),
-        amber});
-    }));
-    phase=0;pt=0;
-  }
-  // phases: 0 assemble (2.2s) · 1 hold (3s) · 2 scatter (1.6s) · 3 pause (.6s)
-  const DUR=[2.2,3,1.6,.6];
-  let last=performance.now();
-  function rr(x,y,w,h,r){
-    ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);
-    ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();
-  }
-  function frame(now){
-    const dt=Math.min(.05,(now-last)/1000);last=now;
-    pt+=dt;
-    if(pt>DUR[phase]){pt=0;phase=(phase+1)%4;
-      if(phase===0){bricks.forEach(b=>{b.sx=b.fx;b.sy=b.fy;b.fx=Math.random()*W;b.fy=Math.random()*H;b.delay=Math.random()*.45})}}
-    ctx.clearRect(0,0,W,H);
-    ctx.fillStyle='rgba(251,248,242,.0)';ctx.clearRect(0,0,W,H);
-    // faint grid of the glyph's home cells
-    ctx.strokeStyle='rgba(27,31,28,.07)';ctx.lineWidth=1;
-    for(let y=0;y<5;y++)for(let x=0;x<16;x++){ctx.strokeRect(ox+x*cell+.5,oy+y*cell+.5,cell,cell)}
-    const pad=cell*.14,sz=cell-pad*2;
-    bricks.forEach(b=>{
-      let x,y,a=1,r=0,s=1;
-      if(phase===0){const p=ease(Math.max(0,Math.min(1,(pt-b.delay)/(DUR[0]-.45))));
-        x=b.sx+(b.tx-b.sx)*p;y=b.sy+(b.ty-b.sy)*p;r=b.rot*(1-p);a=.35+.65*p}
-      else if(phase===1){x=b.tx;y=b.ty;
-        if(b.amber){const k=(Math.sin(pt*4)+1)/2;s=1+k*.12;ctx.shadowColor='rgba(194,84,43,.9)';ctx.shadowBlur=18+k*16}}
-      else if(phase===2){const p=ease(Math.max(0,Math.min(1,(pt-b.delay*.6)/(DUR[2]-.3))));
-        x=b.tx+(b.fx-b.tx)*p;y=b.ty+(b.fy-b.ty)*p;r=b.rot*p;a=1-.7*p}
-      else {x=b.fx;y=b.fy;r=b.rot;a=.3}
-      ctx.save();ctx.globalAlpha=a;
-      ctx.translate(x+cell/2,y+cell/2);ctx.rotate(r);ctx.scale(s,s);
-      ctx.fillStyle=b.col;rr(-sz/2,-sz/2,sz,sz,cell*.16);ctx.fill();
-      ctx.restore();ctx.shadowBlur=0;
-    });
-    requestAnimationFrame(frame);
-  }
-  addEventListener('resize',size);
-  size();requestAnimationFrame(frame);
-})();
-
-/* ===== ladder ===== */
-(function(){
-  const rungs=[...document.querySelectorAll('.rung')],panes=[...document.querySelectorAll('.rd')];
-  let idx=0,auto=true;
-  function show(i){
-    idx=i;
-    rungs.forEach((r,j)=>r.classList.toggle('on',j===i));
-    panes.forEach((p,j)=>p.classList.toggle('on',j===i));
-  }
-  rungs.forEach(r=>r.addEventListener('click',()=>{auto=false;show(+r.dataset.i)}));
-  setInterval(()=>{if(auto)show((idx+1)%rungs.length)},3600);
-})();
-
-/* ===== MCP flow ===== */
-(function(){
-  const body=document.getElementById('flowBody');
-  if(!body)return;
-  const msgs=[...body.querySelectorAll('.fmsg')];
-  let started=false;
-  function run(){
-    msgs.forEach(m=>m.classList.remove('on'));
-    msgs.forEach((m,i)=>setTimeout(()=>m.classList.add('on'),380+i*620));
-    setTimeout(run,380+msgs.length*620+3400);
-  }
-  new IntersectionObserver(es=>es.forEach(e=>{
-    if(e.isIntersecting&&!started){started=true;run()}
-  }),{threshold:.25}).observe(body);
-})();
-
-/* ===== tabs ===== */
-document.querySelectorAll('.tb').forEach(b=>{
-  b.addEventListener('click',()=>{
-    document.querySelectorAll('.tb').forEach(x=>x.classList.remove('on'));
-    document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
-    b.classList.add('on');
-    document.getElementById('p-'+b.dataset.t).classList.add('on');
-  });
-});
-
-/* ===== copy ===== */
-document.querySelectorAll('.code .copy').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    const c=btn.parentElement.cloneNode(true);
-    c.querySelector('.copy').remove();
-    navigator.clipboard.writeText(c.textContent.trim()).then(()=>{
-      btn.textContent='Copied';setTimeout(()=>btn.textContent='Copy',1400);
-    });
-  });
-});
-
-/* =========================================================
-   BLOG
-   Add a post: push an object into POSTS. Fields:
-   slug, title, cat, date (YYYY-MM-DD), mins, excerpt, body (HTML string), feat (optional)
-   ========================================================= */
-const POSTS=[
-  {
-    slug:'reuse-beats-regeneration',feat:true,
-    title:'Reuse beats regeneration. Here is the arithmetic.',
-    cat:'token economics',date:'2026-09-02',mins:5,
-    excerpt:'Every time an assistant regenerates a module you already own, you pay three times: tokens, review, and a new variant to maintain. The Vault makes reuse the cheapest path, so it becomes the default path.',
-    body:`<p>Ask a repo-indexing assistant "do we have JWT auth for NestJS?" and watch what happens. It pulls in tens of thousands of tokens of source, decides that it probably could write one, and writes one. It is usually fine. It is also the fourth one.</p>
-<p>Ask the same question through <code>brico mcp</code> and the assistant receives a card: name, description, tags, latest version. About fifty tokens. If it wants to know how to call the piece, it asks for the surface: signatures without bodies, env vars, wiring steps. A few hundred more. Then it recommends <code>brico add auth</code>.</p>
-<h3>The three costs of regeneration</h3>
-<p><b>Tokens</b> are the visible one, and the smallest. <b>Review</b> is bigger: novel code has to be read by a human who did not write it. <b>Variants</b> are the biggest and the slowest to show up: every regenerated module is a slightly different implementation that someone will have to keep in sync with the others, or will quietly fail to.</p>
-<p>Reuse pays none of the three. That is the whole argument, and it does not depend on which model you use.</p>
-<pre><b>$ brico stats --since 30d</b>
-pieces served      412
-tokens served      31,900
-baseline estimate  2,140,000
-saved              ~98.5%</pre>
-<p><code>brico stats</code> (phase C) turns that argument into a number your team can look at every month.</p>`
-  },
-  {
-    slug:'what-a-piece-carries',
-    title:'What a piece carries that a package cannot',
-    cat:'design',date:'2026-08-19',mins:4,
-    excerpt:'A package gives you code. A piece gives you the code, the wiring, the env vars, the design decisions and a fifty-token card. Here is why each of those matters.',
-    body:`<p>People hear "versioned modules" and think npm. The comparison is useful right up until it is misleading.</p>
-<p>A package is designed to be consumed by strangers. It hides its internals and tells you nothing about how it was wired into the project it came from, because that is none of your business. A piece is the opposite. It is designed to be consumed by your own team, and the wiring is exactly what you need.</p>
-<h3>Five things in every piece</h3>
-<p><b>The files.</b> Obviously. <b>The manifest.</b> Dependencies, env vars, framework wiring steps, and relations to other pieces. <b>The card.</b> Fifty tokens that answer "what is this?". <b>The surface.</b> Signatures with the bodies removed, extracted from the AST. <b>The summary.</b> Design decisions and trade-offs written down once, at capture time.</p>
-<p>The first is what you would get from copy-paste. The other four are what you would normally have to ask a colleague about. The colleague is now a file.</p>`
-  },
-  {
-    slug:'git-is-the-database',
-    title:'Why the Vault is a git folder and not a database',
-    cat:'inside',date:'2026-08-05',mins:4,
-    excerpt:'Every index in BWX is a projection you can delete. That one rule buys vector search, full-text search and graph queries with none of the database liabilities.',
-    body:`<p>The first draft of the architecture wanted five systems: a vector store, a full-text engine, a graph database, a metadata store, and the git repo underneath. It was correct and nobody would ever have installed it.</p>
-<p>The second draft asked a simpler question: what if git is the only source of truth, and everything else is a cache? Then the vector index can be one SQLite file with sqlite-vec. Full-text is FTS5 in the same file. Relationships are two relational tables and a recursive CTE. All of it lives at <code>~/.brico/index.db</code>, compiled into the binary, and all of it can be rebuilt with <code>brico reindex</code>.</p>
-<h3>What you get for free</h3>
-<p>Branching, code review and history for your knowledge, because it is a repo. Offline operation, because there is no server. Zero migrations-as-truth, because the schema is a cache. And a hosted tier later that is still just a projection: if it dies, rebuild it from the repos.</p>`
-  },
-  {
-    slug:'first-piece-in-five-minutes',
-    title:'Capturing your first piece in five minutes',
-    cat:'guide',date:'2026-07-22',mins:3,
-    excerpt:'Build the binary, run extract on an existing NestJS or Next.js project, capture the highest-confidence candidate, add it somewhere else. A walkthrough with the exact commands.',
-    body:`<p>You need Go and an existing NestJS or Next.js project. That is the whole prerequisite list.</p>
-<pre><b>$ cd engine && go build -o ../brico ./cmd/brico && cd ..</b>
-<b>$ ./brico extract</b>
-  auth      92%   jwt, passport, bcrypt
-  mailer    81%   smtp, templates
-<b>$ ./brico capture auth -y -d "JWT auth with Passport and bcrypt" -t security,jwt</b>
-  ok  saved auth@0.1.0 to the Vault</pre>
-<p><code>extract</code> scans the project and ranks modules by how cleanly they separate from the rest. <code>capture</code> snapshots one of them, records its dependencies and env vars, and writes the manifest. From here on the piece is immutable: publishing a second time at the same version is refused.</p>
-<pre><b>$ ./brico --cwd ../new-service add auth -y</b>
-  ok  copied 6 files, wired .env.example
-  next: add AuthModule to AppModule imports
-<b>$ ./brico doctor</b></pre>
-<p>That is the loop. Everything else in BWX, the summaries, the search, the MCP server, exists to make step two ("find it") work for people who were not there when step one happened.</p>`
-  },
-  {
-    slug:'prompts-need-versions',
-    title:'A prompt without evals is a module without tests',
-    cat:'design',date:'2026-07-08',mins:4,
-    excerpt:'Prompts, agent skills and eval suites are engineering assets. They get copy-pasted and drift exactly like code did before package managers. Phase B treats them as pieces.',
-    body:`<p>Somewhere in your organisation there is a prompt that works unusually well. It lives in a wiki page, or a Slack thread, or a constant in one repo. Three teams have copied it. Two have edited their copy. Nobody can say which version is best because nobody has a way to compare them.</p>
-<p>This is exactly where code was before package managers, and the fix is the same: give the asset a name, a version, and a test suite. In BWX a prompt piece is a template, its input variables, its target models, and a set of evaluation cases. <code>brico eval</code> runs the cases. A prompt change that lowers the pass rate is a failing build.</p>
-<h3>Why it costs nothing extra</h3>
-<p>A prompt piece is structurally identical to a code piece. Same manifest, same card, same ladder, same MCP tools. Only the <code>kind</code> field changes. The Vault becomes a prompt registry and a skill registry without a second product.</p>`
-  }
-];
-
-(function(){
-  const grid=document.getElementById('posts'),tags=document.getElementById('tags');
-  if(!grid)return;
-  const cats=['all',...new Set(POSTS.map(p=>p.cat))];
-  let cur='all';
-  const fmt=d=>new Date(d+'T00:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
-  function renderTags(){
-    tags.innerHTML='';
-    cats.forEach(c=>{
-      const b=document.createElement('button');b.className='tag'+(c===cur?' on':'');b.textContent=c;b.setAttribute('role','tab');
-      b.addEventListener('click',()=>{cur=c;renderTags();renderPosts()});
-      tags.appendChild(b);
-    });
-  }
-  function renderPosts(){
-    grid.innerHTML='';
-    POSTS.filter(p=>cur==='all'||p.cat===cur)
-      .sort((a,b)=>b.date.localeCompare(a.date))
-      .forEach(p=>{
-        const a=document.createElement('article');
-        a.className='post'+(p.feat&&cur==='all'?' feat':'');
-        if(p.feat&&cur==='all')a.insertAdjacentHTML('afterbegin','<span class="tape tl"></span>');
-        a.tabIndex=0;a.setAttribute('role','button');
-        a.innerHTML=`<span class="no">${String(POSTS.length-POSTS.indexOf(p)).padStart(2,'0')}</span><div class="meta"><span class="cat">${p.cat}</span><span>${fmt(p.date)}</span><span>${p.mins} min read</span></div>
-          <h3>${p.title}</h3><p>${p.excerpt}</p><span class="more">Read the note</span>`;
-        const open=()=>openReader(p);
-        a.addEventListener('click',open);
-        a.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}});
-        grid.appendChild(a);
+  </main>
+  
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
       });
-  }
-  const reader=document.getElementById('reader');
-  function openReader(p){
-    document.getElementById('readerMeta').innerHTML=`<span class="cat">${p.cat}</span> &middot; ${fmt(p.date)} &middot; ${p.mins} min read`;
-    document.getElementById('readerTitle').textContent=p.title;
-    document.getElementById('readerBody').innerHTML=p.body;
-    reader.classList.add('open');document.body.style.overflow='hidden';
-    history.replaceState(null,'','#post-'+p.slug);
-    document.getElementById('readerClose').focus();
-  }
-  function closeReader(){
-    reader.classList.remove('open');document.body.style.overflow='';
-    if(location.hash.startsWith('#post-'))history.replaceState(null,'','#blog');
-  }
-  document.getElementById('readerClose').addEventListener('click',closeReader);
-  document.getElementById('readerSub').addEventListener('click',closeReader);
-  reader.addEventListener('click',e=>{if(e.target===reader)closeReader()});
-  addEventListener('keydown',e=>{if(e.key==='Escape'&&reader.classList.contains('open'))closeReader()});
-  renderTags();renderPosts();
-  // deep link: index.html#post-slug opens the article directly
-  if(location.hash.startsWith('#post-')){
-    const p=POSTS.find(x=>x.slug===location.hash.slice(6));
-    if(p)setTimeout(()=>openReader(p),300);
-  }
-})();
-
-/* =========================================================
-   WAITLIST  (posts to waitlist/main.go)
-   ========================================================= */
-(function(){
-  const f=document.getElementById('wlForm');
-  if(!f)return;
-  const email=document.getElementById('wlEmail'),btn=document.getElementById('wlBtn'),msg=document.getElementById('wlMsg'),
-        cnt=document.getElementById('wlCount'),endpoint=f.dataset.endpoint||'/api/waitlist',minCount=+(f.dataset.minCount||10);
-  const show=(cls,text)=>{msg.className='msg '+cls;msg.textContent=text};
-  const fmt=n=>n.toLocaleString('en-GB');
-  function setCount(n){if(n>=minCount){cnt.querySelector('b').textContent=fmt(n);cnt.hidden=false}}
-  // live count
-  fetch(endpoint+'/count',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{if(j&&typeof j.count==='number')setCount(j.count)}).catch(()=>{});
-  // no-JS fallback landed here after a classic POST
-  if(new URLSearchParams(location.search).get('joined')==='1'){f.classList.add('done');show('ok','You are on the list. We will write when the Vault opens.');history.replaceState(null,'','#launch')}
-  f.addEventListener('submit',e=>{
-    e.preventDefault();
-    const v=email.value.trim();
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)){show('err','Please enter a valid email address.');email.focus();return}
-    btn.disabled=true;btn.textContent='Joining';
-    fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},
-      body:JSON.stringify({email:v,source:f.querySelector('[name=source]').value,company:f.querySelector('[name=company]').value})})
-      .then(async r=>{const j=await r.json().catch(()=>({}));
-        if(r.ok&&j.ok){f.classList.add('done');show('ok',j.already?'You were already on the list. Same place in line, promise.':'You are on the list. We will write when the Vault opens.');if(typeof j.count==='number')setCount(j.count)}
-        else{show('err',j.error||'Something went wrong. Please try again.');btn.disabled=false;btn.textContent='Join the waitlist'}})
-      .catch(()=>{show('err','Could not reach the waitlist service. Please try again in a moment.');btn.disabled=false;btn.textContent='Join the waitlist'});
-  });
-})();
-
-/* ===== teaser player ===== */
-(function(){
-  const v=document.getElementById('teaser'),b=document.getElementById('teaserPlay'),fr=v&&v.closest('.teaser-frame'),miss=document.getElementById('teaserMissing');
-  if(!v)return;
-  b.addEventListener('click',()=>{v.controls=true;v.play().catch(()=>{})});
-  v.addEventListener('play',()=>fr.classList.add('playing'));
-  v.addEventListener('pause',()=>{if(v.currentTime===0)fr.classList.remove('playing')});
-  v.addEventListener('ended',()=>fr.classList.remove('playing'));
-  // is there a teaser file yet? (the page works either way)
-  const gone=()=>{miss.hidden=false;b.style.opacity=.35;b.disabled=true};
-  // A real decode failure is the only reliable signal; fetch() cannot be used
-  // because it is blocked for file:// URLs when the page is opened from disk.
-  v.addEventListener('error',gone);
-  const mp4=v.querySelector('source[type="video/mp4"]');
-  if(/^https?:$/.test(location.protocol)){
-    fetch(mp4.src,{method:'HEAD'}).then(r=>{if(!r.ok)throw 0}).catch(gone);
-  }
-})();
-
-/* =========================================================
-   NEWSLETTER
-   Reads data-provider and data-action from the form.
-   mailchimp   -> JSONP to the post-json endpoint (no CORS issues)
-   convertkit  -> JSON POST to the forms/:id/subscriptions endpoint
-   Placeholder action -> demo mode, shows the success state only.
-   ========================================================= */
-(function(){
-  const f=document.getElementById('nform');
-  if(!f)return;
-  const email=document.getElementById('nemail'),btn=document.getElementById('nbtn'),msg=document.getElementById('nmsg');
-  const provider=f.dataset.provider,action=f.dataset.action||'';
-  const demo=!action||/YOUR_/.test(action);
-  const show=(cls,text)=>{msg.className='msg '+cls;msg.textContent=text};
-  const done=()=>{show('ok','You are on the list. Check your inbox for a confirmation email.');email.value='';btn.disabled=false;btn.textContent='Subscribe'};
-  const fail=t=>{show('err',t||'Something went wrong. Please try again in a moment.');btn.disabled=false;btn.textContent='Subscribe'};
-  f.addEventListener('submit',e=>{
-    e.preventDefault();
-    if(f.querySelector('[name=b_field]').value)return; // honeypot
-    const v=email.value.trim();
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){show('err','Please enter a valid email address.');email.focus();return}
-    btn.disabled=true;btn.textContent='Sending';
-    if(demo){setTimeout(done,700);return}
-    if(provider==='mailchimp'){
-      const cb='mc_'+Date.now();
-      window[cb]=r=>{delete window[cb];s.remove();r.result==='success'?done():fail(String(r.msg||'').replace(/^\d+\s*-\s*/,''))};
-      const s=document.createElement('script');
-      s.src=action.replace('/post?','/post-json?')+'&EMAIL='+encodeURIComponent(v)+'&c='+cb;
-      s.onerror=()=>fail();
-      document.body.appendChild(s);
-    } else if(provider==='convertkit'){
-      fetch(action,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({email_address:v})})
-        .then(r=>r.ok?done():r.json().then(j=>fail(j.message||j.error)))
-        .catch(()=>fail());
-    } else {
-      // generic: let the browser post the form the old-fashioned way
-      f.action=action;f.submit();done();
-    }
-  });
-})();
-</script>
-
+    }, { threshold: 0.1 });
+    
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
