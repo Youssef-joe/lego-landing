@@ -439,6 +439,310 @@ $ brico add auth
 
     </div>
   </section>
+\n
+  <!-- Band C: For AI Assistants -->
+  <section id="ai" class="dark fade-up">
+    <div class="container">
+      <div class="sec-head" style="margin-bottom: 56px;">
+        <span class="eyebrow" style="color: var(--on-ink-2);">FOR AI ASSISTANTS</span>
+        <h2 style="color: var(--on-ink);">Your assistant gets a librarian instead of the whole library.</h2>
+        <p class="body-l" style="margin-top: 16px; color: var(--on-ink-2);">
+          <code style="color: var(--ai); font-family: var(--mono);">brico mcp</code> exposes the Vault over the Model Context Protocol. Claude, Cursor, IDE agents, internal copilots &mdash; any MCP-capable assistant can search your pieces and recommend reuse before writing anything new.
+        </p>
+      </div>
+
+      <div class="grid-12" style="margin-bottom: 64px;">
+        <!-- MCP Tools -->
+        <div style="grid-column: span 5; display: flex; flex-direction: column; gap: 16px;">
+          <div style="background: var(--ink-2); border: 1px solid var(--text-2); border-radius: 8px; padding: 20px;">
+            <code style="color: var(--ai); font-family: var(--mono); display: block; margin-bottom: 8px;">search_pieces(query, kind?)</code>
+            <p style="font-size: 0.9rem; color: var(--on-ink-2);">Finds pieces by meaning or capability.</p>
+          </div>
+          <div style="background: var(--ink-2); border: 1px solid var(--text-2); border-radius: 8px; padding: 20px;">
+            <code style="color: var(--ai); font-family: var(--mono); display: block; margin-bottom: 8px;">get_piece(name, level)</code>
+            <p style="font-size: 0.9rem; color: var(--on-ink-2);">Fetches the exact detail level needed (card, surface, summary, source).</p>
+          </div>
+          <div style="background: var(--ink-2); border: 1px solid var(--text-2); border-radius: 8px; padding: 20px;">
+            <code style="color: var(--ai); font-family: var(--mono); display: block; margin-bottom: 8px;">plan_reuse(task)</code>
+            <p style="font-size: 0.9rem; color: var(--on-ink-2);">Returns a recommended assembly of existing pieces.</p>
+          </div>
+          <div style="background: var(--ink-2); border: 1px solid var(--text-2); border-radius: 8px; padding: 20px;">
+            <code style="color: var(--ai); font-family: var(--mono); display: block; margin-bottom: 8px;">get_relations(name, kind?)</code>
+            <p style="font-size: 0.9rem; color: var(--on-ink-2);">Navigates the dependency graph.</p>
+          </div>
+        </div>
+
+        <!-- Conversation Trace -->
+        <div style="grid-column: span 7; background: var(--ink-2); border: 1px solid var(--text-2); border-radius: 8px; padding: 32px; font-family: var(--mono); font-size: 0.85rem; line-height: 1.6;">
+          <div style="margin-bottom: 24px;">
+            <span style="color: var(--on-ink-2); font-size: 0.75rem; display: block; margin-bottom: 8px;">DEV &rarr; ASSISTANT</span>
+            <div style="background: var(--ink); border: 1px solid var(--text-2); padding: 12px; border-radius: 6px; color: var(--on-ink);">
+              We need a rate limiter for the new API.
+            </div>
+          </div>
+          <div style="margin-bottom: 24px;">
+            <span style="color: var(--ai); font-size: 0.75rem; display: block; margin-bottom: 8px;">ASSISTANT &rarr; TOOL</span>
+            <div style="background: rgba(70,97,122,0.1); border: 1px solid rgba(70,97,122,0.3); padding: 12px; border-radius: 6px; color: var(--ai);">
+              search_pieces({ query: "rate limiter API redis" })
+            </div>
+          </div>
+          <div style="margin-bottom: 24px;">
+            <span style="color: var(--reuse); font-size: 0.75rem; display: block; margin-bottom: 8px;">VAULT &rarr; ASSISTANT</span>
+            <div style="background: rgba(194,84,43,0.1); border: 1px solid rgba(194,84,43,0.3); padding: 12px; border-radius: 6px; color: var(--reuse);">
+              Found: rate-limiter@1.1.0<br/>
+              Tags: redis, sliding-window<br/>
+              Proven in: 4 projects
+            </div>
+          </div>
+          
+          <div style="padding-top: 16px; border-top: 1px solid var(--text-2); display: flex; justify-content: space-between; color: var(--on-ink-2); font-size: 0.8rem;">
+            <span>Vault Answer: ~40 MB for 10,000 pieces</span>
+            <span>Repo Scan: GBs of raw text</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Piece Kinds -->
+  <section class="fade-up">
+    <div class="container" style="text-align: center;">
+      <p style="font-size: 1.1rem; color: var(--text-2); margin-bottom: 32px;">
+        Modules today; prompts, agent skills, evals, datasets and pipelines are the same structure with a different kind.
+      </p>
+      <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;">
+        <div style="padding: 12px 24px; border-radius: 99px; border: 1px solid var(--line); background: var(--card); font-family: var(--mono); font-size: 0.875rem;">
+          code <span style="font-size: 0.7rem; color: var(--verified); background: rgba(85,112,79,0.1); padding: 4px 8px; border-radius: 4px; margin-left: 8px;">SHIPPING</span>
+        </div>
+        <div style="padding: 12px 24px; border-radius: 99px; border: 1px solid var(--line); background: var(--card); font-family: var(--mono); font-size: 0.875rem;">
+          prompt <span style="font-size: 0.7rem; color: var(--ai); background: rgba(70,97,122,0.1); padding: 4px 8px; border-radius: 4px; margin-left: 8px;">NEXT</span>
+        </div>
+        <div style="padding: 12px 24px; border-radius: 99px; border: 1px solid var(--line); background: var(--card); font-family: var(--mono); font-size: 0.875rem;">
+          skill <span style="font-size: 0.7rem; color: var(--ai); background: rgba(70,97,122,0.1); padding: 4px 8px; border-radius: 4px; margin-left: 8px;">NEXT</span>
+        </div>
+        <div style="padding: 12px 24px; border-radius: 99px; border: 1px solid var(--line); background: var(--card); font-family: var(--mono); font-size: 0.875rem;">
+          eval <span style="font-size: 0.7rem; color: var(--text-3); background: var(--paper-2); padding: 4px 8px; border-radius: 4px; margin-left: 8px;">LATER</span>
+        </div>
+        <div style="padding: 12px 24px; border-radius: 99px; border: 1px solid var(--line); background: var(--card); font-family: var(--mono); font-size: 0.875rem;">
+          dataset <span style="font-size: 0.7rem; color: var(--text-3); background: var(--paper-2); padding: 4px 8px; border-radius: 4px; margin-left: 8px;">LATER</span>
+        </div>
+        <div style="padding: 12px 24px; border-radius: 99px; border: 1px solid var(--line); background: var(--card); font-family: var(--mono); font-size: 0.875rem;">
+          pipeline <span style="font-size: 0.7rem; color: var(--text-3); background: var(--paper-2); padding: 4px 8px; border-radius: 4px; margin-left: 8px;">LATER</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Inside -->
+  <section id="inside" class="alt fade-up">
+    <div class="container">
+      <div class="sec-head" style="margin-bottom: 56px;">
+        <h2>Boring on purpose: files in git, one SQLite index, one binary.</h2>
+      </div>
+
+      <div class="grid-12">
+        <div style="grid-column: span 4; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 32px;">
+          <h3 style="margin-bottom: 12px;">Truth</h3>
+          <p style="color: var(--text-2); font-size: 0.95rem;">The Vault is a git directory. Your pieces, their histories, and their relationships are stored as plain files.</p>
+        </div>
+        <div style="grid-column: span 4; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 32px;">
+          <h3 style="margin-bottom: 12px;">Index</h3>
+          <p style="color: var(--text-2); font-size: 0.95rem;">One <code style="font-family: var(--mono); color: var(--reuse);">index.db</code>. We use sqlite-vec + FTS5 for hybrid search, with zero runtime dependencies.</p>
+        </div>
+        <div style="grid-column: span 4; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 32px;">
+          <h3 style="margin-bottom: 12px;">Scale</h3>
+          <p style="color: var(--text-2); font-size: 0.95rem;">Everything works locally forever. An optional hosted Postgres tier will handle extreme team scale, later.</p>
+        </div>
+      </div>
+      
+      <p style="text-align: center; margin-top: 40px; color: var(--text); font-size: 1.05rem;">
+        Embedding generation is the only step that touches a network, and it is always skippable.
+      </p>
+    </div>
+  </section>
+
+  <!-- Roadmap -->
+  <section class="fade-up">
+    <div class="container">
+      <div class="sec-head" style="margin-bottom: 40px;">
+        <h2>Roadmap</h2>
+      </div>
+      <div style="display: flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--card);">
+        <div style="flex: 1; padding: 24px; border-right: 1px solid var(--line);">
+          <div style="font-family: var(--mono); font-size: 0.75rem; color: var(--reuse); font-weight: 600; margin-bottom: 16px;">A &middot; NOW</div>
+          <h3 style="margin-bottom: 16px; font-size: 1.1rem;">Knowledge layer</h3>
+          <ul style="color: var(--text-2); font-size: 0.9rem; margin-left: 20px;">
+            <li style="margin-bottom: 8px;">Summaries at capture</li>
+            <li style="margin-bottom: 8px;">Meaning-based search</li>
+            <li>MCP server</li>
+          </ul>
+        </div>
+        <div style="flex: 1; padding: 24px; border-right: 1px solid var(--line);">
+          <div style="font-family: var(--mono); font-size: 0.75rem; color: var(--ai); font-weight: 600; margin-bottom: 16px;">B</div>
+          <h3 style="margin-bottom: 16px; font-size: 1.1rem;">AI piece kinds</h3>
+          <ul style="color: var(--text-2); font-size: 0.9rem; margin-left: 20px;">
+            <li style="margin-bottom: 8px;">Prompts as pieces</li>
+            <li>Agent skills</li>
+          </ul>
+        </div>
+        <div style="flex: 1; padding: 24px; border-right: 1px solid var(--line);">
+          <div style="font-family: var(--mono); font-size: 0.75rem; color: var(--text-3); font-weight: 600; margin-bottom: 16px;">C</div>
+          <h3 style="margin-bottom: 16px; font-size: 1.1rem;">Accounting &amp; graph</h3>
+          <ul style="color: var(--text-2); font-size: 0.9rem; margin-left: 20px;">
+            <li style="margin-bottom: 8px;">Token usage tracking</li>
+            <li>Dependency graph</li>
+          </ul>
+        </div>
+        <div style="flex: 1; padding: 24px;">
+          <div style="font-family: var(--mono); font-size: 0.75rem; color: var(--text-3); font-weight: 600; margin-bottom: 16px;">D</div>
+          <h3 style="margin-bottom: 16px; font-size: 1.1rem;">Team scale</h3>
+          <ul style="color: var(--text-2); font-size: 0.9rem; margin-left: 20px;">
+            <li style="margin-bottom: 8px;">Hosted index tier</li>
+            <li>SSO &amp; RBAC</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="alt fade-up">
+    <div class="container" style="max-width: 800px;">
+      <h2 style="margin-bottom: 40px;">FAQ</h2>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <details style="background: var(--card); border: 1px solid var(--line); border-radius: 8px;" open>
+          <summary style="padding: 24px; font-family: var(--display); font-weight: 600; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: space-between;">
+            So what is BricoWerx, in one breath?
+            <span style="color: var(--reuse);">+</span>
+          </summary>
+          <div style="padding: 0 24px 24px; color: var(--text-2); font-size: 0.95rem; line-height: 1.6;">
+            A version-controlled library of your organisation's proven building blocks, with the wiring and the reasoning attached, readable by humans and by AI.
+          </div>
+        </details>
+        
+        <details style="background: var(--card); border: 1px solid var(--line); border-radius: 8px;">
+          <summary style="padding: 24px; font-family: var(--display); font-weight: 600; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: space-between;">
+            Is it a code generator?
+            <span style="color: var(--reuse);">+</span>
+          </summary>
+          <div style="padding: 0 24px 24px; color: var(--text-2); font-size: 0.95rem; line-height: 1.6;">
+            No. It does not generate new code. It finds and retrieves code your team has already written, reviewed, and proven in production.
+          </div>
+        </details>
+
+        <details style="background: var(--card); border: 1px solid var(--line); border-radius: 8px;">
+          <summary style="padding: 24px; font-family: var(--display); font-weight: 600; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: space-between;">
+            Is it a package registry like npm?
+            <span style="color: var(--reuse);">+</span>
+          </summary>
+          <div style="padding: 0 24px 24px; color: var(--text-2); font-size: 0.95rem; line-height: 1.6;">
+            No. It's designed for the "glue code" and internal modules that are too specific or too numerous to publish as formal packages. You copy the pieces into your project and modify them as needed.
+          </div>
+        </details>
+
+        <details style="background: var(--card); border: 1px solid var(--line); border-radius: 8px;">
+          <summary style="padding: 24px; font-family: var(--display); font-weight: 600; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: space-between;">
+            Do I need a server, an account, or a database?
+            <span style="color: var(--reuse);">+</span>
+          </summary>
+          <div style="padding: 0 24px 24px; color: var(--text-2); font-size: 0.95rem; line-height: 1.6;">
+            No. The Vault is just a git repository on your machine. BricoWerx uses a local SQLite index for search. You don't need a central server unless your team grows extremely large.
+          </div>
+        </details>
+
+        <details style="background: var(--card); border: 1px solid var(--line); border-radius: 8px;">
+          <summary style="padding: 24px; font-family: var(--display); font-weight: 600; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: space-between;">
+            Which stacks does it support today?
+            <span style="color: var(--reuse);">+</span>
+          </summary>
+          <div style="padding: 0 24px 24px; color: var(--text-2); font-size: 0.95rem; line-height: 1.6;">
+            It works with any text-based files. The CLI has language-specific understanding for TypeScript, Go, Python, and Rust, allowing it to extract dependencies automatically.
+          </div>
+        </details>
+
+        <details style="background: var(--card); border: 1px solid var(--line); border-radius: 8px;">
+          <summary style="padding: 24px; font-family: var(--display); font-weight: 600; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: space-between;">
+            Where does the name come from?
+            <span style="color: var(--reuse);">+</span>
+          </summary>
+          <div style="padding: 0 24px 24px; color: var(--text-2); font-size: 0.95rem; line-height: 1.6;">
+            From the French word <em>bricolage</em> (/bri.ko.laj/): making something new from whatever is already at hand, and letting the joins show. We apply it to engineering knowledge in the AI era.
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Waitlist -->
+  <section id="launch" class="dark fade-up" style="padding: 100px 0;">
+    <div class="container" style="max-width: 720px; text-align: center;">
+      <h2 style="margin-bottom: 16px;">The Vault opens soon. Be in the first cohort.</h2>
+      <p style="color: var(--on-ink-2); font-size: 1.1rem; margin-bottom: 40px; margin-left: auto; margin-right: auto;">
+        We're finishing Phase A: summaries at capture, meaning-based search, and the MCP server.
+      </p>
+      
+      <form style="display: flex; gap: 12px; max-width: 500px; margin: 0 auto;">
+        <label for="wl-email" class="sr-only" style="display: none;">Work email</label>
+        <input type="email" id="wl-email" placeholder="you@company.com" required style="flex: 1; padding: 14px 20px; border-radius: 6px; border: 1px solid var(--on-ink-2); background: var(--ink-2); color: var(--on-ink); font-family: var(--sans); font-size: 1rem;" />
+        <label for="wl-company" class="sr-only" style="display: none;">Company (optional)</label>
+        <input type="text" id="wl-company" placeholder="Company (optional)" style="display: none;" />
+        <button type="submit" class="btn btn-primary" style="padding: 14px 32px; font-size: 1rem;">Join the waitlist</button>
+      </form>
+      
+      <p style="color: var(--text-3); font-size: 0.85rem; margin-top: 16px; margin-bottom: 32px;">
+        No spam. One email when we open, one when the binary is yours.
+      </p>
+      
+      <div style="display: flex; justify-content: center; gap: 24px; font-size: 0.9rem; color: var(--on-ink-2);">
+        <span><strong style="color: var(--on-ink);">First binary</strong></span>
+        <span><strong style="color: var(--on-ink);">Founding badge</strong></span>
+        <span><strong style="color: var(--on-ink);">A vote on what ships next</strong></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog & Footer -->
+  <footer style="background: var(--paper); border-top: 1px solid var(--line); padding: 80px 0 40px;">
+    <div class="container grid-12">
+      <!-- Blog posts (simplified cards) -->
+      <div style="grid-column: span 12; margin-bottom: 64px;">
+        <h3 style="margin-bottom: 32px; font-size: 1.5rem;">Recent from the blog</h3>
+        <div class="grid-12">
+          <div style="grid-column: span 4; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 24px; transition: transform 0.2s; cursor: pointer;">
+            <div style="font-family: var(--mono); font-size: 0.75rem; color: var(--reuse); margin-bottom: 12px; text-transform: uppercase;">Engineering</div>
+            <h4 style="font-size: 1.1rem; margin-bottom: 8px;">Stop regenerating your auth module</h4>
+            <p style="font-size: 0.9rem; color: var(--text-2); margin-bottom: 16px;">Why LLMs should compose existing pieces instead of writing from scratch.</p>
+            <div style="font-size: 0.8rem; color: var(--text-3);">Oct 12 &middot; 4 min read</div>
+          </div>
+          <div style="grid-column: span 4; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 24px; transition: transform 0.2s; cursor: pointer;">
+            <div style="font-family: var(--mono); font-size: 0.75rem; color: var(--reuse); margin-bottom: 12px; text-transform: uppercase;">Product</div>
+            <h4 style="font-size: 1.1rem; margin-bottom: 8px;">The Model Context Protocol</h4>
+            <p style="font-size: 0.9rem; color: var(--text-2); margin-bottom: 16px;">How we exposed the Vault to Cursor and Claude.</p>
+            <div style="font-size: 0.8rem; color: var(--text-3);">Oct 05 &middot; 6 min read</div>
+          </div>
+          <div style="grid-column: span 4; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 24px; transition: transform 0.2s; cursor: pointer;">
+            <div style="font-family: var(--mono); font-size: 0.75rem; color: var(--reuse); margin-bottom: 12px; text-transform: uppercase;">Design</div>
+            <h4 style="font-size: 1.1rem; margin-bottom: 8px;">Building the new BricoWerx</h4>
+            <p style="font-size: 0.9rem; color: var(--text-2); margin-bottom: 16px;">Our transition to a simpler, more focused landing page.</p>
+            <div style="font-size: 0.8rem; color: var(--text-3);">Sep 28 &middot; 5 min read</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Links & Copyright -->
+      <div style="grid-column: span 12; display: flex; justify-content: space-between; align-items: flex-end; padding-top: 40px; border-top: 1px solid var(--line);">
+        <div style="display: flex; gap: 32px;">
+          <a href="#" style="color: var(--text-2); text-decoration: none; font-size: 0.9rem;">Docs</a>
+          <a href="#" style="color: var(--text-2); text-decoration: none; font-size: 0.9rem;">GitHub</a>
+          <a href="#" style="color: var(--text-2); text-decoration: none; font-size: 0.9rem;">Contact</a>
+          <a href="#" style="color: var(--text-2); text-decoration: none; font-size: 0.9rem;">License</a>
+        </div>
+        <div style="font-family: var(--mono); font-size: 0.8rem; color: var(--text-3);">
+          &copy; BricoWerx. All rights reserved.
+        </div>
+      </div>
+    </div>
+  </footer>
 \n</main>
 
 <script>
