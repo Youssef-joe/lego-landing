@@ -43,9 +43,9 @@ Protection: per-IP rate limit (5 per minute), 4 KB body cap, honeypot field
 
 ## Page wiring
 
-`index.html` reads `data-endpoint` on the waitlist form. Leave it as `/api/waitlist`
-when the binary serves the page. Point it at your API host if the page lives elsewhere,
-and set ALLOWED_ORIGIN on the service to the page's origin.
+The landing page is the Next.js app in `web/`. Its waitlist form is not yet wired to
+this service — it needs to POST to `/api/waitlist` when the binary serves the page,
+or to your API host if the page lives elsewhere, with ALLOWED_ORIGIN set to that origin.
 
 ## Moving to SQLite or Postgres later
 
