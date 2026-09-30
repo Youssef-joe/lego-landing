@@ -5,8 +5,8 @@ import { useState, useEffect, useRef } from 'react';
 export default function Capture() {
   const [playing, setPlaying] = useState(false);
   const [p, setP] = useState(0);
-  const reqRef = useRef<number>();
-  const startRef = useRef<number>();
+  const reqRef = useRef<number | undefined>(undefined);
+  const startRef = useRef<number | undefined>(undefined);
   const containerRef = useRef<HTMLDivElement>(null);
   const hasPlayed = useRef(false);
 
