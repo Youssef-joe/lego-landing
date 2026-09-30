@@ -41,7 +41,7 @@ export default function Hero() {
         </div>
         <div className="container">
           <div className="hero-text" style={{ paddingBottom: '48px' }}>
-            <span className="chip chip-launch">Launching soon · Open source</span>
+            <span className="chip chip-launch">Launching soon · Join the Waitlist</span>
             <BrickText text="Developers don't have to start from scratch." />
             <p className="hero-sub reveal" data-delay="1">Build from your team's existing knowledge, code, and decisions — instead of rebuilding them every time.</p>
             
