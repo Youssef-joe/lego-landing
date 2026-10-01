@@ -59,7 +59,6 @@ export default function Hero() {
                     required 
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    style={{ padding: '12px 20px', borderRadius: '999px', border: '1px solid var(--hairline)', fontSize: '16px', fontFamily: 'var(--ff-body)', background: 'var(--page)' }}
                   />
                   <button type="submit" className="btn-fill hero-submit">Join the waitlist</button>
                 </form>

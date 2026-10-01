@@ -1017,8 +1017,9 @@ h1, h2, h3, h4 { text-align: center; }
   .hero-text { padding: 24px 0 8px; }
   .hero-text h1 { margin-top: 16px; }
   .hero-sub { font-size: 18px; }
-  .hero-form { flex-direction: column; align-items: stretch; }
-  .hero-form input, .hero-submit { width: 100%; }
+  .hero-form { flex-direction: column; align-items: center; max-width: 320px; margin: 0 auto; gap: 10px; }
+  .hero-form input { width: 100%; max-width: 320px; min-height: 44px; padding: 10px 18px; font-size: 15px; }
+  .hero-submit { width: auto; padding: 10px 24px; font-size: 15px; }
 
   .card { border-radius: 24px; padding: 20px; }
   .card-inset { border-radius: 16px; padding: 16px; }
@@ -1046,7 +1047,7 @@ h1, h2, h3, h4 { text-align: center; }
 
   .wl-card { padding: 24px 20px; }
   .waitlist-grid { gap: 32px; }
-  .wl-field input { min-height: 48px; width: 100%; }
+  .wl-field input { min-height: 44px; width: 100%; padding: 10px 16px; font-size: 15px; }
 }
 
 @media (max-width: 560px) {
