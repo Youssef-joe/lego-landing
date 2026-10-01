@@ -32,7 +32,7 @@ export default function HowItWorks() {
           <p className="reveal" style={{ textAlign: "center", margin: "24px auto 0", fontSize: "20px", lineHeight: "1.5", maxWidth: "60ch", color: "var(--body)" } as React.CSSProperties}>Three verbs, one binary. Everything lives in a git folder on your machine called the Vault — no server, no account.</p>
 
           {/* Step 1: Capture */}
-          <div className="card reveal" style={{ marginTop: "64px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px", alignItems: "start" } as React.CSSProperties}>
+          <div className="card reveal how-card" style={{ marginTop: "64px" } as React.CSSProperties}>
             <div>
               <h3>Capture</h3>
               <p style={{ marginTop: "12px" } as React.CSSProperties}>Point BWX at a folder that works. It reads the code, writes the summaries, and versions the result into the Vault as a piece.</p>
@@ -42,11 +42,11 @@ export default function HowItWorks() {
           </div>
 
           {/* Step 2: Find */}
-          <div className="card reveal" style={{ marginTop: "24px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px", alignItems: "start" } as React.CSSProperties}>
+          <div className="card reveal how-card" style={{ marginTop: "24px" } as React.CSSProperties}>
             <div>
               <h3>Find</h3>
               <p style={{ marginTop: "12px" } as React.CSSProperties}>Search by meaning, not by filename. The same index answers a human at the terminal and an assistant over MCP.</p>
-              <div role="tablist" aria-label="Find mode" style={{ display: "flex", gap: "8px", marginTop: "20px" } as React.CSSProperties} id="find-tabs" ref={tabsRef}>
+              <div role="tablist" aria-label="Find mode" className="find-tabs" id="find-tabs" ref={tabsRef}>
                 <button role="tab" aria-selected="true" className="chip" style={{ cursor: "pointer", background: "var(--terracotta)", color: "var(--on-dark)", borderColor: "var(--terracotta)" } as React.CSSProperties} data-tab="find-human">Human</button>
                 <button role="tab" aria-selected="false" className="chip" style={{ cursor: "pointer" } as React.CSSProperties} data-tab="find-ai">AI assistant</button>
               </div>
@@ -74,7 +74,7 @@ export default function HowItWorks() {
           </div>
 
           {/* Step 3: Add */}
-          <div className="card reveal" style={{ marginTop: "24px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px", alignItems: "start" } as React.CSSProperties}>
+          <div className="card reveal how-card" style={{ marginTop: "24px" } as React.CSSProperties}>
             <div>
               <h3>Add</h3>
               <p style={{ marginTop: "12px" } as React.CSSProperties}>One command copies the piece into the project, wires what it can, and prints the steps only you can decide.</p>

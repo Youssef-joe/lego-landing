@@ -32,7 +32,7 @@ export default function Piece() {
             {/* File tree */}
             <div className="card" style={{ background: "var(--wash-sage)" } as React.CSSProperties}>
               <span style={{ fontSize: "14px", fontWeight: "500", color: "var(--terracotta-d)", marginBottom: "16px", display: "block" } as React.CSSProperties}>On disk</span>
-              <div className="card-inset" style={{ fontFamily: "var(--ff-mono)", fontSize: "14px", lineHeight: "2", color: "var(--ink)" } as React.CSSProperties}>
+              <div className="card-inset file-tree" style={{ fontFamily: "var(--ff-mono)", fontSize: "14px", lineHeight: "2", color: "var(--ink)" } as React.CSSProperties}>
                 vault/pieces/auth/0.2.0/<br />
                 ├── card.md&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~50 tokens<br />
                 ├── surface.md&nbsp;&nbsp;&nbsp;~200–400<br />
@@ -47,7 +47,7 @@ export default function Piece() {
 
             {/* Level selector */}
             <div className="card">
-              <div role="tablist" aria-label="Detail level" style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "24px" } as React.CSSProperties} id="level-tabs" ref={tabsRef}>
+              <div role="tablist" aria-label="Detail level" className="level-tabs" id="level-tabs" ref={tabsRef}>
                 <button role="tab" aria-selected="true" className="chip" style={{ cursor: "pointer", background: "var(--terracotta)", color: "var(--on-dark)", borderColor: "var(--terracotta)" } as React.CSSProperties} data-level="card">Card ~50</button>
                 <button role="tab" aria-selected="false" className="chip" style={{ cursor: "pointer" } as React.CSSProperties} data-level="surface">Surface ~200–400</button>
                 <button role="tab" aria-selected="false" className="chip" style={{ cursor: "pointer" } as React.CSSProperties} data-level="summary">Summary ~500</button>
@@ -55,7 +55,7 @@ export default function Piece() {
               </div>
 
               <div id="level-card" className="level-panel">
-                <p style={{ fontFamily: "var(--ff-head)", fontSize: "28px", fontWeight: "500", color: "var(--ink)", lineHeight: "1.2", marginBottom: "20px" } as React.CSSProperties}>"Do we have something for X?"</p>
+                <p className="level-q">"Do we have something for X?"</p>
                 <div className="card-inset" style={{ fontFamily: "var(--ff-mono)", fontSize: "14px", lineHeight: "1.7", color: "var(--ink)" } as React.CSSProperties}>
                   auth@0.2.0<br />
                   JWT + refresh tokens for NestJS services.<br />
@@ -64,22 +64,22 @@ export default function Piece() {
                 </div>
               </div>
               <div id="level-surface" className="level-panel" style={{ display: "none" } as React.CSSProperties}>
-                <p style={{ fontFamily: "var(--ff-head)", fontSize: "28px", fontWeight: "500", color: "var(--ink)", lineHeight: "1.2", marginBottom: "20px" } as React.CSSProperties}>"How do I call it?"</p>
+                <p className="level-q">"How do I call it?"</p>
                 <div className="card-inset" style={{ fontFamily: "var(--ff-mono)", fontSize: "14px", lineHeight: "1.7", color: "var(--ink)" } as React.CSSProperties}>The API signature, exported types, and wiring instructions.</div>
               </div>
               <div id="level-summary" className="level-panel" style={{ display: "none" } as React.CSSProperties}>
-                <p style={{ fontFamily: "var(--ff-head)", fontSize: "28px", fontWeight: "500", color: "var(--ink)", lineHeight: "1.2", marginBottom: "20px" } as React.CSSProperties}>"Why was it built this way?"</p>
+                <p className="level-q">"Why was it built this way?"</p>
                 <div className="card-inset" style={{ fontFamily: "var(--ff-mono)", fontSize: "14px", lineHeight: "1.7", color: "var(--ink)" } as React.CSSProperties}>The human-written or AI-generated explanation of architectural choices.</div>
               </div>
               <div id="level-source" className="level-panel" style={{ display: "none" } as React.CSSProperties}>
-                <p style={{ fontFamily: "var(--ff-head)", fontSize: "28px", fontWeight: "500", color: "var(--ink)", lineHeight: "1.2", marginBottom: "20px" } as React.CSSProperties}>"I need to change it."</p>
+                <p className="level-q">"I need to change it."</p>
                 <div className="card-inset" style={{ fontFamily: "var(--ff-mono)", fontSize: "14px", lineHeight: "1.7", color: "var(--ink)" } as React.CSSProperties}>The actual code files. Read only when a modification is necessary.</div>
               </div>
             </div>
           </div>
 
           {/* Level questions */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: "24px", marginTop: "32px", maxWidth: "640px", marginLeft: "auto", marginRight: "auto" } as React.CSSProperties} className="reveal">
+          <div className="reveal level-qa">
             <div style={{ textAlign: "center" } as React.CSSProperties}>
               <span style={{ fontFamily: "var(--ff-head)", fontWeight: "500", color: "var(--ink)" } as React.CSSProperties}>Surface</span>
               <p style={{ fontSize: "15px", marginTop: "4px" } as React.CSSProperties}>"How do I call it?"</p>

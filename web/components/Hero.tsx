@@ -52,16 +52,16 @@ export default function Hero() {
                   You're on the list
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '12px', width: '100%', flexWrap: 'wrap' }}>
+                <form onSubmit={handleSubmit} className="hero-form">
                   <input 
                     type="email" 
                     placeholder="Work email" 
                     required 
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    style={{ flex: '1 1 200px', padding: '12px 20px', borderRadius: '999px', border: '1px solid var(--hairline)', fontSize: '16px', fontFamily: 'var(--ff-body)', background: 'var(--page)' }}
+                    style={{ padding: '12px 20px', borderRadius: '999px', border: '1px solid var(--hairline)', fontSize: '16px', fontFamily: 'var(--ff-body)', background: 'var(--page)' }}
                   />
-                  <button type="submit" className="btn-fill" style={{ flex: '0 0 auto' }}>Join the waitlist</button>
+                  <button type="submit" className="btn-fill hero-submit">Join the waitlist</button>
                 </form>
               )}
               
@@ -70,14 +70,14 @@ export default function Hero() {
         </div>
 
         {/* Static Library Graphic */}
-        <div style={{ position: 'relative', width: '100%', maxWidth: '1200px', margin: '0 auto', height: '400px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div className="hero-vault">
           
-          <div className="library reveal" data-delay="3" style={{ position: 'relative', left: 'auto', top: 'auto', transform: 'none', zIndex: 10, width: '400px' }}>
+          <div className="library reveal" data-delay="3" style={{ position: 'relative', left: 'auto', top: 'auto', transform: 'none', zIndex: 10, width: '400px', maxWidth: '100%' }}>
             <div className="library-head">
               <span>Your library</span>
               <code>vault/pieces</code>
             </div>
-            <div className="stagger-in" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', marginBottom: '20px' }}>
+            <div className="stagger-in vault-grid">
               {pieces.map((p, i) => (
                 <div key={i} style={{ padding: '12px 10px', background: 'rgba(255,255,255,0.06)', borderRadius: '12px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
                   <code style={{ fontSize: '12px', color: 'var(--code-accent)' }}>{p.name}</code>

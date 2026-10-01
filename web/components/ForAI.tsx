@@ -20,7 +20,7 @@ const TOOLS = [
 
 const traceRowStyle = { display: 'flex', gap: '16px' } as React.CSSProperties;
 const labelStyle = (color: string) => ({ color, minWidth: '56px' }) as React.CSSProperties;
-const tokStyle = { marginLeft: 'auto', color: 'var(--on-dark-3)' } as React.CSSProperties;
+const tokStyle = { color: 'var(--on-dark-3)' } as React.CSSProperties;
 
 const statCardStyle = {
   background: 'rgba(255,255,255,0.06)',
@@ -50,8 +50,8 @@ export default function ForAI() {
             {/* 4 tool cards */}
             <div className="ai-tools" style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: '16px', marginTop: '48px' } as React.CSSProperties}>
               {TOOLS.map(([sig, desc]) => (
-                <div key={sig} style={toolCardStyle}>
-                  <code style={toolSigStyle}>{sig}</code>
+                <div key={sig} className="tool-card" style={toolCardStyle}>
+                  <code className="tool-sig" style={toolSigStyle}>{sig}</code>
                   <p style={{ fontSize: '15px' } as React.CSSProperties}>{desc}</p>
                 </div>
               ))}
@@ -63,21 +63,21 @@ export default function ForAI() {
                 One exchange
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontFamily: 'var(--ff-mono)', fontSize: '14px', lineHeight: '1.7' } as React.CSSProperties}>
-                <div style={traceRowStyle}>
+                <div className="trace-row" style={traceRowStyle}>
                   <span style={labelStyle('var(--on-dark-3)')}>DEV →</span>
                   <span style={{ color: 'var(--on-dark)' } as React.CSSProperties}>&quot;add jwt auth to the billing service&quot;</span>
                 </div>
-                <div style={traceRowStyle}>
+                <div className="trace-row" style={traceRowStyle}>
                   <span style={labelStyle('var(--code-accent)')}>TOOL →</span>
                   <span style={{ color: 'var(--on-dark-3)' } as React.CSSProperties}>plan_reuse(&quot;jwt auth, nest&quot;)</span>
-                  <span style={tokStyle}>· 38 tok</span>
+                  <span className="trace-tok" style={tokStyle}>· 38 tok</span>
                 </div>
-                <div style={traceRowStyle}>
+                <div className="trace-row" style={traceRowStyle}>
                   <span style={labelStyle('var(--terracotta)')}>VAULT →</span>
                   <span style={{ color: 'var(--on-dark-3)' } as React.CSSProperties}>auth@0.2.0 · card + surface</span>
-                  <span style={tokStyle}>· 244 tok</span>
+                  <span className="trace-tok" style={tokStyle}>· 244 tok</span>
                 </div>
-                <div style={traceRowStyle}>
+                <div className="trace-row" style={traceRowStyle}>
                   <span style={labelStyle('var(--code-accent)')}>TOOL →</span>
                   <span style={{ color: 'var(--on-dark-3)' } as React.CSSProperties}>&quot;reuse auth@0.2.0; new: billing webhooks&quot;</span>
                 </div>

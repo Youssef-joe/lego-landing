@@ -16,7 +16,7 @@ export default function Footer() {
             <div className="footer-col">
               <h4>Product</h4>
               <ul>
-                <li><a href="#why">Why BricoWerx</a></li>
+                <li><a href="#problem">Why BricoWerx</a></li>
                 <li><a href="#how">How it works</a></li>
                 <li><a href="#ai">For AI assistants</a></li>
                 <li><a href="#inside">Architecture</a></li>

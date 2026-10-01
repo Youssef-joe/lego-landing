@@ -98,7 +98,7 @@ export default function Capture() {
       <div className="cap-card" style={{ '--pp': s4, left: '70px', top: '150px', '--dx': '120', '--dy': '-30', '--c': 'var(--terracotta)' } as any}><span className="ico"></span>auth.module.ts</div>
 
       {/* the folder */}
-      <div style={{ position: 'absolute', right: '16px', top: '40px', width: '160px', opacity: p > 0.1 ? Math.min((p - 0.1) * 3, 1) : 0, transition: 'opacity 0.2s', zIndex: 5 }}>
+      <div className="cap-vault" style={{ opacity: p > 0.1 ? Math.min((p - 0.1) * 3, 1) : 0 }}>
         <div style={{ background: 'var(--wash-warm)', borderRadius: '12px', padding: '12px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
             <strong style={{ fontFamily: 'var(--ff-head)', fontSize: '12px', color: 'var(--ink)' }}>Vault</strong>
@@ -116,7 +116,7 @@ export default function Capture() {
       </div>
       
       {/* steps indicator overlay */}
-      <div style={{ position: 'absolute', top: '16px', right: '16px', display: 'flex', flexDirection: 'column', gap: '4px', zIndex: 6 }}>
+      <div className="cap-steps-overlay">
         <div style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '999px', background: active === 0 ? 'var(--espresso)' : 'rgba(0,0,0,0.4)', color: active === 0 ? '#fff' : 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.1)', transition: 'all 0.3s' }}>01 Build</div>
         <div style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '999px', background: active === 1 ? 'var(--espresso)' : 'rgba(0,0,0,0.4)', color: active === 1 ? '#fff' : 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.1)', transition: 'all 0.3s' }}>02 Capture</div>
         <div style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '999px', background: active === 2 ? 'var(--espresso)' : 'rgba(0,0,0,0.4)', color: active === 2 ? '#fff' : 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.1)', transition: 'all 0.3s' }}>03 Piece</div>

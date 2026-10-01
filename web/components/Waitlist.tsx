@@ -40,7 +40,7 @@ export default function Waitlist() {
                 <span className="chip">A vote on what ships next</span>
               </div>
             </div>
-            <div className="card" style={{ color: "var(--ink)", padding: "40px" } as React.CSSProperties}>
+            <div className="card wl-card" style={{ color: "var(--ink)" } as React.CSSProperties}>
               <form className="wl-form" id="waitlist-form" noValidate onSubmit={onSubmit} style={{ display: joined ? "none" : undefined } as React.CSSProperties}>
                 <div className={invalid ? "wl-field has-error" : "wl-field"}>
                   <label htmlFor="wl-email">Work email</label>
@@ -49,7 +49,7 @@ export default function Waitlist() {
                 </div>
                 <div className="wl-field">
                   <label htmlFor="wl-company">Company (optional)</label>
-                  <input type="text" id="wl-company" />
+                  <input type="text" id="wl-company" name="company" autoComplete="organization" />
                 </div>
                 <button type="submit" className="btn-fill" style={{ marginTop: "8px" } as React.CSSProperties} id="wl-submit" disabled={submitting}>{submitting ? "Joining\u2026" : "Join the waitlist"}</button>
                 <p className="wl-micro" style={{ textAlign: "center", marginTop: "8px" } as React.CSSProperties}>No spam. One email when we open, one when the binary is yours.</p>

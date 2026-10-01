@@ -952,3 +952,116 @@ h1, h2, h3, h4 { text-align: center; }
 .container > p, .band-dark > p, .hero-after > p, .section-eyebrow {
   margin-left: auto; margin-right: auto;
 }
+
+/* ========== LAYOUT CLASSES (moved out of inline styles so they can respond) ========== */
+.hero-form { display: flex; gap: 12px; width: 100%; flex-wrap: wrap; }
+.hero-form input {
+  flex: 1 1 220px; min-width: 0; min-height: 48px;
+  padding: 12px 20px; border-radius: 999px; border: 1px solid var(--hairline);
+  font-size: 16px; font-family: var(--ff-body); background: var(--page); color: var(--ink);
+}
+.hero-submit { flex: 0 0 auto; white-space: nowrap; }
+.hero-vault {
+  position: relative; width: 100%; max-width: 1200px; margin: 0 auto;
+  min-height: 360px; display: flex; justify-content: center; align-items: center;
+  padding: 0 24px;
+}
+.vault-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+.vault-grid > div { min-width: 0; }
+.vault-grid code { overflow-wrap: anywhere; }
+
+.how-card { display: grid; grid-template-columns: 1fr; gap: 28px; align-items: start; }
+@media (min-width: 900px) { .how-card { grid-template-columns: 1fr 1fr; gap: 40px; } }
+.find-tabs { display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap; justify-content: center; }
+
+.level-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; justify-content: center; }
+.level-q {
+  font-family: var(--ff-head); font-size: clamp(1.4rem, 4.5vw, 1.75rem);
+  font-weight: 500; color: var(--ink); line-height: 1.2; margin-bottom: 20px;
+}
+.level-qa {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+  margin-top: 32px; max-width: 640px; margin-left: auto; margin-right: auto;
+}
+.file-tree { overflow-x: auto; }
+
+.tool-card { min-width: 0; }
+.tool-sig { overflow-wrap: anywhere; word-break: break-word; }
+.trace-row { display: flex; gap: 16px; }
+.trace-row > span:nth-child(2) { min-width: 0; }
+.trace-tok { margin-left: auto; color: var(--on-dark-3); flex: none; }
+
+.cap-steps-overlay {
+  position: absolute; top: 16px; right: 16px;
+  display: flex; flex-direction: column; gap: 4px; z-index: 6;
+}
+.cap-vault {
+  position: absolute; right: 16px; top: 40px; width: 160px;
+  z-index: 5; transition: opacity 0.2s;
+}
+
+.wl-card { padding: 40px; }
+
+/* ========== MOBILE PASS ========== */
+#hero { overflow: clip; }
+
+@media (max-width: 760px) {
+  .container { padding: 0 20px; }
+  section { scroll-margin-top: 64px; }
+  .section-gap { padding: 40px 0; }
+
+  h1 { font-size: clamp(2.3rem, 11vw, 3.2rem); }
+  h2 { font-size: clamp(1.7rem, 7.5vw, 2.4rem); }
+  .h2-sm { font-size: clamp(1.6rem, 7vw, 2.2rem); }
+
+  .hero-text { padding: 24px 0 8px; }
+  .hero-text h1 { margin-top: 16px; }
+  .hero-sub { font-size: 18px; }
+  .hero-form { flex-direction: column; align-items: stretch; }
+  .hero-form input, .hero-submit { width: 100%; }
+
+  .card { border-radius: 24px; padding: 20px; }
+  .card-inset { border-radius: 16px; padding: 16px; }
+
+  .term { font-size: 13px; border-radius: 16px; }
+  .term-body { padding: 16px; overflow-x: auto; }
+  .term-body > div { overflow-wrap: anywhere; }
+
+  .band-dark { border-radius: 24px; padding: 32px 20px; }
+
+  .sage-bar { border-radius: 24px; text-align: center; font-size: 15px; padding: 16px 20px; }
+  .proof-card { padding: 28px 20px; }
+  .proof-num { font-size: clamp(2.4rem, 10vw, 3rem); }
+
+  .level-qa { grid-template-columns: 1fr; gap: 16px; }
+  .level-tabs .chip { padding: 8px 14px; font-size: 13px; }
+
+  .trace-row { flex-wrap: wrap; gap: 2px 12px; font-size: 13px; }
+  .trace-tok { margin-left: 0; }
+  .tool-sig { font-size: 13.5px; }
+
+  .faq-btn { justify-content: flex-start; text-align: left; padding: 18px 52px 18px 20px; }
+  .faq-btn::after { right: 18px; }
+  .faq-answer { padding: 0 20px; }
+
+  .wl-card { padding: 24px 20px; }
+  .waitlist-grid { gap: 32px; }
+  .wl-field input { min-height: 48px; width: 100%; }
+}
+
+@media (max-width: 560px) {
+  .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+  .footer-bottom { justify-content: center; text-align: center; }
+  /* steps pills overlap the vault folder in a 320px box — hide them, the
+     command bar already narrates the state (idle / capturing / done) */
+  .cap-steps-overlay { display: none; }
+  .cap-vault { width: 128px; right: 12px; top: auto; bottom: 60px; }
+}
+
+@media (max-width: 480px) {
+  /* 3-up tiles squeeze names like "feature-flags" — go 2-up */
+  .vault-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .nav { height: 64px; }
+  .nav-brand span { font-size: 18px; }
+  .nav-cta .btn-fill { padding: 8px 16px; font-size: 14px; }
+}
