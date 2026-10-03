@@ -2,12 +2,14 @@
 
 import { useState } from 'react';
 import BrickText from '@/components/BrickText';
+import SignupSuccessModal from '@/components/SignupSuccessModal';
 import { submitWaitlist } from '@/lib/waitlist/client';
 
 export default function Hero() {
   const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [status, setStatus] = useState<'idle' | 'sending' | 'error'>('idle');
   const [error, setError] = useState('');
+  const [celebrating, setCelebrating] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,7 +18,9 @@ export default function Hero() {
     setError('');
     const result = await submitWaitlist({ email, source: 'hero' });
     if (result.ok) {
-      setStatus('success');
+      setCelebrating(email.trim());
+      setEmail('');
+      setStatus('idle');
     } else {
       setError(result.error);
       setStatus('error');
@@ -57,14 +61,8 @@ export default function Hero() {
             <p className="hero-sub reveal" data-delay="1">Build from your team's existing knowledge, code, and decisions — instead of rebuilding them every time.</p>
             
             <div className="reveal" data-delay="2" style={{ marginTop: '32px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px', width: '100%', maxWidth: '480px' }}>
-              {status === 'success' ? (
-                <div className="pop-in" style={{ padding: '16px 24px', background: 'var(--wash-sage)', color: 'var(--sage)', borderRadius: '999px', fontWeight: '500', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  You're on the list
-                </div>
-              ) : (
-                <>
-                <form onSubmit={handleSubmit} className="hero-form">
+              <>
+              <form onSubmit={handleSubmit} className="hero-form">
                   <input 
                     type="email" 
                     placeholder="Work email" 
@@ -79,7 +77,7 @@ export default function Hero() {
                   <p style={{ color: '#b3261e', fontSize: '14px' }}>{error}</p>
                 )}
                 </>
-              )}
+              <SignupSuccessModal email={celebrating} open={celebrating !== ''} onClose={() => setCelebrating('')} />
               
             </div>
           </div>

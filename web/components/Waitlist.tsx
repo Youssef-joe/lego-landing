@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, type FormEvent } from 'react';
+import SignupSuccessModal from '@/components/SignupSuccessModal';
 import { submitWaitlist } from '@/lib/waitlist/client';
 
 export default function Waitlist() {
@@ -8,6 +9,7 @@ export default function Waitlist() {
   const [submitting, setSubmitting] = useState(false);
   const [joined, setJoined] = useState(false);
   const [submitError, setSubmitError] = useState('');
+  const [celebrating, setCelebrating] = useState('');
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,6 +29,8 @@ export default function Waitlist() {
     setSubmitting(false);
     if (result.ok) {
       setJoined(true);
+      setCelebrating(email);
+      form.reset();
     } else {
       setSubmitError(result.error);
     }
@@ -70,6 +74,7 @@ export default function Waitlist() {
           </div>
         </div>
       </section>
+      <SignupSuccessModal email={celebrating} open={celebrating !== ''} onClose={() => setCelebrating('')} />
     </>
   );
 }
