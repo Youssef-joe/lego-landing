@@ -27,6 +27,7 @@ export default function Nav() {
               <li><a href="#problem">For leaders</a></li>
               <li><a href="#how">How it works</a></li>
               <li><a href="#ai">For AI</a></li>
+              <li><a href="/builder">Builder</a></li>
             </ul>
           </nav>
           <div className="nav-cta">

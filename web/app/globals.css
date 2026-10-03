@@ -1017,9 +1017,9 @@ h1, h2, h3, h4 { text-align: center; }
   .hero-text { padding: 24px 0 8px; }
   .hero-text h1 { margin-top: 16px; }
   .hero-sub { font-size: 18px; }
-  .hero-form { flex-direction: column; align-items: center; max-width: 320px; margin: 0 auto; gap: 10px; }
-  .hero-form input { width: 100%; max-width: 320px; min-height: 44px; padding: 10px 18px; font-size: 15px; }
-  .hero-submit { width: auto; padding: 10px 24px; font-size: 15px; }
+  .hero-form { flex-direction: column; align-items: center; max-width: 320px; margin: 0 auto; gap: 10px; flex-wrap: nowrap; }
+  .hero-form input { flex: 0 0 auto; width: 100%; max-width: 320px; min-height: 0; height: 44px; padding: 0 18px; font-size: 15px; }
+  .hero-submit { flex: 0 0 auto; width: auto; padding: 10px 24px; font-size: 15px; }
 
   .card { border-radius: 24px; padding: 20px; }
   .card-inset { border-radius: 16px; padding: 16px; }
@@ -1065,4 +1065,14 @@ h1, h2, h3, h4 { text-align: center; }
   .nav { height: 64px; }
   .nav-brand span { font-size: 18px; }
   .nav-cta .btn-fill { padding: 8px 16px; font-size: 14px; }
+}
+
+/* ---- BRICO Builder (Tailwind utilities, preflight off) ---- */
+@tailwind components;
+@tailwind utilities;
+
+/* Builder-only dotted backdrop; unique name, no landing collisions. */
+.brutal-grid {
+  background-size: 20px 20px;
+  background-image: radial-gradient(circle, rgba(110, 100, 90, 0.15) 1.5px, transparent 1.5px);
 }
