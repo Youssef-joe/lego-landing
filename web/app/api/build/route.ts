@@ -1,12 +1,13 @@
 import { generateText } from 'ai';
 import fs from 'fs/promises';
 import path from 'path';
-import { parseAndWriteFiles } from '../../../lib/ai/file-writer';
+import { isReadOnlyFsError, writeModuleFiles } from '../../../lib/ai/file-writer';
 import { assertBuilderConfiguration, getBuilderModel } from '../../../lib/ai/model';
-import { HarnessError } from '../../../lib/ai/builder-harness';
+import { HarnessError, parseGeneratedFiles, validateGeneratedFiles } from '../../../lib/ai/builder-harness';
 import { guardBuilderRequest } from '../../../lib/ai/request-guard';
 
-export const maxDuration = 300;
+// Hobby serverless ceiling is 60s; longer values fail the deployment.
+export const maxDuration = 60;
 
 export async function POST(req: Request) {
   try {
@@ -68,15 +69,30 @@ BEGIN GENERATION NOW.`;
     });
 
     console.log('[AI Builder] Compilation finished, parsing files...');
-    
-    // Parse the result
-    const filesWritten = await parseAndWriteFiles(result.text);
 
-    return Response.json({
-      success: true, 
-      message: 'Deployed successfully',
-      files: filesWritten 
-    });
+    // Validate first: malformed output is a 422 either way.
+    const files = validateGeneratedFiles(parseGeneratedFiles(result.text));
+
+    try {
+      const filesWritten = await writeModuleFiles(files);
+      return Response.json({
+        success: true,
+        persisted: true,
+        message: 'Deployed successfully',
+        files: filesWritten,
+      });
+    } catch (e: any) {
+      if (!isReadOnlyFsError(e)) throw e;
+      // Serverless filesystems are read-only: hand the module back as
+      // downloadable content instead of failing the build.
+      console.log('[AI Builder] Read-only FS, returning files for download.');
+      return Response.json({
+        success: true,
+        persisted: false,
+        message: 'Generated successfully — download the files below (hosting is read-only).',
+        files: files.map((f) => ({ path: f.path, content: f.content })),
+      });
+    }
   } catch (error: any) {
     console.error('[AI Builder] Build Error:', error);
     if (error instanceof HarnessError) return Response.json({ error: 'Generated module failed safety checks.', issues: error.issues }, { status: 422 });

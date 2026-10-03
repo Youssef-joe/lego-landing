@@ -3,8 +3,8 @@ import { getSystemPrompt } from '../../../lib/ai/system-prompt';
 import { assertBuilderConfiguration, getBuilderModel } from '../../../lib/ai/model';
 import { guardBuilderRequest } from '../../../lib/ai/request-guard';
 
-// Allow streaming responses up to 5 minutes
-export const maxDuration = 300;
+// Hobby serverless ceiling is 60s; longer values fail the deployment.
+export const maxDuration = 60;
 
 export async function POST(req: Request) {
   try {

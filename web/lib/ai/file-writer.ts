@@ -2,6 +2,13 @@ import fs from 'fs/promises';
 import path from 'path';
 import { GeneratedFile, HarnessError, parseGeneratedFiles, validateGeneratedFiles } from './builder-harness';
 
+export function isReadOnlyFsError(e: any) {
+  // Serverless filesystems (e.g. Vercel /var/task) reject writes. When the
+  // disk is read-only the caller should return the files instead of failing.
+  return e && typeof e.code === 'string' &&
+    ['EROFS', 'EACCES', 'EPERM', 'ENOSPC', 'ENOENT'].includes(e.code);
+}
+
 export async function writeModuleFiles(files: { path: string, content: string }[]): Promise<number> {
   const safeFiles = validateGeneratedFiles(files);
   if (process.env['BRICO_BUILDER_ALLOW_OVERWRITE'] !== 'true') {

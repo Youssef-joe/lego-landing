@@ -14,18 +14,36 @@ export default function ChatClient() {
   
   const [isBuilding, setIsBuilding] = useState(false);
   const [buildSuccess, setBuildSuccess] = useState(false);
+  const [downloadFiles, setDownloadFiles] = useState<Array<{ path: string; content: string }> | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll to bottom
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, isBuilding, buildSuccess]);
+  }, [messages, isBuilding, buildSuccess, downloadFiles]);
+
+  const downloadFile = (file: { path: string; content: string }) => {
+    const blob = new Blob([file.content], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = file.path.split('/').pop() || 'module.txt';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  };
+
+  const downloadAll = () => {
+    downloadFiles?.forEach((f, i) => setTimeout(() => downloadFile(f), i * 300));
+  };
 
   const handleBuild = async () => {
     if (messages.length === 0) return;
     
     setIsBuilding(true);
     setBuildSuccess(false);
+    setDownloadFiles(null);
     
     try {
       const response = await fetch('/api/build', {
@@ -36,8 +54,13 @@ export default function ChatClient() {
       
       const data = await response.json();
       if (response.ok) {
-        setBuildSuccess(true);
-        router.refresh();
+        if (data.persisted === false && Array.isArray(data.files)) {
+          // Read-only hosting (e.g. production): files come back for download.
+          setDownloadFiles(data.files);
+        } else {
+          setBuildSuccess(true);
+          router.refresh();
+        }
       } else {
         alert('Build Failed: ' + data.error);
       }
@@ -125,6 +148,43 @@ export default function ChatClient() {
                   System synchronized successfully.
                 </div>
               )}
+            </div>
+          </div>
+        )}
+
+        {/* Read-only hosting: generated files come back for download */}
+        {downloadFiles && downloadFiles.length > 0 && (
+          <div className="flex flex-col gap-4 items-start mt-6">
+            <div className="w-full max-w-[85%] border-4 border-brico-ink bg-white text-brico-ink shadow-brutal p-5">
+              <div className="flex items-center justify-between gap-3 border-b-4 border-brico-ink pb-3 mb-3">
+                <h4 className="font-mono font-black uppercase text-lg tracking-wider">
+                  Module ready · {downloadFiles.length} {downloadFiles.length === 1 ? 'file' : 'files'}
+                </h4>
+                <button
+                  type="button"
+                  onClick={downloadAll}
+                  className="bg-brico-ink text-brico-paper font-mono font-black uppercase text-xs px-3 py-2 border-2 border-brico-ink"
+                >
+                  All ↓
+                </button>
+              </div>
+              <p className="font-mono font-bold text-xs mb-3 uppercase">
+                Hosting is read-only — save these into src/features/ yourself.
+              </p>
+              <ul className="space-y-2 max-h-64 overflow-y-auto">
+                {downloadFiles.map((f) => (
+                  <li key={f.path} className="flex items-center justify-between gap-2 border-2 border-brico-ink bg-brico-paper px-3 py-2">
+                    <span className="font-mono font-bold text-xs truncate">{f.path}</span>
+                    <button
+                      type="button"
+                      onClick={() => downloadFile(f)}
+                      className="shrink-0 bg-brico-green text-white font-mono font-black uppercase text-xs px-3 py-1 border-2 border-brico-ink"
+                    >
+                      ↓
+                    </button>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         )}
