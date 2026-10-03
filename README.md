@@ -44,7 +44,9 @@ Open `http://localhost:3000`.
 - Environment variables (Vercel → Project Settings → Environment Variables):
   - `ADMIN_TOKEN` — required. Token for the `/admin` login (view + CSV export). Pick a long random string.
   - `KV_REST_API_URL` / `KV_REST_API_TOKEN` — required in production. Create a KV database in Vercel (Storage tab); both vars are auto-wired. Without them the app falls back to a local `.data/waitlist.jsonl` file, which does **not** persist on serverless — local dev only.
-  - Builder AI: `BRICO_AI_PROVIDER=openrouter`, `OPENROUTER_API_KEY`, `BRICO_AI_MODEL=openrouter/free`, `BRICO_APP_URL=https://<your-domain>`.
+  - `NEXT_PUBLIC_BUILDER_URL` — optional, defaults to `https://builder.bricowerx.com`.
+
+The Builder itself runs on its own server at `builder.bricowerx.com` (it needs long builds, a compiler and a test runner, which serverless hosting cannot provide). This site's `/builder` page explains it, links to it, and shows its live Vault from `GET /api/bricks`, refreshed every 5 minutes. Old `/builder/app` links redirect there.
 
 Waitlist API: `POST /api/waitlist` (`{email, company?, source?}`), `GET /api/waitlist/count`. Admin: `/admin` (token login) lists signups with CSV export. Rate-limited per instance; deduped by email.
 

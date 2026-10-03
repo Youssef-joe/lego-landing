@@ -1,23 +1,10 @@
 import Link from 'next/link';
-import fs from 'fs/promises';
-import path from 'path';
+import { BUILDER_URL, fetchVault } from '../../lib/builder';
 
-export const dynamic = 'force-dynamic';
+// The Vault list comes from the live Builder; refresh it every few minutes.
+export const revalidate = 300;
 
-const RESERVED = new Set(['domain', 'host', 'ui', 'host-contract']);
-
-async function getAvailableBricks(): Promise<string[]> {
-  try {
-    const featuresDir = path.join(process.cwd(), 'src', 'features');
-    const dirs = await fs.readdir(featuresDir, { withFileTypes: true });
-    return dirs
-      .filter((d) => d.isDirectory() && !RESERVED.has(d.name) && !d.name.startsWith('_') && !d.name.startsWith('.'))
-      .map((d) => d.name)
-      .sort();
-  } catch {
-    return [];
-  }
-}
+const STATUS = { ok: 'Verified', partial: 'Has stubs', legacy: 'Hand-made' } as const;
 
 const THEMES = [
   { bg: 'bg-brico-red', text: 'text-brico-paper' },
@@ -52,7 +39,7 @@ const STEPS = [
 ];
 
 export default async function BuilderLanding() {
-  const bricks = await getAvailableBricks();
+  const bricks = await fetchVault();
 
   return (
     <div className="min-h-screen w-full bg-brico-paper text-brico-ink font-sans brutal-grid">
@@ -82,12 +69,12 @@ export default async function BuilderLanding() {
             <span className="hidden font-mono text-xs font-black uppercase sm:inline">
               {bricks.length} {bricks.length === 1 ? 'module' : 'modules'} live
             </span>
-            <Link
-              href="/builder/app"
+            <a
+              href={`${BUILDER_URL}/builder`}
               className="border-2 border-brico-ink bg-brico-ink px-4 py-2 font-mono text-xs font-black uppercase tracking-widest text-brico-paper shadow-brutal-sm transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none"
             >
               Open Builder →
-            </Link>
+            </a>
           </div>
         </div>
       </nav>
@@ -111,12 +98,12 @@ export default async function BuilderLanding() {
             No boilerplate. Each one lands in the Vault, ready to drop into any app.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
-            <Link
-              href="/builder/app"
+            <a
+              href={`${BUILDER_URL}/builder`}
               className="border-4 border-brico-ink bg-brico-blue px-8 py-4 font-mono text-lg font-black uppercase tracking-widest text-white shadow-brutal transition-all hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none"
             >
               Start building
-            </Link>
+            </a>
             <a
               href="#vault"
               className="border-4 border-brico-ink bg-white px-8 py-4 font-mono text-lg font-black uppercase tracking-widest shadow-brutal transition-all hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none"
@@ -229,33 +216,33 @@ export default async function BuilderLanding() {
                 Every finished build lands here. Open the Builder to create one, or remix an idea into a new module.
               </p>
             </div>
-            <Link
-              href="/builder/app"
+            <a
+              href={`${BUILDER_URL}/builder`}
               className="border-2 border-brico-ink bg-brico-ink px-4 py-2 font-mono text-xs font-black uppercase tracking-widest text-brico-paper shadow-brutal-sm transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none"
             >
               + New module
-            </Link>
+            </a>
           </div>
 
           {bricks.length === 0 ? (
             <div className="mt-8 border-4 border-brico-ink bg-white p-10 text-center shadow-brutal">
               <p className="font-serif text-2xl font-black uppercase">Vault empty</p>
               <p className="mt-2 font-mono font-bold">Start a build sequence in the forge to deploy the first module.</p>
-              <Link
-                href="/builder/app"
+              <a
+              href={`${BUILDER_URL}/builder`}
                 className="mt-6 inline-block border-4 border-brico-ink bg-brico-yellow px-6 py-3 font-mono font-black uppercase shadow-brutal"
               >
                 Open Builder
-              </Link>
+              </a>
             </div>
           ) : (
             <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {bricks.map((brick, i) => {
                 const theme = THEMES[i % THEMES.length]!;
                 return (
-                  <Link
-                    key={brick}
-                    href="/builder/app"
+                  <a
+                    key={brick.name}
+                    href={`${BUILDER_URL}/bricks/${brick.name}`}
                     className="group flex flex-col border-4 border-brico-ink bg-brico-paper p-6 shadow-brutal transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none"
                   >
                     <div className="mb-6 flex items-start justify-between">
@@ -266,15 +253,15 @@ export default async function BuilderLanding() {
                       </div>
                       <span className="flex items-center gap-2 border-2 border-brico-ink bg-white px-2 py-1">
                         <span className="h-2.5 w-2.5 border border-brico-ink bg-brico-green" />
-                        <span className="font-mono text-[10px] font-black uppercase tracking-widest">Live</span>
+                        <span className="font-mono text-[10px] font-black uppercase tracking-widest">{STATUS[brick.status]}</span>
                       </span>
                     </div>
-                    <h3 className="font-serif text-xl font-black capitalize">{brick.replace(/-/g, ' ')}</h3>
-                    <p className="mt-1 truncate font-mono text-xs font-bold text-brico-ink-soft">{brick}</p>
+                    <h3 className="font-serif text-xl font-black capitalize">{brick.title}</h3>
+                    <p className="mt-1 truncate font-mono text-xs font-bold text-brico-ink-soft">{brick.name}</p>
                     <span className="mt-4 inline-block font-mono text-xs font-black uppercase tracking-widest underline decoration-2 underline-offset-4 group-hover:bg-brico-yellow">
-                      Remix in Builder →
+                      Open in Builder →
                     </span>
-                  </Link>
+                  </a>
                 );
               })}
             </div>
@@ -289,12 +276,12 @@ export default async function BuilderLanding() {
             <p className="font-serif text-2xl font-black uppercase">Ready to forge one?</p>
             <p className="mt-1 font-mono text-sm font-bold uppercase">Describe it. Agree it. Deploy it.</p>
           </div>
-          <Link
-            href="/builder/app"
+          <a
+              href={`${BUILDER_URL}/builder`}
             className="border-4 border-brico-ink bg-brico-ink px-8 py-4 font-mono text-lg font-black uppercase tracking-widest text-brico-paper shadow-brutal transition-all hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none"
           >
             Launch Builder →
-          </Link>
+          </a>
         </div>
       </footer>
     </div>
