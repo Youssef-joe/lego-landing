@@ -1,15 +1,19 @@
 'use client';
 
 import { useState, type FormEvent } from 'react';
+import { submitWaitlist } from '@/lib/waitlist/client';
 
 export default function Waitlist() {
   const [invalid, setInvalid] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [joined, setJoined] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const email = String(new FormData(e.currentTarget).get('email') ?? '').trim();
+    const form = e.currentTarget;
+    const email = String(new FormData(form).get('email') ?? '').trim();
+    const company = String(new FormData(form).get('company') ?? '').trim();
 
     if (!email || !email.includes('@') || !email.includes('.')) {
       setInvalid(true);
@@ -17,13 +21,15 @@ export default function Waitlist() {
     }
     setInvalid(false);
     setSubmitting(true);
+    setSubmitError('');
 
-    // Still simulated, exactly as the original page was. Point this at the Go
-    // waitlist service in ../waitlist when you want it to actually record.
-    setTimeout(() => {
-      setSubmitting(false);
+    const result = await submitWaitlist({ email, company, source: 'launch' });
+    setSubmitting(false);
+    if (result.ok) {
       setJoined(true);
-    }, 800);
+    } else {
+      setSubmitError(result.error);
+    }
   };
 
   return (
@@ -52,6 +58,7 @@ export default function Waitlist() {
                   <input type="text" id="wl-company" name="company" autoComplete="organization" />
                 </div>
                 <button type="submit" className="btn-fill" style={{ marginTop: "8px" } as React.CSSProperties} id="wl-submit" disabled={submitting}>{submitting ? "Joining\u2026" : "Join the waitlist"}</button>
+                {submitError && <p className="wl-error" style={{ display: "block" } as React.CSSProperties}>{submitError}</p>}
                 <p className="wl-micro" style={{ textAlign: "center", marginTop: "8px" } as React.CSSProperties}>No spam. One email when we open, one when the binary is yours.</p>
               </form>
               <div id="wl-success" style={{ display: joined ? "block" : "none", textAlign: "center", padding: "24px 0" } as React.CSSProperties}>

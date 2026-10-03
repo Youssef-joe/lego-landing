@@ -2,14 +2,25 @@
 
 import { useState } from 'react';
 import BrickText from '@/components/BrickText';
+import { submitWaitlist } from '@/lib/waitlist/client';
 
 export default function Hero() {
   const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<'idle' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) setStatus('success');
+    if (!email || status === 'sending') return;
+    setStatus('sending');
+    setError('');
+    const result = await submitWaitlist({ email, source: 'hero' });
+    if (result.ok) {
+      setStatus('success');
+    } else {
+      setError(result.error);
+      setStatus('error');
+    }
   };
 
   const pieces = [
@@ -52,6 +63,7 @@ export default function Hero() {
                   You're on the list
                 </div>
               ) : (
+                <>
                 <form onSubmit={handleSubmit} className="hero-form">
                   <input 
                     type="email" 
@@ -59,9 +71,14 @@ export default function Hero() {
                     required 
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    disabled={status === 'sending'}
                   />
-                  <button type="submit" className="btn-fill hero-submit">Join the waitlist</button>
+                  <button type="submit" className="btn-fill hero-submit" disabled={status === 'sending'}>{status === 'sending' ? 'Joining…' : 'Join the waitlist'}</button>
                 </form>
+                {status === 'error' && (
+                  <p style={{ color: '#b3261e', fontSize: '14px' }}>{error}</p>
+                )}
+                </>
               )}
               
             </div>

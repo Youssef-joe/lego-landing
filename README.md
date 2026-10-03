@@ -41,9 +41,12 @@ Open `http://localhost:3000`.
 - Root directory: `web`
 - Build command: `npm run build`
 - Output: `.next` (managed by Next.js)
-- No environment variables required for the current static waitlist UI.
+- Environment variables (Vercel → Project Settings → Environment Variables):
+  - `ADMIN_TOKEN` — required. Token for the `/admin` login (view + CSV export). Pick a long random string.
+  - `KV_REST_API_URL` / `KV_REST_API_TOKEN` — required in production. Create a KV database in Vercel (Storage tab); both vars are auto-wired. Without them the app falls back to a local `.data/waitlist.jsonl` file, which does **not** persist on serverless — local dev only.
+  - Builder AI: `BRICO_AI_PROVIDER=openrouter`, `OPENROUTER_API_KEY`, `BRICO_AI_MODEL=openrouter/free`, `BRICO_APP_URL=https://<your-domain>`.
 
-The waitlist form is currently front-end only with simulated submission. To persist signups, point `components/Waitlist.tsx` at the Go waitlist service in `../waitlist`.
+Waitlist API: `POST /api/waitlist` (`{email, company?, source?}`), `GET /api/waitlist/count`. Admin: `/admin` (token login) lists signups with CSV export. Rate-limited per instance; deduped by email.
 
 ## Project Structure
 
