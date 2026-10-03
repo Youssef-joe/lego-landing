@@ -1,5 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { Redis as IoRedis } from 'ioredis';
 import { kv } from '@vercel/kv';
 
 export type Signup = {
@@ -9,11 +10,37 @@ export type Signup = {
   createdAt: string;
 };
 
+export type StorageKind = 'kv' | 'redis' | 'file';
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const KV_HASH = 'waitlist:signups';
 
 function kvConfigured() {
   return Boolean(process.env['KV_REST_API_URL'] && process.env['KV_REST_API_TOKEN']);
+}
+
+function redisUrl() {
+  return process.env['REDIS_URL'] || '';
+}
+
+let redisClient: IoRedis | null = null;
+
+/** Shared client across warm invocations; connects lazily on first command. */
+function redis(): IoRedis {
+  if (!redisClient) {
+    redisClient = new IoRedis(redisUrl(), {
+      lazyConnect: true,
+      maxRetriesPerRequest: 2,
+      enableAutoPipelining: true,
+    });
+  }
+  return redisClient;
+}
+
+export function storageKind(): StorageKind {
+  if (kvConfigured()) return 'kv';
+  if (redisUrl()) return 'redis';
+  return 'file';
 }
 
 export function normalizeEmail(email: string) {
@@ -54,11 +81,19 @@ export async function addSignup(input: {
     source: input.source?.trim().slice(0, 40) || undefined,
     createdAt: new Date().toISOString(),
   };
+  const kind = storageKind();
 
-  if (kvConfigured()) {
+  if (kind === 'kv') {
     const existing = await kv.hget<Signup>(KV_HASH, email);
     if (existing) return { signup: existing, already: true };
     await kv.hset(KV_HASH, { [email]: signup });
+    return { signup, already: false };
+  }
+
+  if (kind === 'redis') {
+    const existing = await redis().hget(KV_HASH, email);
+    if (existing) return { signup: JSON.parse(existing) as Signup, already: true };
+    await redis().hset(KV_HASH, email, JSON.stringify(signup));
     return { signup, already: false };
   }
 
@@ -71,23 +106,25 @@ export async function addSignup(input: {
 }
 
 export async function listSignups(): Promise<Signup[]> {
-  if (kvConfigured()) {
+  const kind = storageKind();
+  if (kind === 'kv') {
     const all = await kv.hgetall<Record<string, Signup>>(KV_HASH);
     if (!all) return [];
     return Object.values(all).sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+  }
+  if (kind === 'redis') {
+    const all = await redis().hgetall(KV_HASH);
+    return Object.values(all)
+      .map((v) => JSON.parse(v) as Signup)
+      .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
   }
   const all = await fileReadAll();
   return all.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
 }
 
 export async function countSignups(): Promise<number> {
-  if (kvConfigured()) {
-    return kv.hlen(KV_HASH);
-  }
+  const kind = storageKind();
+  if (kind === 'kv') return kv.hlen(KV_HASH);
+  if (kind === 'redis') return redis().hlen(KV_HASH);
   return (await fileReadAll()).length;
-}
-
-/** True when production-grade storage is active (not the local file). */
-export function storageKind(): 'kv' | 'file' {
-  return kvConfigured() ? 'kv' : 'file';
 }
