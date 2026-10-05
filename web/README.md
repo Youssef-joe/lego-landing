@@ -54,6 +54,7 @@ web/
   app/
     layout.tsx      # Root layout, metadata, fonts
     page.tsx        # Page composition
+    docs/           # /docs: product documentation (one folder per page, docs.css)
     globals.css     # Design tokens, sections, animations
     icon.svg        # Favicon / app icon
   components/
@@ -75,9 +76,11 @@ web/
     Reveal.tsx      # Scroll-reveal observer
     BrandMark.tsx   # Logo mark
     Teaser.tsx      # Teaser block
+    docs/           # Docs shell: sidebar, on-page contents, code blocks, callouts
   lib/
     useScrollProgress.ts
     useTabs.ts
+    docs.ts         # Docs map: sections, pages, status labels (add new pages here)
   public/
     media/          # Static assets
 ```
