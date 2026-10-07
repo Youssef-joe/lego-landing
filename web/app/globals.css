@@ -1098,7 +1098,7 @@ h1, h2, h3, h4 { text-align: center; }
 
 /* ---- Signup success modal: your email drops in as a Vault brick ---- */
 .joy-overlay {
-  position: fixed; inset: 0; z-index: 200;
+  position: fixed; inset: 0; z-index: 1000;
   background: rgba(36, 28, 23, 0.55);
   backdrop-filter: blur(3px);
   display: flex; align-items: center; justify-content: center;

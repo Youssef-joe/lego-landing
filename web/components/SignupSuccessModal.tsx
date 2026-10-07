@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 type Props = {
   email: string;
@@ -11,6 +12,11 @@ type Props = {
 /** Your email becomes a brick that drops into the Vault. Pure CSS motion. */
 export default function SignupSuccessModal({ email, open, onClose }: Props) {
   const closeRef = useRef<HTMLButtonElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -26,9 +32,12 @@ export default function SignupSuccessModal({ email, open, onClose }: Props) {
     };
   }, [open, onClose]);
 
-  if (!open) return null;
+  if (!open || !mounted) return null;
 
-  return (
+  // Portal to document.body so the fixed overlay escapes ancestor stacking
+  // contexts (.reveal uses transform, #hero children use z-index: 1).
+  // Without this, nav (z-100) and the "Your library" card paint above it.
+  return createPortal(
     <div
       className="joy-overlay"
       role="dialog"
@@ -67,6 +76,7 @@ export default function SignupSuccessModal({ email, open, onClose }: Props) {
           Back to the page
         </button>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
