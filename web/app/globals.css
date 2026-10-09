@@ -1095,6 +1095,13 @@ h1, h2, h3, h4 { text-align: center; }
 .adm-table thead th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--body); }
 .adm-table tbody tr:last-child td { border-bottom: none; }
 .adm-email { font-weight: 600; }
+.adm-subtitle { font-size: 24px; margin: 56px 0 16px; letter-spacing: -0.01em; }
+.adm-reports { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+.adm-report { background: #fff; border: 1px solid var(--line, #e8e2d5); border-radius: 16px; padding: 18px 20px; }
+.adm-report-head { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 14px; }
+.adm-report-date { margin-left: auto; }
+.adm-report-msg { margin: 12px 0 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.adm-report-meta { margin: 8px 0 0; font-size: 13px; overflow-wrap: anywhere; }
 
 /* ---- Signup success modal: your email drops in as a Vault brick ---- */
 .joy-overlay {

@@ -11,6 +11,16 @@ type Signup = {
   createdAt: string;
 };
 
+type Report = {
+  id: string;
+  createdAt: string;
+  kind: string;
+  email: string;
+  message: string;
+  person?: string;
+  context?: { page?: string; brick?: string; buildId?: string; buildStatus?: string; turns?: number; lastError?: string };
+};
+
 export default function AdminPage() {
   const [authed, setAuthed] = useState<boolean | null>(null);
   const [token, setToken] = useState('');
@@ -19,6 +29,20 @@ export default function AdminPage() {
   const [storage, setStorage] = useState('');
   const [loading, setLoading] = useState(false);
   const [loadError, setLoadError] = useState('');
+  const [reports, setReports] = useState<Report[]>([]);
+  const [reportsError, setReportsError] = useState('');
+
+  const loadReports = useCallback(async () => {
+    setReportsError('');
+    try {
+      const res = await fetch('/api/admin/feedback');
+      const data = await res.json().catch(() => null);
+      if (!res.ok) throw new Error(data?.error || 'Could not load Builder feedback.');
+      setReports(data.reports ?? []);
+    } catch (e: any) {
+      setReportsError(e?.message || 'Could not load Builder feedback.');
+    }
+  }, []);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -36,12 +60,13 @@ export default function AdminPage() {
       setSignups(data.signups ?? []);
       setStorage(data.storage ?? '');
       setAuthed(true);
+      loadReports();
     } catch (e: any) {
       setLoadError(e?.message || 'Could not load signups.');
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [loadReports]);
 
   useEffect(() => {
     load();
@@ -72,6 +97,7 @@ export default function AdminPage() {
     await fetch('/api/admin/logout', { method: 'POST' });
     setAuthed(false);
     setSignups([]);
+    setReports([]);
   };
 
   return (
@@ -138,6 +164,42 @@ export default function AdminPage() {
                   </tbody>
                 </table>
               </div>
+            )}
+
+            <h2 className="adm-subtitle">Builder feedback</h2>
+            <div className="adm-bar">
+              <span className="chip">
+                {reports.length} report{reports.length === 1 ? '' : 's'} · builder.bricowerx.com
+              </span>
+              <button type="button" className="adm-ghost" onClick={loadReports}>Refresh</button>
+            </div>
+            {reportsError && <p className="adm-error">{reportsError}</p>}
+            {!reportsError && reports.length === 0 && <p className="adm-muted">No reports yet.</p>}
+            {reports.length > 0 && (
+              <ul className="adm-reports">
+                {reports.map((r) => {
+                  const c = r.context ?? {};
+                  const where = [
+                    c.page,
+                    c.brick && `brick ${c.brick}`,
+                    c.buildId && `build ${c.buildId}${c.buildStatus ? ` (${c.buildStatus})` : ''}`,
+                    c.turns != null && `${c.turns} turns`,
+                  ].filter(Boolean).join(' · ');
+                  return (
+                    <li key={r.id} className="adm-report">
+                      <div className="adm-report-head">
+                        <span className="chip">{r.kind}</span>
+                        <a className="adm-email" href={`mailto:${r.email}`}>{r.email}</a>
+                        {r.person && <span className="adm-muted">{r.person}</span>}
+                        <span className="adm-muted adm-report-date">{new Date(r.createdAt).toLocaleString()}</span>
+                      </div>
+                      <p className="adm-report-msg">{r.message}</p>
+                      {where && <p className="adm-muted adm-report-meta">{where}</p>}
+                      {c.lastError && <p className="adm-error adm-report-meta">Last error: {c.lastError}</p>}
+                    </li>
+                  );
+                })}
+              </ul>
             )}
           </>
         )}
